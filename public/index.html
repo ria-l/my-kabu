@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>
+    Lat: <span id="lat"></span>
+  </p>
+  <p>
+    Lon: <span id="lon"></span>
+  </p>
+  <button id="submit">submit</button>
+  <script>
+    document.querySelector('#submit').addEventListener('click', () => {
+      runGeo();
+    })
+    const runGeo = () => {
+      if ('geolocation' in navigator) {
+        console.log('geo ok');
+        navigator.geolocation.getCurrentPosition(async position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          document.querySelector('#lat').textContent = lat;
+          document.querySelector('#lon').textContent = lon;
+
+          const data = { lat, lon };
+          const options = {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          }
+          const response = await fetch('/api', options)
+          const json = await response.json();
+          console.log(json);
+        })
+      } else {
+        console.log('no geo');
+      }
+    }
+  </script>
+</body>
+
+</html>
