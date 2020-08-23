@@ -40,8 +40,10 @@ app.get('/ticker/:ticker', async (request, response) => {
 });
 
 app.get('/daily/:ticker', async (request, response) => {
+  const startDate = '2020-08-01';
+  const endDate = '2020-08-22';
   const ticker = request.params.ticker;
-  const api_url = `https://api.tiingo.com/tiingo/daily/${ticker}/prices?token=${tiingo_api_key}`;
+  const api_url = `https://api.tiingo.com/tiingo/daily/${ticker}/prices?startDate=${startDate}&endDate=${endDate}&token=${tiingo_api_key}`;
   const fetch_response = await fetch(api_url);
   const json = await fetch_response.json();
   response.json(json);

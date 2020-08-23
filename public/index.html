@@ -4,18 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
   <title>Document</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"
+    integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q=="
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
- 
-    <label for="ticker">Ticker:</label>
-    <input type="text" id="ticker" name="ticker"><br><br>
-    <button id="submit">submit</button>
-  
-    <canvas id="myChart" width="400" height="400"></canvas>
- 
+
+  <label for="ticker">Ticker:</label>
+  <input type="text" id="ticker" name="ticker"><br><br>
+  <button id="submit">submit</button>
+  <div id="wrapper">
+    <canvas id="myChart" width="6"" height="4"></canvas>
+  </div>
+  <div id="ticker-info">
+
+  </div>
   <script src="index.js">  </script>
 
 </body>

@@ -1,0 +1,14 @@
+#wrapper {
+  position: relative;
+   width: 65vw;
+   float: left;
+}
+
+#ticker-info {
+ display: inline-block;
+ width: 30vw;
+}
+
+* {
+
+}
