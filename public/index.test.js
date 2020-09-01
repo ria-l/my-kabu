@@ -1,7 +1,7 @@
 const getDataForChart = require('./index');
 
 window.fetch = (url) => {
-  if (url.includes('daily')) {
+  if (url.includes('prices')) {
     return Promise.resolve({
       json: () =>
         Promise.resolve([
@@ -82,24 +82,23 @@ window.fetch = (url) => {
           },
         ]),
     });
-  } else if (url.includes('ticker')) {
+  } else if (url.includes('meta')) {
     return Promise.resolve({
       json: () =>
         Promise.resolve({
           endDate: '2020-08-28',
-          description:
-            'Tesla Motors, Inc. (Tesla) designs, develops, manufactures and sells electric vehicles and advanced electric vehicle powertrain components. Tesla owns its sales and service network. The Company is engaged in commercially producing a federally-compliant electric vehicle, the Tesla Roadster. addition to developing its Model S and future vehicle manufacturing capabilities at the Tesla Factory, the Company is designing, developing and manufacturing lithium-ion battery packs, electric motors, gearboxes and components both for its vehicles and for its original equipment manufacturer customers. These activities occur at its electric powertrain manufacturing facility in Palo Alto, California and at the Tesla Factory. The Company provides services for the development of electric powertrain components and sells electric powertrain components to other automotive manufacturers.',
+          description: 'Lorem ipsum.',
           exchangeCode: 'NASDAQ',
-          ticker: 'TSLA',
-          name: 'Tesla Motors Inc',
+          ticker: 'FAKE',
+          name: 'Fake AF Inc',
           startDate: '2010-06-29',
         }),
     });
   }
 };
 
-it('gets label data for stock chart', async () => {
-  const data = await getDataForChart('TSLA');
+it('getDataForChart(): returns object with data and labels for stock chart', async () => {
+  const data = await getDataForChart('FAKE');
   expect(data).toEqual({
     xAxisLabels: [
       '2020-08-03',
@@ -109,7 +108,7 @@ it('gets label data for stock chart', async () => {
       '2020-08-07',
     ],
     yAxisLabels: [1485.0, 1487.0, 1485.02, 1489.58, 1452.71],
-    ticker: 'TSLA',
-    name: 'Tesla Motors Inc',
+    ticker: 'FAKE',
+    name: 'Fake AF Inc',
   });
 });
