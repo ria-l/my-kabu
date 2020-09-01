@@ -33,14 +33,14 @@ async function chartIt(ticker) {
 }
 
 async function getDataForChart(ticker) {
-  const dailyApiUrl = `/daily/${ticker}`;
-  const dailyResponse = await fetch(dailyApiUrl);
-  const dailyJson = await dailyResponse.json();
+  const pricesApiUrl = `/prices/${ticker}`;
+  const pricesResponse = await fetch(pricesApiUrl);
+  const pricesJson = await pricesResponse.json();
   const xAxisLabels = [];
   const yAxisLabels = [];
-  for (let i = 0; i < dailyJson.length; i++) {
-    xAxisLabels.push(dailyJson[i].date.split('T')[0]);
-    yAxisLabels.push(dailyJson[i].close);
+  for (let i = 0; i < pricesJson.length; i++) {
+    xAxisLabels.push(pricesJson[i].date.split('T')[0]);
+    yAxisLabels.push(pricesJson[i].close);
   }
 
   const metaData = await getStockMetadata(ticker);
@@ -50,7 +50,7 @@ async function getDataForChart(ticker) {
 }
 
 async function getStockMetadata(ticker) {
-  const metadataApiUrl = `/ticker/${ticker}`;
+  const metadataApiUrl = `/meta/${ticker}`;
   const metadataResponse = await fetch(metadataApiUrl);
   const metadataJson = await metadataResponse.json();
 
