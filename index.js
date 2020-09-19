@@ -11,7 +11,7 @@ app.use(express.static('./public'));
 app.use(express.json({ limit: '1mb' }));
 
 // proxy server
-app.get('/ticker/:ticker', async (request, response) => {
+app.get('/meta/:ticker', async (request, response) => {
   const ticker = request.params.ticker;
   const apiUrl = `https://api.tiingo.com/tiingo/daily/${ticker}?token=${tiingo_api_key}`;
   const fetchResponse = await fetch(apiUrl);
@@ -19,7 +19,7 @@ app.get('/ticker/:ticker', async (request, response) => {
   response.json(json);
 });
 
-app.get('/daily/:ticker', async (request, response) => {
+app.get('/prices/:ticker', async (request, response) => {
   const startDate = '2020-08-01';
   const endDate = '2020-08-22';
   const ticker = request.params.ticker;
