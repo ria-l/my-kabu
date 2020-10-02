@@ -1,31 +1,36 @@
 {
   "name": "my-kabu",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "nedb": "^1.8.0",
-    "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.4"
-  },
-  "devDependencies": {
-    "jest": "^26.4.2"
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.6.6",
+    "chart.js": "^2.9.3",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3"
   },
   "scripts": {
-    "test": "jest",
-    "live-server": "live-server",
-    "watch": "jest --watch *.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iliketigers/my-kabu.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iliketigers/my-kabu/issues"
-  },
-  "homepage": "https://github.com/iliketigers/my-kabu#readme"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

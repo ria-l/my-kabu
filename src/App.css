@@ -1,0 +1,19 @@
+@import '~antd/dist/antd.css';
+
+table,
+th,
+tr,
+td {
+  border: solid 1px black;
+}
+table {
+  height: 300px;
+  width: 500px;
+}
+
+div.main {
+  float: left;
+  border: solid green 2px;
+  margin: 5px;
+  padding: 5px;
+}
