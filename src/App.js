@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import '../App.css';
+import './App.css';
 import PortfolioSummary from './PortolioSummary';
 import StockList from './StockList';
-import TickerPicker from './TickerPicker';
-// import Chart from 'chart.js';
-
-import { Button, DatePicker } from 'antd';
-
-// const App = () => (
-//   <>
-//     <Button type="primary">PRESS ME</Button>
-//     <DatePicker placeholder="select date" />
-//   </>
-// );
+import AddLot from './AddLot';
 
 class App extends Component {
-  // state = {};
+  state = {
+    submitted: false,
+  };
+
+  setSubmittedState = (state) => {
+    this.setState({ submitted: state });
+  };
+
   render() {
     return (
       <>
         <PortfolioSummary />
+        <AddLot itsAProp={this.setSubmittedState} />
         <StockList />
-        <TickerPicker />
       </>
     );
   }

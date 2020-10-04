@@ -5,6 +5,7 @@ th,
 tr,
 td {
   border: solid 1px black;
+  padding: 3px;
 }
 table {
   height: 300px;
@@ -13,7 +14,6 @@ table {
 
 div.main {
   float: left;
-  border: solid green 2px;
   margin: 5px;
   padding: 5px;
 }
@@ -24,7 +24,7 @@ div.main {
   float: left;
 }
 
-#ticker-info {
+.ticker-info {
   display: inline-block;
   width: 30vw;
 }

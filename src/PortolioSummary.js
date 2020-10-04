@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import * as Constants from './constants';
 import Chart from 'chart.js';
 
-// TODO: dedupe
+const getCurrentValue = (ticker) => {
+  return 30; // FIXME:
+};
+
+// TODO: need to convert this to sum values
 const getDataForChart = (ticker) => {
   const pricesJson = Constants.API_PRICES[ticker];
   const xAxisLabels = [];
@@ -18,58 +22,59 @@ const getDataForChart = (ticker) => {
   return { xAxisLabels, yAxisLabels, name };
 };
 
-class TickerPicker extends Component {
-  selectTicker = () => {
-    console.log('sup');
-  };
+class PortfolioSummary extends Component {
+  state = {};
+
   render() {
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+
+    let currValue = 0;
+    for (const lot in portfolio.lots) {
+      let currentShares =
+        portfolio.lots[lot].buyShares - portfolio.lots[lot].sellShares;
+      currValue += getCurrentValue(portfolio.lots[lot].symbol) * currentShares;
+    }
+
+    let depositValue = 0;
+
+    for (const deposit in Constants.DEPOSITS) {
+      depositValue += Constants.DEPOSITS[deposit];
+    }
+    const totalGain = currValue - depositValue;
+    const prevValue = 6; // FIXME:
+    const dayGain = 7; // FIXME:
+
     return (
       <div className="main">
-        <form>
-          <label htmlFor="ticker">Ticker</label>
-          <input
-            type="text"
-            name="ticker"
-            value="FAKE"
-            onChange={this.selectTicker}
-          />
-          <input type="button" value="submit" onClick={this.submitForm} />
-        </form>
         <div>
-          <h1>Microsoft</h1>
-          <h2>{Constants.API_PRICES['MSFT'][0]['close']}</h2>
-          +$4.63 (+2.28%) Today
-          <br />
-          -$0.77 (-0.37%) After Hours
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <PortfolioChart />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <h1>{portfolio.name}</h1>
+          <h2>${currValue}</h2>
         </div>
+        <div>
+          Day Gain: ${dayGain} (+{((dayGain / prevValue) * 100).toFixed(2)}%)
+          <br />
+          Total Gain: ${totalGain} (
+          {((totalGain / depositValue) * 100).toFixed(2)}%)
+        </div>
+        <PortfolioChart />
       </div>
     );
   }
 }
 
-// TODO: dedupe
 class PortfolioChart extends Component {
   state = {};
   chartRef = React.createRef();
   componentDidMount() {
-    const myChartRef = this.chartRef.current.getContext('2d');
-    const chartData = getDataForChart('MSFT');
-    new Chart(myChartRef, {
+    const portfolioChartRef = this.chartRef.current.getContext('2d');
+    const chartData = getDataForChart('AMZN');
+    new Chart(portfolioChartRef, {
       type: 'line',
       data: {
         labels: chartData.xAxisLabels,
         datasets: [
           {
-            label: `${chartData.ticker}: ${chartData.name}`,
+            label: 'Portfolio value over time',
             data: chartData.yAxisLabels,
             backgroundColor: ['rgba(0, 200, 5, 0.2)'],
             borderColor: ['rgba(0, 200, 5, 1)'],
@@ -93,7 +98,7 @@ class PortfolioChart extends Component {
               <td>
                 <div className="chart-wrapper">
                   <canvas
-                    id="secondChart"
+                    id="portfolioChart"
                     ref={this.chartRef}
                     width="6"
                     height="4"
@@ -108,4 +113,4 @@ class PortfolioChart extends Component {
   }
 }
 
-export default TickerPicker;
+export default PortfolioSummary;

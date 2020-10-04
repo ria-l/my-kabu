@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
-import * as Constants from './Const';
+// import { render } from 'react-dom';
+import * as Constants from './constants';
 // import Chart from 'chart.js';
 
 function formatDate(date) {
@@ -16,11 +16,15 @@ function formatDate(date) {
 }
 
 function getTodaysPrice(ticker) {
-  return Constants.API_TODAY_PRICE[ticker][0].adjClose;
+  if (Constants.API_TODAY_PRICE[ticker]) {
+    return Constants.API_TODAY_PRICE[ticker][0].adjClose;
+  }
 }
 
 function getYesterdaysPrice(ticker) {
-  return Constants.API_PRICES[ticker][26].adjClose;
+  if (Constants.API_PRICES[ticker]) {
+    return Constants.API_PRICES[ticker][26].adjClose;
+  }
 }
 
 function calculatePercentChange(oldValue, newValue) {
@@ -29,18 +33,14 @@ function calculatePercentChange(oldValue, newValue) {
 
 function getNumberOfShares(lot) {
   return (
-    Constants.PORTFOLIO.lots[lot].buyShares -
-    Constants.PORTFOLIO.lots[lot].sellShares
+    JSON.parse(window.localStorage.getItem('portfolio')).lots[lot].buyShares -
+    JSON.parse(window.localStorage.getItem('portfolio')).lots[lot].sellShares
   );
 }
 class StockListRow extends Component {
   render() {
-    // let columns = [];
-
-    // for (const col in Constants.PORTFOLIO.lots[this.props.lot]) {
-    //   columns.push(<td>{Constants.PORTFOLIO.lots[this.props.lot][col]}</td>);
-    // }
-    const symbol = Constants.PORTFOLIO.lots[this.props.lot].symbol;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const symbol = portfolio.lots[this.props.lot].symbol;
 
     return (
       <tr>
@@ -89,7 +89,8 @@ class StockList extends Component {
   render() {
     const rows = [];
 
-    for (const lot in Constants.PORTFOLIO.lots) {
+    for (const lot in JSON.parse(window.localStorage.getItem('portfolio'))
+      .lots) {
       rows.push(<StockListRow lot={lot} key={lot} />);
     }
 
