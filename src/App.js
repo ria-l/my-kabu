@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import PortfolioSummary from './PortolioSummary';
+import PortfolioSummary from './PortfolioSummary';
 import StockList from './StockList';
 import AddLot from './AddLot';
 

@@ -7,7 +7,7 @@ const getCurrentValue = (ticker) => {
 };
 
 // TODO: need to convert this to sum values
-const getDataForChart = (ticker) => {
+export const getDataForChart = (ticker) => {
   const pricesJson = Constants.API_PRICES[ticker];
   const xAxisLabels = [];
   const yAxisLabels = [];
@@ -29,10 +29,13 @@ class PortfolioSummary extends Component {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
 
     let currValue = 0;
-    for (const lot in portfolio.lots) {
-      let currentShares =
-        portfolio.lots[lot].buyShares - portfolio.lots[lot].sellShares;
-      currValue += getCurrentValue(portfolio.lots[lot].symbol) * currentShares;
+    if (portfolio) {
+      for (const lot in portfolio.lots) {
+        let currentShares =
+          portfolio.lots[lot].buyShares - portfolio.lots[lot].sellShares;
+        currValue +=
+          getCurrentValue(portfolio.lots[lot].symbol) * currentShares;
+      }
     }
 
     let depositValue = 0;
@@ -47,7 +50,7 @@ class PortfolioSummary extends Component {
     return (
       <div className="main">
         <div>
-          <h1>{portfolio.name}</h1>
+          <h1>{portfolio && portfolio.name}</h1>
           <h2>${currValue}</h2>
         </div>
         <div>
