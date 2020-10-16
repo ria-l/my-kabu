@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import * as Constants from './constants';
 
-function parseStorage(ticker) {
-  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-  console.log(portfolio);
-  console.log(ticker);
+// TODO: move to utilities
+export function parseStorage(ticker) {
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (!portfolio) {
+    window.localStorage.setItem(
+      'portfolio',
+      JSON.stringify({
+        name: 'To The Moon',
+        lots: [],
+      })
+    );
+    portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  }
   portfolio.lots.push({
-    symbol: ticker,
+    symbol: ticker.toUpperCase(),
     buyShares: 0,
     buyDate: null,
     broker: null,
@@ -26,7 +35,6 @@ class AddLot extends React.Component {
   };
 
   handleSubmit = (event) => {
-    // alert('Your favorite flavor is: ' + this.state.value);
     event.preventDefault();
     this.props.itsAProp(true);
     parseStorage(this.state.value);
