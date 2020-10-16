@@ -1,4 +1,4 @@
-function formatDate(date) {
+export function formatDate(date) {
   var d = new Date(date),
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),
@@ -9,9 +9,10 @@ function formatDate(date) {
 
   return [year, month, day].join('-');
 }
+
 let today = new Date();
 today = formatDate(today);
-today += 'T00:00:00+00:00';
+today += 'T00:00:00+00:00Z';
 
 let yesterday = new Date();
 yesterday = yesterday.setDate(yesterday.getDate() - 1);
@@ -425,6 +426,21 @@ export const API_PRICES = {
       divCash: 0.0,
       splitFactor: 1.0,
     },
+    {
+      date: today,
+      close: 3125,
+      high: 3195.7965,
+      low: 3123,
+      open: 3153.63,
+      volume: 5613098,
+      adjClose: 3125,
+      adjHigh: 3195.7965,
+      adjLow: 3123,
+      adjOpen: 3153.63,
+      adjVolume: 5613098,
+      divCash: 0,
+      splitFactor: 1,
+    },
   ],
   MSFT: [
     {
@@ -831,6 +847,21 @@ export const API_PRICES = {
       adjVolume: 43373587,
       divCash: 0.0,
       splitFactor: 1.0,
+    },
+    {
+      date: today,
+      close: 3221.26,
+      high: 3224,
+      low: 3172,
+      open: 3208,
+      volume: 4971922,
+      adjClose: 3221.26,
+      adjHigh: 3224,
+      adjLow: 3172,
+      adjOpen: 3208,
+      adjVolume: 4971922,
+      divCash: 0,
+      splitFactor: 1,
     },
   ],
   BABA: [
@@ -1239,6 +1270,21 @@ export const API_PRICES = {
       divCash: 0.0,
       splitFactor: 1.0,
     },
+    {
+      date: today,
+      close: 290.05,
+      high: 295.59,
+      low: 288.25,
+      open: 295.26,
+      volume: 16304018,
+      adjClose: 290.05,
+      adjHigh: 295.59,
+      adjLow: 288.25,
+      adjOpen: 295.26,
+      adjVolume: 16304018,
+      divCash: 0,
+      splitFactor: 1,
+    },
   ],
   FAKE: [
     {
@@ -1287,7 +1333,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-08-06T00:00:00.000Z',
+      date: yesterday,
       close: 1489.58,
       high: 1517.31,
       low: 1477.26,
@@ -1302,7 +1348,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-08-07T00:00:00.000Z',
+      date: today,
       close: 1452.71,
       high: 1499.75,
       low: 1415.01,
@@ -1320,57 +1366,9 @@ export const API_PRICES = {
 };
 
 export const API_TODAY_PRICE = {
-  AMZN: [
-    {
-      adjClose: 3174.05,
-      adjHigh: 3175.04,
-      adjLow: 3117.1684,
-      adjOpen: 3148.85,
-      adjVolume: 4224165,
-      close: 3174.05,
-      date: today,
-      divCash: 0.0,
-      high: 3175.04,
-      low: 3117.1684,
-      open: 3148.85,
-      splitFactor: 1.0,
-      volume: 4224165,
-    },
-  ],
-  BABA: [
-    {
-      adjClose: 276.01,
-      adjHigh: 278.84,
-      adjLow: 274.1989,
-      adjOpen: 275.53,
-      adjVolume: 8761678,
-      close: 276.01,
-      date: today,
-      divCash: 0.0,
-      high: 278.84,
-      low: 274.1989,
-      open: 275.53,
-      splitFactor: 1.0,
-      volume: 8761678,
-    },
-  ],
-  MSFT: [
-    {
-      adjClose: 209.44,
-      adjHigh: 212.57,
-      adjLow: 208.06,
-      adjOpen: 210.88,
-      adjVolume: 32004936,
-      close: 209.44,
-      date: today,
-      divCash: 0.0,
-      high: 212.57,
-      low: 208.06,
-      open: 210.88,
-      splitFactor: 1.0,
-      volume: 32004936,
-    },
-  ],
+  AMZN: [],
+  BABA: [],
+  MSFT: [],
 };
 export const API_META = {
   AMZN: {
