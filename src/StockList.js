@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import { render } from 'react-dom';
+import { render } from 'react-dom';
 import * as Constants from './constants';
-// import Chart from 'chart.js';
+import Chart from 'chart.js';
 
-function formatDate(date) {
+export function formatDate(date) {
   var d = new Date(date),
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),
@@ -15,72 +15,63 @@ function formatDate(date) {
   return [year, month, day].join('-');
 }
 
-function getTodaysPrice(ticker) {
-  if (Constants.API_TODAY_PRICE[ticker]) {
-    return Constants.API_TODAY_PRICE[ticker][0].adjClose;
+/**
+ *
+ * @param {string} ticker
+ */
+export function getTodaysPrice(ticker) {
+  let today = formatDate(new Date());
+  const tickerData = Constants.API_PRICES[ticker];
+
+  for (const entry in tickerData) {
+    const cleanDate = tickerData[entry].date.split('T')[0];
+
+    if (cleanDate === today) {
+      return tickerData[entry].adjClose;
+    }
   }
 }
 
-function getYesterdaysPrice(ticker) {
-  if (Constants.API_PRICES[ticker]) {
-    return Constants.API_PRICES[ticker][26].adjClose;
+/**
+ *
+ * @param {string} ticker
+ */
+export function getYesterdaysPrice(ticker) {
+  let yesterday = new Date();
+  yesterday = yesterday.setDate(yesterday.getDate() - 1);
+  yesterday = formatDate(yesterday);
+  for (const entry in Constants.API_PRICES[ticker]) {
+    const cleanDate = Constants.API_PRICES[ticker][entry].date.split('T')[0];
+    if (cleanDate === yesterday) {
+      return Constants.API_PRICES[ticker][entry].adjClose;
+    }
   }
 }
 
-function calculatePercentChange(oldValue, newValue) {
-  return ((newValue - oldValue) / oldValue) * 100;
-}
-
-function getNumberOfShares(lot) {
-  return (
-    JSON.parse(window.localStorage.getItem('portfolio')).lots[lot].buyShares -
-    JSON.parse(window.localStorage.getItem('portfolio')).lots[lot].sellShares
-  );
-}
-class StockListRow extends Component {
-  render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const symbol = portfolio.lots[this.props.lot].symbol;
-
-    return (
-      <tr>
-        <td>{symbol}</td>
-        <td>Graph!</td>
-        <td>${getTodaysPrice(symbol)}</td>
-        <td>
-          ${(getTodaysPrice(symbol) - getYesterdaysPrice(symbol)).toFixed(2)}
-          <br />
-          {calculatePercentChange(
-            getYesterdaysPrice(symbol),
-            getTodaysPrice(symbol)
-          ).toFixed(2)}
-          %
-        </td>
-        <td>{getNumberOfShares(this.props.lot)}</td>
-        <td>
-          $
-          {(getNumberOfShares(this.props.lot) * getTodaysPrice(symbol)).toFixed(
-            2
-          )}
-        </td>
-        <td>
-          {(
-            getNumberOfShares(this.props.lot) * getTodaysPrice(symbol) -
-            getNumberOfShares(this.props.lot) * getYesterdaysPrice(symbol)
-          ).toFixed(2)}
-          <br />
-          {calculatePercentChange(
-            getNumberOfShares(this.props.lot) * getYesterdaysPrice(symbol),
-            getNumberOfShares(this.props.lot) * getTodaysPrice(symbol)
-          ).toFixed(2)}
-          %
-        </td>
-        <td>
-          <strike>Total Gain</strike>
-        </td>
-      </tr>
-    );
+/**
+ *
+ * @param {number} oldValue
+ * @param {number} newValue
+ */
+export function calculatePercentChange(oldValue, newValue) {
+  if (oldValue && newValue) {
+    return (((newValue - oldValue) / oldValue) * 100).toFixed(2) + '%';
+  } else {
+    return null;
   }
+}
+
+/**
+ *
+ * @param {number} lot
+ */
+export function getNumberOfShares(lot) {
+  const portfolio = window.localStorage.getItem('portfolio');
+  if (portfolio) {
+    const portfolioEntry = JSON.parse(portfolio).lots[lot];
+    return portfolioEntry.buyShares - portfolioEntry.sellShares;
+  }
+  return 0;
 }
 
 class StockList extends Component {
@@ -88,10 +79,11 @@ class StockList extends Component {
 
   render() {
     const rows = [];
-
-    for (const lot in JSON.parse(window.localStorage.getItem('portfolio'))
-      .lots) {
-      rows.push(<StockListRow lot={lot} key={lot} />);
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    if (portfolio) {
+      for (const lot in portfolio.lots) {
+        rows.push(<StockListRow lot={lot} key={lot} />);
+      }
     }
 
     return (
@@ -101,8 +93,8 @@ class StockList extends Component {
             <tr>
               <th>Stock</th>
               <th>Graph</th>
-              <th>Current Price</th>
-              <th>Change</th>
+              <th>Today's close</th>
+              <th>Change since...</th>
               <th>Shares</th>
               <th>Market Value</th>
               <th>Daily Gain</th>
@@ -112,6 +104,52 @@ class StockList extends Component {
           </tbody>
         </table>
       </div>
+    );
+  }
+}
+
+class StockListRow extends Component {
+  render() {
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const symbol = portfolio.lots[this.props.lot].symbol;
+    const numShares = getNumberOfShares(this.props.lot);
+    const todaysPrice = getTodaysPrice(symbol);
+    const yesterdaysPrice = getYesterdaysPrice(symbol);
+    const yesterdaysValue = numShares * yesterdaysPrice;
+    const todaysValue = numShares * todaysPrice;
+    console.log(symbol, todaysPrice);
+
+    return (
+      <tr>
+        {/* Stock */}
+        <td>{symbol}</td>
+        {/* Graph */}
+        <td>Graph!</td>
+        {/* Today's close */}
+        <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
+        {/* Change since... */}
+        <td>
+          {todaysPrice
+            ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}`
+            : null}
+          <br />
+          {calculatePercentChange(yesterdaysPrice, todaysPrice)}
+        </td>
+        {/* Shares */}
+        <td>{numShares}</td>
+        {/* Market value */}
+        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : null}</td>
+        {/* Daily gain */}
+        <td>
+          {todaysValue
+            ? `$${(todaysValue - yesterdaysValue).toFixed(2)}`
+            : null}
+          <br />
+          {calculatePercentChange(yesterdaysValue, todaysValue)}
+        </td>
+        {/* Total gain */}
+        <td></td>
+      </tr>
     );
   }
 }
