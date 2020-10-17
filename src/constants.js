@@ -1,22 +1,12 @@
-export function formatDate(date) {
-  var d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
-
-  return [year, month, day].join('-');
-}
+import * as Utilities from './utilities';
 
 let today = new Date();
-today = formatDate(today);
+today = Utilities.formatDate(today);
 today += 'T00:00:00+00:00Z';
 
 let yesterday = new Date();
 yesterday = yesterday.setDate(yesterday.getDate() - 1);
-yesterday = formatDate(yesterday);
+yesterday = Utilities.formatDate(yesterday);
 yesterday += 'T00:00:00.000Z';
 
 export const API_PRICES = {

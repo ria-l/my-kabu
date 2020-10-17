@@ -1,31 +1,6 @@
 import React, { Component } from 'react';
 import * as Constants from './constants';
-
-// TODO: move to utilities
-export function parseStorage(ticker) {
-  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-  if (!portfolio) {
-    window.localStorage.setItem(
-      'portfolio',
-      JSON.stringify({
-        name: 'To The Moon',
-        lots: [],
-      })
-    );
-    portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-  }
-  portfolio.lots.push({
-    symbol: ticker.toUpperCase(),
-    buyShares: 0,
-    buyDate: null,
-    broker: null,
-    buyPrice: null,
-    sellShares: 0,
-    sellDate: null,
-    sellPrice: null,
-  });
-  window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
-}
+import * as Utilities from './utilities';
 
 class AddLot extends React.Component {
   state = { value: null, submitted: false };
@@ -37,7 +12,7 @@ class AddLot extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.itsAProp(true);
-    parseStorage(this.state.value);
+    Utilities.addLotToPortfolio(this.state.value);
   };
 
   render() {

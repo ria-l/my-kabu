@@ -1,8 +1,4 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import AddLot from './AddLot';
-import * as Functions from './AddLot';
-import * as Constants from './constants';
+import * as Utilities from './utilities';
 
 class LocalStorageMock {
   constructor() {
@@ -31,7 +27,7 @@ window.localStorage = new LocalStorageMock();
 describe('AddLot local storage tests', () => {
   describe('parseStorage', () => {
     it('adds a new element to localstorage portfolio', () => {
-      Functions.parseStorage('FAKE');
+      Utilities.addLotToPortfolio('FAKE');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots.length).toEqual(1);
       expect(portfolio.lots[0].symbol).toEqual('FAKE');
