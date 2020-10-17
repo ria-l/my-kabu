@@ -1,25 +1,10 @@
 import React, { Component } from 'react';
 import * as Constants from './constants';
 import Chart from 'chart.js';
+import Utilities from './utilities';
 
 const getCurrentValue = (ticker) => {
   return 30; // FIXME:
-};
-
-// TODO: need to convert this to sum values
-export const getDataForChart = (ticker) => {
-  const pricesJson = Constants.API_PRICES[ticker];
-  const xAxisLabels = [];
-  const yAxisLabels = [];
-  for (let i = 0; i < pricesJson.length; i++) {
-    xAxisLabels.push(pricesJson[i].date.split('T')[0]);
-    yAxisLabels.push(pricesJson[i].close);
-  }
-
-  const metaData = Constants.API_META[ticker];
-  const name = metaData['name'];
-
-  return { xAxisLabels, yAxisLabels, name };
 };
 
 class PortfolioSummary extends Component {
@@ -70,7 +55,7 @@ class PortfolioChart extends Component {
   chartRef = React.createRef();
   componentDidMount() {
     const portfolioChartRef = this.chartRef.current.getContext('2d');
-    const chartData = getDataForChart('AMZN');
+    const chartData = Utilities.getDataForChart('AMZN');
     new Chart(portfolioChartRef, {
       type: 'line',
       data: {

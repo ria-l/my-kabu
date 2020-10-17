@@ -1,22 +1,7 @@
 import React, { Component } from 'react';
 import * as Constants from './constants';
+import * as Utilities from './utilities';
 import Chart from 'chart.js';
-
-// TODO: dedupe
-const getDataForChart = (ticker) => {
-  const pricesJson = Constants.API_PRICES[ticker];
-  const xAxisLabels = [];
-  const yAxisLabels = [];
-  for (let i = 0; i < pricesJson.length; i++) {
-    xAxisLabels.push(pricesJson[i].date.split('T')[0]);
-    yAxisLabels.push(pricesJson[i].close);
-  }
-
-  const metaData = Constants.API_META[ticker];
-  const name = metaData['name'];
-
-  return { xAxisLabels, yAxisLabels, name };
-};
 
 class TickerPicker extends Component {
   selectTicker = () => {
@@ -62,7 +47,7 @@ class PortfolioChart extends Component {
   chartRef = React.createRef();
   componentDidMount() {
     const myChartRef = this.chartRef.current.getContext('2d');
-    const chartData = getDataForChart('MSFT');
+    const chartData = Utilities.getDataForChart('MSFT');
     new Chart(myChartRef, {
       type: 'line',
       data: {
