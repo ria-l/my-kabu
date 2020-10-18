@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as Constants from './constants';
 import Chart from 'chart.js';
-import Utilities from './utilities';
+import * as Utilities from './utilities';
 
 const getCurrentValue = (ticker) => {
   return 30; // FIXME:
