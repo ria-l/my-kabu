@@ -1,4 +1,5 @@
 import * as Constants from './constants';
+import { v4 as uuidv4 } from 'uuid';
 
 export function addLotToPortfolio(ticker) {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
@@ -13,6 +14,7 @@ export function addLotToPortfolio(ticker) {
     portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   }
   portfolio.lots.push({
+    id: uuidv4(),
     symbol: ticker.toUpperCase(),
     buyShares: 0,
     buyDate: null,
@@ -23,6 +25,22 @@ export function addLotToPortfolio(ticker) {
     sellPrice: null,
   });
   window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+}
+
+export function deleteLotFromPortfolio(id) {
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (!portfolio) {
+    return;
+  } else {
+    let index;
+    for (let i = 0; i < portfolio.lots.length; i++) {
+      if (id === portfolio.lots[i]['id']) {
+        index = i;
+      }
+    }
+    portfolio.lots.splice(index, 1);
+    window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+  }
 }
 
 // TODO: need to convert this to sum values
