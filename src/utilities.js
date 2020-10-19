@@ -2,6 +2,7 @@ import * as Constants from './constants';
 import { v4 as uuidv4 } from 'uuid';
 
 export function addLotToPortfolio(ticker) {
+  // TODO: null case
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (!portfolio) {
     window.localStorage.setItem(
@@ -29,17 +30,17 @@ export function addLotToPortfolio(ticker) {
 
 export function deleteLotFromPortfolio(id) {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-  if (!portfolio) {
-    return;
-  } else {
+  if (portfolio) {
     let index;
     for (let i = 0; i < portfolio.lots.length; i++) {
       if (id === portfolio.lots[i]['id']) {
         index = i;
       }
     }
-    portfolio.lots.splice(index, 1);
-    window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+    if (index >= 0) {
+      portfolio.lots.splice(index, 1);
+      window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+    }
   }
 }
 

@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import * as Constants from './constants';
+import React from 'react';
 import * as Utilities from './utilities';
 
 class AddLot extends React.Component {
@@ -11,7 +10,7 @@ class AddLot extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.itsAProp(true);
+    this.props.submitted(true);
     Utilities.addLotToPortfolio(this.state.value);
   };
 

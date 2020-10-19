@@ -17,8 +17,8 @@ class App extends Component {
     return (
       <>
         <PortfolioSummary />
-        <AddLot itsAProp={this.setSubmittedState} />
-        <StockList />
+        <AddLot submitted={this.setSubmittedState} />
+        <StockList submitted={this.setSubmittedState} />
       </>
     );
   }
