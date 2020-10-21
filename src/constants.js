@@ -1355,11 +1355,7 @@ export const API_PRICES = {
   ],
 };
 
-export const API_TODAY_PRICE = {
-  AMZN: [],
-  BABA: [],
-  MSFT: [],
-};
+// invalid tickers return: {"detail":"Error: Ticker 'FAKE' not found"}
 export const API_META = {
   AMZN: {
     description:
