@@ -132,7 +132,7 @@ export function getNumberOfShares(lot) {
   const portfolio = window.localStorage.getItem('portfolio');
   if (portfolio) {
     const portfolioEntry = JSON.parse(portfolio).lots[lot];
-    return portfolioEntry.buyShares - portfolioEntry.sellShares;
+    return portfolioEntry.boughtShares - portfolioEntry.soldShares;
   }
   return 0;
 }
