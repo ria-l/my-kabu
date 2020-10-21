@@ -6,6 +6,7 @@ class AddLot extends React.Component {
     tickerValue: null,
     boughtShares: null,
     boughtPrice: null,
+    broker: null,
     submitted: false,
   };
 
@@ -21,13 +22,17 @@ class AddLot extends React.Component {
   handleDateChange = (event) => {
     this.setState({ boughDate: event.target.value });
   };
+  handleBrokerChange = (event) => {
+    this.setState({ broker: event.target.value });
+  };
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.submitted(true);
     Utilities.addLotToPortfolio(
       this.state.tickerValue,
       this.state.boughtShares,
-      this.state.boughtDate
+      this.state.boughtDate,
+      this.state.broker
     );
   };
 
@@ -58,6 +63,12 @@ class AddLot extends React.Component {
           <input
             value={this.state.boughtDatePrice}
             onChange={this.handleDateChange}
+          />
+          <br />
+          <label>Broker: </label>
+          <input
+            value={this.state.broker}
+            onChange={this.handlBrokerChange}
           />
           <input type="submit" value="Submit" />
         </form>

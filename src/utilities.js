@@ -1,7 +1,13 @@
 import * as Constants from './constants';
 import { v4 as uuidv4 } from 'uuid';
 
-export function addLotToPortfolio(ticker, boughtShares, boughtPrice, boughtDate) {
+export function addLotToPortfolio(
+  ticker,
+  boughtShares,
+  boughtPrice,
+  boughtDate,
+  broker
+) {
   if (ticker) {
     let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     if (!portfolio) {
@@ -20,7 +26,7 @@ export function addLotToPortfolio(ticker, boughtShares, boughtPrice, boughtDate)
       boughtShares,
       boughtDate,
       boughtPrice,
-      broker: null,
+      broker,
       soldShares: 0,
       soldDate: null,
       soldPrice: null,
