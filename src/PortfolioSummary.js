@@ -17,7 +17,7 @@ class PortfolioSummary extends Component {
     if (portfolio) {
       for (const lot in portfolio.lots) {
         let currentShares =
-          portfolio.lots[lot].buyShares - portfolio.lots[lot].sellShares;
+          portfolio.lots[lot].boughtShares - portfolio.lots[lot].soldShares;
         currValue +=
           getCurrentValue(portfolio.lots[lot].symbol) * currentShares;
       }

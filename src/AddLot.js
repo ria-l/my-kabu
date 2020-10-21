@@ -2,16 +2,22 @@ import React from 'react';
 import * as Utilities from './utilities';
 
 class AddLot extends React.Component {
-  state = { tickerValue: null, boughtShares: null, submitted: false };
+  state = {
+    tickerValue: null,
+    boughtShares: null,
+    boughtPrice: null,
+    submitted: false,
+  };
 
   handleTickerChange = (event) => {
     this.setState({ tickerValue: event.target.value });
   };
-
   handleSharesChange = (event) => {
     this.setState({ boughtShares: event.target.value });
   };
-
+  handlePriceChange = (event) => {
+    this.setState({ boughtPrice: event.target.value });
+  };
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.submitted(true);
@@ -38,6 +44,14 @@ class AddLot extends React.Component {
               <input
                 value={this.state.boughtShares}
                 onChange={this.handleSharesChange}
+              />
+            </label>
+            <br />
+            <label>
+              Buy price:
+              <input
+                value={this.state.boughtPrice}
+                onChange={this.handlePriceChange}
               />
             </label>
           </label>
