@@ -2,20 +2,23 @@ import React from 'react';
 import * as Utilities from './utilities';
 
 class AddLot extends React.Component {
-  state = { tickerValue: null, buyShares: null, submitted: false };
+  state = { tickerValue: null, boughtShares: null, submitted: false };
 
   handleTickerChange = (event) => {
     this.setState({ tickerValue: event.target.value });
   };
 
   handleSharesChange = (event) => {
-    this.setState({ buyShares: event.target.value });
+    this.setState({ boughtShares: event.target.value });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.submitted(true);
-    Utilities.addLotToPortfolio(this.state.tickerValue, this.state.buyShares);
+    Utilities.addLotToPortfolio(
+      this.state.tickerValue,
+      this.state.boughtShares
+    );
   };
 
   render() {
@@ -33,7 +36,7 @@ class AddLot extends React.Component {
             <label>
               Number of shares:
               <input
-                value={this.state.buyShares}
+                value={this.state.boughtShares}
                 onChange={this.handleSharesChange}
               />
             </label>
