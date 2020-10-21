@@ -14,7 +14,6 @@ export function addLotToPortfolio(ticker, boughtShares) {
       );
       portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     }
-    console.log(boughtShares);
     portfolio.lots.push({
       id: uuidv4(),
       symbol: ticker.toUpperCase(),
@@ -27,7 +26,6 @@ export function addLotToPortfolio(ticker, boughtShares) {
       soldPrice: null,
     });
     window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
-    console.log(JSON.stringify(portfolio));
   }
 }
 
@@ -134,8 +132,6 @@ export function getNumberOfShares(lot) {
   const portfolio = window.localStorage.getItem('portfolio');
   if (portfolio) {
     const portfolioEntry = JSON.parse(portfolio).lots[lot];
-    console.log(portfolioEntry.buyShares);
-    console.log(portfolioEntry.sellShares);
     return portfolioEntry.buyShares - portfolioEntry.sellShares;
   }
   return 0;
