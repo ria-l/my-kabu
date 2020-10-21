@@ -37,11 +37,17 @@ describe('local storage tests', () => {
   });
 
   describe('addLotToPortfolio', () => {
-    it('adds a new element to localstorage portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE');
+    it('correctly adds inputted ticker to portfolio', () => {
+      Utilities.addLotToPortfolio('FAKE', 3);
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots.length).toEqual(1);
       expect(portfolio.lots[0].symbol).toEqual('FAKE');
+    });
+
+    it('correctly adds inputted number of shares to portfolio', () => {
+      Utilities.addLotToPortfolio('FAKE', 3);
+      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+      expect(portfolio.lots[0].boughtShares).toEqual(3);
     });
   });
 

@@ -15,4 +15,8 @@ describe('getDataForChart', () => {
       yAxisLabels: [1485, 1487, 1485.02, 1489.58, 1452.71],
     });
   });
+
+  it("returns null if ticker doesn't exist", () => {
+    expect(Utilities.getDataForChart('asdf')).toEqual(null);
+  });
 });

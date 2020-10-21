@@ -1,31 +1,32 @@
 import * as Constants from './constants';
 import { v4 as uuidv4 } from 'uuid';
 
-export function addLotToPortfolio(ticker) {
-  // TODO: null case
-  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-  if (!portfolio) {
-    window.localStorage.setItem(
-      'portfolio',
-      JSON.stringify({
-        name: 'To The Moon',
-        lots: [],
-      })
-    );
-    portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+export function addLotToPortfolio(ticker, boughtShares) {
+  if (ticker) {
+    let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    if (!portfolio) {
+      window.localStorage.setItem(
+        'portfolio',
+        JSON.stringify({
+          name: 'To The Moon',
+          lots: [],
+        })
+      );
+      portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    }
+    portfolio.lots.push({
+      id: uuidv4(),
+      symbol: ticker.toUpperCase(),
+      boughtShares,
+      boughtDate: null,
+      broker: null,
+      boughtPrice: null,
+      soldShares: 0,
+      soldDate: null,
+      soldPrice: null,
+    });
+    window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
   }
-  portfolio.lots.push({
-    id: uuidv4(),
-    symbol: ticker.toUpperCase(),
-    buyShares: 0,
-    buyDate: null,
-    broker: null,
-    buyPrice: null,
-    sellShares: 0,
-    sellDate: null,
-    sellPrice: null,
-  });
-  window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
 }
 
 export function deleteLotFromPortfolio(id) {
@@ -47,17 +48,22 @@ export function deleteLotFromPortfolio(id) {
 // TODO: need to convert this to sum values
 export const getDataForChart = (ticker) => {
   const pricesJson = Constants.API_PRICES[ticker];
-  const xAxisLabels = [];
-  const yAxisLabels = [];
-  for (let i = 0; i < pricesJson.length; i++) {
-    xAxisLabels.push(pricesJson[i].date.split('T')[0]);
-    yAxisLabels.push(pricesJson[i].close);
+  if (pricesJson) {
+    const xAxisLabels = [];
+    const yAxisLabels = [];
+
+    for (let i = 0; i < pricesJson.length; i++) {
+      xAxisLabels.push(pricesJson[i].date.split('T')[0]);
+      yAxisLabels.push(pricesJson[i].close);
+    }
+
+    const metaData = Constants.API_META[ticker];
+    const name = metaData['name'];
+
+    return { xAxisLabels, yAxisLabels, name };
+  } else {
+    return null;
   }
-
-  const metaData = Constants.API_META[ticker];
-  const name = metaData['name'];
-
-  return { xAxisLabels, yAxisLabels, name };
 };
 
 export function formatDate(date) {
