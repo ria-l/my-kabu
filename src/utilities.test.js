@@ -31,6 +31,15 @@ jest.mock('uuid', () => {
   };
 });
 
+describe('formatDateToIso', () => {
+  it('converts given Date object to YYYY-MM-DD format', () => {
+    const date = new Date(
+      'Wed Oct 21 2020 23:48:36 GMT-0700 (Pacific Daylight Time)'
+    );
+    expect(Utilities.formatDateToIso(date)).toEqual('2020-10-21');
+  });
+});
+
 describe('local storage tests', () => {
   afterEach(() => {
     window.localStorage.clear();

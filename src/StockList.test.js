@@ -38,10 +38,10 @@ const testPortfolio = JSON.stringify({
 
 let getStorage;
 
-describe('formatDate', () => {
+describe('formatDateToIso', () => {
   it('convert a Date object to a string formatted YYYY-MM-DD', () => {
     const testDate = new Date('December 17, 1995 03:24:00');
-    expect(Utilities.formatDate(testDate)).toEqual('1995-12-17');
+    expect(Utilities.formatDateToIso(testDate)).toEqual('1995-12-17');
   });
 });
 

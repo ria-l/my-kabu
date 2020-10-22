@@ -54,26 +54,25 @@ export function deleteLotFromPortfolio(id) {
 // TODO: need to convert this to sum values
 export const getDataForChart = (ticker) => {
   const pricesJson = Constants.API_PRICES[ticker];
-  if (pricesJson) {
-    const xAxisLabels = [];
-    const yAxisLabels = [];
-
-    for (let i = 0; i < pricesJson.length; i++) {
-      xAxisLabels.push(pricesJson[i].date.split('T')[0]);
-      yAxisLabels.push(pricesJson[i].close);
-    }
-
-    const metaData = Constants.API_META[ticker];
-    const name = metaData['name'];
-
-    return { xAxisLabels, yAxisLabels, name };
-  } else {
-    return null;
+  if (!pricesJson) {
+    return;
   }
+  const xAxisLabels = [];
+  const yAxisLabels = [];
+
+  for (let i = 0; i < pricesJson.length; i++) {
+    xAxisLabels.push(pricesJson[i].date.split('T')[0]);
+    yAxisLabels.push(pricesJson[i].close);
+  }
+
+  const metaData = Constants.API_META[ticker];
+  const name = metaData['name'];
+
+  return { xAxisLabels, yAxisLabels, name };
 };
 
-export function formatDate(date) {
-  var d = new Date(date),
+export function formatDateToIso(date) {
+  const d = new Date(date),
     month = '' + (d.getMonth() + 1),
     day = '' + d.getDate(),
     year = d.getFullYear();
@@ -89,7 +88,7 @@ export function formatDate(date) {
  * @param {string} ticker
  */
 export function getTodaysPrice(ticker) {
-  let today = formatDate(new Date());
+  let today = formatDateToIso(new Date());
   const tickerData = Constants.API_PRICES[ticker];
 
   for (const entry in tickerData) {
@@ -108,7 +107,7 @@ export function getTodaysPrice(ticker) {
 export function getYesterdaysPrice(ticker) {
   let yesterday = new Date();
   yesterday = yesterday.setDate(yesterday.getDate() - 1);
-  yesterday = formatDate(yesterday);
+  yesterday = formatDateToIso(yesterday);
   for (const entry in Constants.API_PRICES[ticker]) {
     const cleanDate = Constants.API_PRICES[ticker][entry].date.split('T')[0];
     if (cleanDate === yesterday) {

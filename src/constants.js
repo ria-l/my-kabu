@@ -1,12 +1,12 @@
 import * as Utilities from './utilities';
 
 let today = new Date();
-today = Utilities.formatDate(today);
+today = Utilities.formatDateToIso(today);
 today += 'T00:00:00+00:00Z';
 
 let yesterday = new Date();
 yesterday = yesterday.setDate(yesterday.getDate() - 1);
-yesterday = Utilities.formatDate(yesterday);
+yesterday = Utilities.formatDateToIso(yesterday);
 yesterday += 'T00:00:00.000Z';
 
 export const API_PRICES = {
