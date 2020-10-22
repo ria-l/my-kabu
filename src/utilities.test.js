@@ -1,34 +1,42 @@
 import * as Utilities from './utilities';
-import { v4 as uuidv4 } from 'uuid';
 
-class LocalStorageMock {
-  constructor() {
-    this.store = {};
-  }
-
-  clear() {
-    this.store = {};
-  }
-
-  getItem(key) {
-    return this.store[key] || null;
-  }
-
-  setItem(key, value) {
-    this.store[key] = value.toString();
-  }
-
-  removeItem(key) {
-    delete this.store[key];
-  }
-}
-
-window.localStorage = new LocalStorageMock();
-
-jest.mock('uuid', () => {
-  return {
-    v4: jest.fn(() => 1234),
-  };
+const testPortfolio = JSON.stringify({
+  name: 'To The Moon',
+  lots: [
+    {
+      id: 1234,
+      symbol: 'AMZN',
+      boughtShares: 1,
+      boughtDate: '2020-06-16',
+      broker: 'Robinhood',
+      boughtPrice: 2619.97,
+      soldShares: 1,
+      soldDate: '2020-07-13',
+      soldPrice: 3175.0,
+    },
+    {
+      id: 2345,
+      symbol: 'MSFT',
+      boughtShares: 5,
+      boughtDate: '2020-07-14',
+      broker: 'Robinhood',
+      boughtPrice: 107.97,
+      soldShares: 0,
+      soldDate: null,
+      soldPrice: null,
+    },
+    {
+      id: 3456,
+      symbol: 'BABA',
+      boughtShares: 2,
+      boughtDate: '2020-05-07',
+      broker: 'Robinhood',
+      boughtPrice: 199.6,
+      soldShares: 0,
+      soldDate: null,
+      soldPrice: null,
+    },
+  ],
 });
 
 describe('formatDateToIso', () => {
@@ -40,49 +48,54 @@ describe('formatDateToIso', () => {
   });
 });
 
-describe('local storage tests', () => {
+describe('API retrieval functions', () => {
+  describe('getTodaysPrice', () => {
+    it("returns today's close price for a given ticker, if it exists", () => {
+      expect(Utilities.getTodaysPrice('FAKE')).toEqual(1452.71);
+    });
+  });
+
+  describe('getYesterdaysPrice', () => {
+    it("returns yesterday's close price for a given ticker, if it exists", () => {
+      expect(Utilities.getYesterdaysPrice('FAKE')).toEqual(1489.58);
+    });
+  });
+});
+
+
+
+describe('calculatePercentChange', () => {
+  it('returns percent change between two numbers', () => {
+    expect(Utilities.calculatePercentChange(5, 10)).toEqual('100.00%');
+  });
+
+  it('returns error if inputs are invalid', () => {
+    expect(Utilities.calculatePercentChange(null, 5)).toEqual(null);
+  });
+});
+
+describe('localstorage retrieval functions', () => {
+  let getStorage;
+  beforeEach(() => {
+    getStorage = jest.spyOn(window.localStorage.__proto__, 'getItem');
+  });
   afterEach(() => {
-    window.localStorage.clear();
+    jest.clearAllMocks();
   });
 
-  describe('addLotToPortfolio', () => {
-    it('correctly adds inputted ticker to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
-      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots.length).toEqual(1);
-      expect(portfolio.lots[0].symbol).toEqual('FAKE');
+  describe('getNumberOfShares', () => {
+    it('returns number of owned shares for a given portfolio entry', () => {
+      getStorage.mockReturnValue(testPortfolio);
+      expect(Utilities.getNumberOfShares(1)).toEqual(5);
+      expect(getStorage).toHaveBeenCalledWith('portfolio');
+      expect(getStorage.mock.calls.length).toEqual(1);
     });
 
-    it('correctly adds inputted number of shares to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
-      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots[0].boughtShares).toEqual(3);
-    });
-
-    it('correctly adds inputted bought price to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
-      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots[0].boughtPrice).toEqual(40.23);
-    });
-
-    it('correctly adds inputted bought date to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
-      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots[0].boughtDate).toEqual('2020-05-06');
-    });
-    it('correctly adds inputted broker to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
-      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots[0].broker).toEqual('RobinHood');
-    });
-  });
-
-  describe('deleteLotFromPortfolio', () => {
-    it('removes a lot from the localstorage portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE');
-      Utilities.deleteLotFromPortfolio(1234);
-      const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots.length).toEqual(0);
+    it('returns 0 if there is no portfolio in localstorage', () => {
+      getStorage.mockReturnValue(undefined);
+      expect(Utilities.getNumberOfShares(1)).toEqual(0);
+      expect(getStorage).toHaveBeenCalledWith('portfolio');
+      expect(getStorage.mock.calls.length).toEqual(1);
     });
   });
 });
