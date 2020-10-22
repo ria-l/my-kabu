@@ -20,7 +20,7 @@ class AddLot extends React.Component {
     this.setState({ boughtPrice: event.target.value });
   };
   handleDateChange = (event) => {
-    this.setState({ boughDate: event.target.value });
+    this.setState({ boughtDate: event.target.value });
   };
   handleBrokerChange = (event) => {
     this.setState({ broker: event.target.value });
@@ -41,13 +41,13 @@ class AddLot extends React.Component {
       <>
         <form onSubmit={this.handleSubmit}>
           <h2>What did you buy??</h2>
-          <label>Stock:</label>
+          <label>Stock: </label>
           <input
             value={this.state.tickerValue}
             onChange={this.handleTickerChange}
           />
           <br />
-          <label>Number of shares:</label>
+          <label>Number of shares: </label>
           <input
             value={this.state.boughtShares}
             onChange={this.handleSharesChange}
@@ -66,10 +66,7 @@ class AddLot extends React.Component {
           />
           <br />
           <label>Broker: </label>
-          <input
-            value={this.state.broker}
-            onChange={this.handlBrokerChange}
-          />
+          <input value={this.state.broker} onChange={this.handleBrokerChange} />
           <input type="submit" value="Submit" />
         </form>
         {this.props.submitted && <h1>{this.state.value}</h1>}
