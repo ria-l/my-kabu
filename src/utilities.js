@@ -51,6 +51,27 @@ export function deleteLotFromPortfolio(id) {
   }
 }
 
+export function updatePortfolio(id, symbol, boughtShares) {
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (portfolio) {
+    let index;
+    for (let i = 0; i < portfolio.lots.length; i++) {
+      if (id === portfolio.lots[i]['id']) {
+        index = i;
+      }
+    }
+    if (index >= 0) {
+      if (symbol) {
+        portfolio.lots[index].symbol = symbol;
+      }
+      if (boughtShares) {
+        portfolio.lots[index].boughtShares = boughtShares;
+      }
+      window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+    }
+  }
+}
+
 // TODO: need to convert this to sum values
 export const getDataForChart = (ticker) => {
   const pricesJson = Constants.API_PRICES[ticker];
@@ -72,13 +93,10 @@ export const getDataForChart = (ticker) => {
 };
 
 export function formatDateToIso(date) {
-  const d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
+  let d = new Date(date),
+    month = ('0' + (d.getMonth() + 1)).substr(-2),
+    day = ('0' + d.getDate()).substr(-2),
     year = d.getFullYear();
-
-  if (month.length < 2) month = '0' + month;
-  if (day.length < 2) day = '0' + day;
 
   return [year, month, day].join('-');
 }
