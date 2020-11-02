@@ -1,11 +1,11 @@
 import * as Utilities from './utilities';
 
 let today = new Date();
-today = Utilities.formatDate(today);
+today = Utilities.formatDateToIso(today);
 
 let yesterday = new Date();
 yesterday = yesterday.setDate(yesterday.getDate() - 1);
-yesterday = Utilities.formatDate(yesterday);
+yesterday = Utilities.formatDateToIso(yesterday);
 
 describe('getDataForChart', () => {
   it('converts API data into chart-friendly format', () => {
@@ -16,7 +16,7 @@ describe('getDataForChart', () => {
     });
   });
 
-  it("returns null if ticker doesn't exist", () => {
-    expect(Utilities.getDataForChart('asdf')).toEqual(null);
+  it("returns undefined if ticker doesn't exist", () => {
+    expect(Utilities.getDataForChart('asdf')).toEqual(undefined);
   });
 });
