@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as Utilities from './utilities';
 
 class StockList extends Component {
-  state = { changed: false, editing: false, id: null };
+  state = { changed: false, editing: false };
 
   handleDeleteRequest = (id) => {
     Utilities.deleteLotFromPortfolio(id);
@@ -144,8 +144,8 @@ class EditableStockListRow extends Component {
   handleSaveClick = (id, symbol, shares) => {
     this.props.onSaveRequest(id, symbol, shares);
   };
-  handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
@@ -156,11 +156,10 @@ class EditableStockListRow extends Component {
     const yesterdaysPrice = Utilities.getYesterdaysPrice(symbol);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
-    const test = this.props.test;
 
     return (
       <tr>
-        {/* ID TODO: delete later */}
+        {/* TODO: delete ID later */}
         <td>{id}</td>
         {/* Stock */}
         <td>
@@ -172,7 +171,7 @@ class EditableStockListRow extends Component {
           />
         </td>
         {/* Graph */}
-        <td>{test}</td>
+        <td></td>
         {/* Today's close */}
         <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
         {/* Change since... */}
@@ -210,7 +209,6 @@ class EditableStockListRow extends Component {
         <td>
           <button
             onClick={() => {
-              console.log('test', this.state.symbol);
               this.handleSaveClick(id, this.state.symbol, this.state.numShares);
             }}
           >

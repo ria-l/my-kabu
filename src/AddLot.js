@@ -3,34 +3,20 @@ import * as Utilities from './utilities';
 
 class AddLot extends React.Component {
   state = {
-    tickerValue: null,
-    boughtShares: null,
-    boughtPrice: null,
-    broker: null,
     submitted: false,
   };
 
-  handleTickerChange = (event) => {
-    this.setState({ tickerValue: event.target.value });
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
-  handleSharesChange = (event) => {
-    this.setState({ boughtShares: event.target.value });
-  };
-  handlePriceChange = (event) => {
-    this.setState({ boughtPrice: event.target.value });
-  };
-  handleDateChange = (event) => {
-    this.setState({ boughtDate: event.target.value });
-  };
-  handleBrokerChange = (event) => {
-    this.setState({ broker: event.target.value });
-  };
-  handleSubmit = (event) => {
-    event.preventDefault();
+
+  handleSubmit = (e) => {
+    e.preventDefault();
     this.props.submitted(true);
     Utilities.addLotToPortfolio(
-      this.state.tickerValue,
+      this.state.symbol,
       this.state.boughtShares,
+      this.state.boughtPrice,
       this.state.boughtDate,
       this.state.broker
     );
@@ -43,30 +29,38 @@ class AddLot extends React.Component {
           <h2>What did you buy??</h2>
           <label>Stock: </label>
           <input
-            value={this.state.tickerValue}
-            onChange={this.handleTickerChange}
+            name="symbol"
+            onChange={this.handleChange}
+            value={this.state.symbol}
           />
           <br />
           <label>Number of shares: </label>
           <input
+            name="boughtShares"
+            onChange={this.handleChange}
             value={this.state.boughtShares}
-            onChange={this.handleSharesChange}
           />
           <br />
           <label>Buy price: </label>
           <input
+            name="boughtPrice"
+            onChange={this.handleChange}
             value={this.state.boughtPrice}
-            onChange={this.handlePriceChange}
           />
           <br />
           <label>Buy date: </label>
           <input
-            value={this.state.boughtDatePrice}
-            onChange={this.handleDateChange}
+            name="boughtDate"
+            onChange={this.handleChange}
+            value={this.state.boughtDate}
           />
           <br />
           <label>Broker: </label>
-          <input value={this.state.broker} onChange={this.handleBrokerChange} />
+          <input
+            name="broker"
+            onChange={this.handleChange}
+            value={this.state.broker}
+          />
           <input type="submit" value="Submit" />
         </form>
         {this.props.submitted && <h1>{this.state.value}</h1>}
