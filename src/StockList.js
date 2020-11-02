@@ -15,7 +15,12 @@ class StockList extends Component {
   };
 
   handleSaveRequest = (id, symbol, boughtShares) => {
-    Utilities.updatePortfolio(id, symbol, boughtShares);
+    if (symbol || boughtShares) {
+      Utilities.updatePortfolio(id, symbol, boughtShares);
+    }
+    this.setState({ editing: false, changed: true });
+  };
+  handleCancelRequest = () => {
     this.setState({ editing: false, changed: true });
   };
 
@@ -34,6 +39,7 @@ class StockList extends Component {
               key={lot}
               onDeleteRequest={this.handleDeleteRequest}
               onSaveRequest={this.handleSaveRequest}
+              onCancelRequest={this.handleCancelRequest}
             />
           );
         } else {
@@ -138,12 +144,18 @@ class StockListRow extends Component {
 
 class EditableStockListRow extends Component {
   state = {};
-  handleDeleteClick = (id) => {
-    this.props.onDeleteRequest(id);
+  handleClick = (name, id, symbol, shares) => {
+    if (name === 'delete') {
+      this.props.onDeleteRequest(id);
+    }
+    if (name === 'save') {
+      this.props.onSaveRequest(id, symbol, shares);
+    }
+    if (name === 'cancel') {
+      this.props.onCancelRequest();
+    }
   };
-  handleSaveClick = (id, symbol, shares) => {
-    this.props.onSaveRequest(id, symbol, shares);
-  };
+
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -204,15 +216,31 @@ class EditableStockListRow extends Component {
         {/* Total gain */}
         <td></td>
         <td>
-          <button onClick={() => this.handleDeleteClick(id)}>Delete</button>
+          <button name="delete" onClick={() => this.handleClick('delete', id)}>
+            Delete
+          </button>
         </td>
         <td>
           <button
+            name="save"
             onClick={() => {
-              this.handleSaveClick(id, this.state.symbol, this.state.numShares);
+              this.handleClick(
+                'save',
+                id,
+                this.state.symbol,
+                this.state.numShares
+              );
             }}
           >
             Save
+          </button>
+          <button
+            name="cancel"
+            onClick={() => {
+              this.handleClick('cancel', id);
+            }}
+          >
+            Cancel
           </button>
         </td>
       </tr>
