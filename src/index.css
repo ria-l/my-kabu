@@ -16,3 +16,7 @@ td,
 th {
   text-align: center !important;
 }
+
+input {
+  width: 50px;
+}
