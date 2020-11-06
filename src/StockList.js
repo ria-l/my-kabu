@@ -1,54 +1,50 @@
-import { prototype } from 'chart.js';
 import React, { Component } from 'react';
 import * as Utilities from './utilities';
 
 class StockList extends Component {
-  state = { changed: false, editing: false };
+  state = { rerender: false, editing: false };
 
-  handleDeleteRequest = (id) => {
+  deleteRow = (id) => {
     Utilities.deleteLotFromPortfolio(id);
-    this.setState({ changed: true });
+    this.setState({ rerender: true });
   };
 
-  handleEditRequest = (id) => {
+  editRow = (id) => {
     this.setState({ editing: true, id });
   };
 
-  handleSaveRequest = (id, symbol, boughtShares) => {
-    if (symbol || boughtShares) {
+  finishEditingRow = (id, symbol, boughtShares) => {
+    if (id) {
       Utilities.updatePortfolio(id, symbol, boughtShares);
     }
-    this.setState({ editing: false, changed: true });
-  };
-  handleCancelRequest = () => {
-    this.setState({ editing: false, changed: true });
+    this.setState({ editing: false, rerender: true });
   };
 
   render() {
     const rows = [];
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+
     if (portfolio) {
       for (const lot in portfolio.lots) {
         if (
-          portfolio.lots[lot].id === this.state.id &&
-          this.state.editing === true
+          this.state.editing === true &&
+          portfolio.lots[lot].id === this.state.id
         ) {
           rows.push(
             <EditableStockListRow
+              key={portfolio.lots[lot].id}
               lot={lot}
-              key={lot}
-              onDeleteRequest={this.handleDeleteRequest}
-              onSaveRequest={this.handleSaveRequest}
-              onCancelRequest={this.handleCancelRequest}
+              onDelete={this.deleteRow}
+              onSaveOrCancel={this.finishEditingRow}
             />
           );
         } else {
           rows.push(
             <StockListRow
+              key={portfolio.lots[lot].id}
               lot={lot}
-              key={lot}
-              onDeleteRequest={this.handleDeleteRequest}
-              onEditRequest={this.handleEditRequest}
+              onDelete={this.deleteRow}
+              onEdit={this.editRow}
             />
           );
         }
@@ -82,11 +78,13 @@ class StockList extends Component {
 }
 
 class StockListRow extends Component {
-  handleDeleteClick = (id) => {
-    this.props.onDeleteRequest(id);
-  };
-  handleEditClick = (id) => {
-    this.props.onEditRequest(id);
+  handleClick = (name, id) => {
+    if (name === 'delete') {
+      this.props.onDelete(id);
+    }
+    if (name === 'edit') {
+      this.props.onEdit(id);
+    }
   };
 
   render() {
@@ -132,10 +130,10 @@ class StockListRow extends Component {
         {/* Total gain */}
         <td></td>
         <td>
-          <button onClick={() => this.handleDeleteClick(id)}>Delete</button>
+          <button onClick={() => this.handleClick('delete', id)}>Delete</button>
         </td>
         <td>
-          <button onClick={() => this.handleEditClick(id)}>Edit</button>
+          <button onClick={() => this.handleClick('edit', id)}>Edit</button>
         </td>
       </tr>
     );
@@ -146,13 +144,13 @@ class EditableStockListRow extends Component {
   state = {};
   handleClick = (name, id, symbol, shares) => {
     if (name === 'delete') {
-      this.props.onDeleteRequest(id);
+      this.props.onDelete(id);
     }
     if (name === 'save') {
-      this.props.onSaveRequest(id, symbol, shares);
+      this.props.onSaveOrCancel(id, symbol, shares);
     }
     if (name === 'cancel') {
-      this.props.onCancelRequest();
+      this.props.onSaveOrCancel();
     }
   };
 
