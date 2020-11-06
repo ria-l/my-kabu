@@ -1,13 +1,7 @@
 import * as Utilities from './utilities';
 
-let today = new Date();
-today = Utilities.formatDateToIso(today);
-today += 'T00:00:00+00:00Z';
-
-let yesterday = new Date();
-yesterday = yesterday.setDate(yesterday.getDate() - 1);
-yesterday = Utilities.formatDateToIso(yesterday);
-yesterday += 'T00:00:00.000Z';
+const today = Utilities.getTodaysDateInIso();
+const yesterday = Utilities.getYesterdaysDateInIso();
 
 export const API_PRICES = {
   AMZN: [

@@ -20,6 +20,7 @@ export function addLotToPortfolio(
       );
       portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     }
+    boughtDate = new Date(boughtDate);
     portfolio.lots.push({
       id: uuidv4(),
       symbol: ticker.toUpperCase(),
@@ -72,7 +73,6 @@ export function updatePortfolio(id, symbol, boughtShares) {
   }
 }
 
-// TODO: need to convert this to sum values
 export const getDataForChart = (ticker) => {
   const pricesJson = Constants.API_PRICES[ticker];
   if (!pricesJson) {
@@ -92,23 +92,24 @@ export const getDataForChart = (ticker) => {
   return { xAxisLabels, yAxisLabels, name };
 };
 
-export function formatDateToIso(date) {
-  let d = new Date(date),
-    month = ('0' + (d.getMonth() + 1)).substr(-2),
-    day = ('0' + d.getDate()).substr(-2),
-    year = d.getFullYear();
-
-  return [year, month, day].join('-');
+export function getTodaysDateInIso() {
+  const today = new Date().toISOString();
+  return today;
 }
 
+export function getYesterdaysDateInIso() {
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday = yesterday.toISOString();
+  return yesterday;
+}
 /**
  *
  * @param {string} ticker
  */
 export function getTodaysPrice(ticker) {
-  let today = formatDateToIso(new Date());
+  const today = getTodaysDateInIso().split('T')[0];
   const tickerData = Constants.API_PRICES[ticker];
-
   for (const entry in tickerData) {
     const cleanDate = tickerData[entry].date.split('T')[0];
 
@@ -123,9 +124,7 @@ export function getTodaysPrice(ticker) {
  * @param {string} ticker
  */
 export function getYesterdaysPrice(ticker) {
-  let yesterday = new Date();
-  yesterday = yesterday.setDate(yesterday.getDate() - 1);
-  yesterday = formatDateToIso(yesterday);
+  const yesterday = getYesterdaysDateInIso().split('T')[0];
   for (const entry in Constants.API_PRICES[ticker]) {
     const cleanDate = Constants.API_PRICES[ticker][entry].date.split('T')[0];
     if (cleanDate === yesterday) {

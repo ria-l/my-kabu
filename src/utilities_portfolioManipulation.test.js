@@ -54,7 +54,7 @@ describe('Functions that manipulate the portfolio (CRUD)', () => {
     it('correctly adds inputted bought date to portfolio', () => {
       Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-      expect(portfolio.lots[0].boughtDate).toEqual('2020-05-06');
+      expect(portfolio.lots[0].boughtDate).toEqual('2020-05-06T00:00:00.000Z');
     });
     it('correctly adds inputted broker to portfolio', () => {
       Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
