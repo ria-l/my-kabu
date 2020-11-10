@@ -1,5 +1,11 @@
 import React from 'react';
 import * as Utilities from './utilities';
+import 'react-dates/initialize';
+import {
+  DateRangePicker,
+  SingleDatePicker,
+  DayPickerRangeController,
+} from 'react-dates';
 
 class AddLot extends React.Component {
   state = {
@@ -13,11 +19,12 @@ class AddLot extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.submitted(true);
+    console.log(this.state.date._date);
     Utilities.addLotToPortfolio(
       this.state.symbol,
       this.state.boughtShares,
       this.state.boughtPrice,
-      this.state.boughtDate,
+      this.state.date._d,
       this.state.broker
     );
   };
@@ -49,10 +56,13 @@ class AddLot extends React.Component {
           />
           <br />
           <label>Buy date: </label>
-          <input
-            name="boughtDate"
-            onChange={this.handleChange}
-            value={this.state.boughtDate}
+          <SingleDatePicker
+            date={this.state.date}
+            onDateChange={(date) => this.setState({ date })}
+            focused={this.state.focused}
+            onFocusChange={({ focused }) => this.setState({ focused })}
+            id="your_unique_id"
+            isOutsideRange={Utilities.falseFunc}
           />
           <br />
           <label>Broker: </label>

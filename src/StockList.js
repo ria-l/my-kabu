@@ -53,7 +53,7 @@ class StockList extends Component {
 
     return (
       <div className="main">
-        <table>
+        <table id="stocklist">
           <tbody>
             <tr>
               {/* // TODO: Delete 'ID" later */}
@@ -96,7 +96,7 @@ class StockListRow extends Component {
     const yesterdaysPrice = Utilities.getYesterdaysPrice(symbol);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
-
+    const boughtDate = portfolio.lots[this.props.lot].boughtDate;
     return (
       <tr>
         {/* ID TODO: delete later */}
@@ -104,7 +104,7 @@ class StockListRow extends Component {
         {/* Stock */}
         <td>{symbol}</td>
         {/* Graph */}
-        <td>Graph!</td>
+        <td>{boughtDate}</td>
         {/* Today's close */}
         <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
         {/* Change since... */}

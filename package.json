@@ -10,6 +10,7 @@
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",
     "react": "^16.13.1",
+    "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "react-test-renderer": "^16.13.1",

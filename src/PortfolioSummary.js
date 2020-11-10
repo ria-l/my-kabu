@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import * as Constants from './constants';
 import Chart from 'chart.js';
+import 'react-dates/initialize';
+import {
+  DateRangePicker,
+  SingleDatePicker,
+  DayPickerRangeController,
+} from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
 import * as Utilities from './utilities';
 
 const getCurrentValue = (ticker) => {
@@ -45,6 +52,21 @@ class PortfolioSummary extends Component {
           {((totalGain / depositValue) * 100).toFixed(2)}%)
         </div>
         <PortfolioChart />
+        <br />
+        Select date range
+        <br />
+        <DateRangePicker
+          startDate={this.state.startDate}
+          startDateId="your_unique_start_date_id"
+          endDate={this.state.endDate}
+          endDateId="your_unique_end_date_id"
+          onDatesChange={({ startDate, endDate }) =>
+            this.setState({ startDate, endDate })
+          }
+          focusedInput={this.state.focusedInput}
+          onFocusChange={(focusedInput) => this.setState({ focusedInput })}
+          isOutsideRange={Utilities.falseFunc}
+        />
       </div>
     );
   }
@@ -80,7 +102,7 @@ class PortfolioChart extends Component {
     return (
       <div>
         PortfolioChart
-        <table>
+        <table id="the-chart">
           <tbody>
             <tr>
               <td>
