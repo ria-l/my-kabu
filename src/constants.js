@@ -6,7 +6,7 @@ const yesterday = Utilities.getYesterdaysDateInIso();
 export const API_PRICES = {
   AMZN: [
     {
-      date: '2020-05-06T00:00:00.000Z',
+      date: '2020-11-06T00:00:00.000Z',
       close: 2351.26,
       high: 2357.45,
       low: 2320.0,
@@ -21,7 +21,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-07T00:00:00.000Z',
+      date: '2020-11-07T00:00:00.000Z',
       close: 2367.61,
       high: 2376.0,
       low: 2343.11,
@@ -36,7 +36,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-08T00:00:00.000Z',
+      date: '2020-11-08T00:00:00.000Z',
       close: 2379.61,
       high: 2387.24,
       low: 2357.0,
@@ -51,7 +51,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-11T00:00:00.000Z',
+      date: '2020-11-11T00:00:00.000Z',
       close: 2409.0,
       high: 2419.66,
       low: 2372.11,
@@ -66,7 +66,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-12T00:00:00.000Z',
+      date: '2020-11-12T00:00:00.000Z',
       close: 2356.95,
       high: 2419.0,
       low: 2355.0,
@@ -81,7 +81,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-13T00:00:00.000Z',
+      date: '2020-11-13T00:00:00.000Z',
       close: 2367.92,
       high: 2407.7,
       low: 2337.8,
@@ -96,7 +96,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-14T00:00:00.000Z',
+      date: '2020-11-14T00:00:00.000Z',
       close: 2388.85,
       high: 2391.37,
       low: 2353.21,
@@ -111,7 +111,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-15T00:00:00.000Z',
+      date: '2020-11-15T00:00:00.000Z',
       close: 2409.78,
       high: 2411.0,
       low: 2356.37,
@@ -126,7 +126,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-18T00:00:00.000Z',
+      date: '2020-11-18T00:00:00.000Z',
       close: 2426.26,
       high: 2433.0,
       low: 2384.01,
@@ -141,7 +141,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-19T00:00:00.000Z',
+      date: '2020-11-19T00:00:00.000Z',
       close: 2449.33,
       high: 2484.99,
       low: 2428.97,
@@ -156,7 +156,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-20T00:00:00.000Z',
+      date: '2020-11-20T00:00:00.000Z',
       close: 2497.94,
       high: 2500.01,
       low: 2467.27,
@@ -171,7 +171,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-21T00:00:00.000Z',
+      date: '2020-11-21T00:00:00.000Z',
       close: 2446.74,
       high: 2525.45,
       low: 2442.54,
@@ -186,7 +186,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-22T00:00:00.000Z',
+      date: '2020-11-22T00:00:00.000Z',
       close: 2436.88,
       high: 2469.85,
       low: 2430.13,
@@ -201,7 +201,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-26T00:00:00.000Z',
+      date: '2020-11-26T00:00:00.000Z',
       close: 2421.86,
       high: 2462.0,
       low: 2414.06,
@@ -216,7 +216,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-27T00:00:00.000Z',
+      date: '2020-11-27T00:00:00.000Z',
       close: 2410.39,
       high: 2413.58,
       low: 2330.0,
@@ -231,7 +231,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-28T00:00:00.000Z',
+      date: '2020-11-28T00:00:00.000Z',
       close: 2401.1,
       high: 2436.97,
       low: 2378.23,
@@ -246,7 +246,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-29T00:00:00.000Z',
+      date: '2020-11-29T00:00:00.000Z',
       close: 2442.37,
       high: 2442.37,
       low: 2398.2,
@@ -261,8 +261,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-01T00:00:00.000Z',
-      close: 2471.04,
+      date: '2020-12-01T00:00:00.000Z',
+      close: 1000,
       high: 2476.93,
       low: 2444.17,
       open: 2448.0,
@@ -276,8 +276,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-02T00:00:00.000Z',
-      close: 2472.41,
+      date: '2020-12-02T00:00:00.000Z',
+      close: 1000,
       high: 2473.53,
       low: 2445.31,
       open: 2467.0,
@@ -291,8 +291,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-03T00:00:00.000Z',
-      close: 2478.4,
+      date: '2020-12-03T00:00:00.000Z',
+      close: 1000,
       high: 2488.0,
       low: 2461.17,
       open: 2468.01,
@@ -306,7 +306,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-04T00:00:00.000Z',
+      date: '2020-12-04T00:00:00.000Z',
       close: 2460.6,
       high: 2507.54,
       low: 2450.01,
@@ -321,7 +321,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-05T00:00:00.000Z',
+      date: '2020-12-05T00:00:00.000Z',
       close: 2483.0,
       high: 2488.64,
       low: 2437.13,
@@ -336,7 +336,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-08T00:00:00.000Z',
+      date: '2020-12-08T00:00:00.000Z',
       close: 2524.06,
       high: 2530.0,
       low: 2487.34,
@@ -351,7 +351,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-09T00:00:00.000Z',
+      date: '2020-12-09T00:00:00.000Z',
       close: 2600.86,
       high: 2626.43,
       low: 2525.0,
@@ -366,7 +366,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-10T00:00:00.000Z',
+      date: '2020-12-10T00:00:00.000Z',
       close: 2647.45,
       high: 2722.35,
       low: 2626.26,
@@ -381,7 +381,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-11T00:00:00.000Z',
+      date: '2020-12-11T00:00:00.000Z',
       close: 2557.96,
       high: 2671.38,
       low: 2536.23,
@@ -428,7 +428,7 @@ export const API_PRICES = {
   ],
   MSFT: [
     {
-      date: '2020-05-06T00:00:00.000Z',
+      date: '2020-11-06T00:00:00.000Z',
       close: 182.54,
       high: 184.2,
       low: 181.63,
@@ -443,7 +443,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-07T00:00:00.000Z',
+      date: '2020-11-07T00:00:00.000Z',
       close: 183.6,
       high: 184.55,
       low: 182.58,
@@ -458,7 +458,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-08T00:00:00.000Z',
+      date: '2020-11-08T00:00:00.000Z',
       close: 184.68,
       high: 185.0,
       low: 183.36,
@@ -473,7 +473,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-11T00:00:00.000Z',
+      date: '2020-11-11T00:00:00.000Z',
       close: 186.74,
       high: 187.51,
       low: 182.85,
@@ -488,7 +488,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-12T00:00:00.000Z',
+      date: '2020-11-12T00:00:00.000Z',
       close: 182.51,
       high: 187.04,
       low: 182.3,
@@ -503,7 +503,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-13T00:00:00.000Z',
+      date: '2020-11-13T00:00:00.000Z',
       close: 179.75,
       high: 184.05,
       low: 176.54,
@@ -518,7 +518,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-14T00:00:00.000Z',
+      date: '2020-11-14T00:00:00.000Z',
       close: 180.53,
       high: 180.69,
       low: 175.68,
@@ -533,7 +533,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-15T00:00:00.000Z',
+      date: '2020-11-15T00:00:00.000Z',
       close: 183.16,
       high: 187.06,
       low: 177.0,
@@ -548,7 +548,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-18T00:00:00.000Z',
+      date: '2020-11-18T00:00:00.000Z',
       close: 184.91,
       high: 186.2,
       low: 183.96,
@@ -563,7 +563,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-19T00:00:00.000Z',
+      date: '2020-11-19T00:00:00.000Z',
       close: 183.63,
       high: 186.6,
       low: 183.49,
@@ -578,7 +578,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-20T00:00:00.000Z',
+      date: '2020-11-20T00:00:00.000Z',
       close: 185.66,
       high: 185.85,
       low: 183.94,
@@ -593,7 +593,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-21T00:00:00.000Z',
+      date: '2020-11-21T00:00:00.000Z',
       close: 183.43,
       high: 186.67,
       low: 183.29,
@@ -608,7 +608,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-22T00:00:00.000Z',
+      date: '2020-11-22T00:00:00.000Z',
       close: 183.51,
       high: 184.46,
       low: 182.54,
@@ -623,7 +623,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-26T00:00:00.000Z',
+      date: '2020-11-26T00:00:00.000Z',
       close: 181.57,
       high: 186.5,
       low: 181.1,
@@ -638,7 +638,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-27T00:00:00.000Z',
+      date: '2020-11-27T00:00:00.000Z',
       close: 181.81,
       high: 181.99,
       low: 176.6,
@@ -653,7 +653,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-28T00:00:00.000Z',
+      date: '2020-11-28T00:00:00.000Z',
       close: 181.4,
       high: 184.15,
       low: 180.38,
@@ -668,7 +668,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-29T00:00:00.000Z',
+      date: '2020-11-29T00:00:00.000Z',
       close: 183.25,
       high: 184.27,
       low: 180.41,
@@ -683,8 +683,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-01T00:00:00.000Z',
-      close: 182.83,
+      date: '2020-12-01T00:00:00.000Z',
+      close: 100,
       high: 183.0,
       low: 181.46,
       open: 182.54,
@@ -698,8 +698,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-02T00:00:00.000Z',
-      close: 184.91,
+      date: '2020-12-02T00:00:00.000Z',
+      close: 100,
       high: 185.0,
       low: 181.35,
       open: 184.25,
@@ -713,8 +713,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-03T00:00:00.000Z',
-      close: 185.36,
+      date: '2020-12-03T00:00:00.000Z',
+      close: 100,
       high: 185.94,
       low: 183.58,
       open: 184.82,
@@ -728,7 +728,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-04T00:00:00.000Z',
+      date: '2020-12-04T00:00:00.000Z',
       close: 182.92,
       high: 185.84,
       low: 182.3,
@@ -743,7 +743,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-05T00:00:00.000Z',
+      date: '2020-12-05T00:00:00.000Z',
       close: 187.2,
       high: 187.73,
       low: 182.01,
@@ -758,7 +758,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-08T00:00:00.000Z',
+      date: '2020-12-08T00:00:00.000Z',
       close: 188.36,
       high: 188.55,
       low: 184.44,
@@ -773,7 +773,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-09T00:00:00.000Z',
+      date: '2020-12-09T00:00:00.000Z',
       close: 189.8,
       high: 190.7,
       low: 187.26,
@@ -788,7 +788,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-10T00:00:00.000Z',
+      date: '2020-12-10T00:00:00.000Z',
       close: 196.84,
       high: 198.52,
       low: 191.01,
@@ -803,7 +803,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-11T00:00:00.000Z',
+      date: '2020-12-11T00:00:00.000Z',
       close: 186.27,
       high: 195.76,
       low: 186.07,
@@ -850,7 +850,7 @@ export const API_PRICES = {
   ],
   BABA: [
     {
-      date: '2020-05-06T00:00:00.000Z',
+      date: '2020-11-06T00:00:00.000Z',
       close: 195.17,
       high: 198.91,
       low: 194.93,
@@ -865,7 +865,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-07T00:00:00.000Z',
+      date: '2020-11-07T00:00:00.000Z',
       close: 196.49,
       high: 198.09,
       low: 194.78,
@@ -880,7 +880,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-08T00:00:00.000Z',
+      date: '2020-11-08T00:00:00.000Z',
       close: 201.19,
       high: 203.02,
       low: 198.68,
@@ -895,7 +895,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-11T00:00:00.000Z',
+      date: '2020-11-11T00:00:00.000Z',
       close: 205.4,
       high: 206.64,
       low: 202.38,
@@ -910,7 +910,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-12T00:00:00.000Z',
+      date: '2020-11-12T00:00:00.000Z',
       close: 200.31,
       high: 208.05,
       low: 200.02,
@@ -925,7 +925,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-13T00:00:00.000Z',
+      date: '2020-11-13T00:00:00.000Z',
       close: 199.46,
       high: 204.68,
       low: 197.98,
@@ -940,7 +940,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-14T00:00:00.000Z',
+      date: '2020-11-14T00:00:00.000Z',
       close: 201.3,
       high: 201.77,
       low: 194.03,
@@ -955,7 +955,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-15T00:00:00.000Z',
+      date: '2020-11-15T00:00:00.000Z',
       close: 203.68,
       high: 204.4899,
       low: 200.1,
@@ -970,7 +970,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-18T00:00:00.000Z',
+      date: '2020-11-18T00:00:00.000Z',
       close: 215.28,
       high: 215.47,
       low: 210.37,
@@ -985,7 +985,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-19T00:00:00.000Z',
+      date: '2020-11-19T00:00:00.000Z',
       close: 217.2,
       high: 220.59,
       low: 215.19,
@@ -1000,7 +1000,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-20T00:00:00.000Z',
+      date: '2020-11-20T00:00:00.000Z',
       close: 216.79,
       high: 221.1574,
       low: 210.58,
@@ -1015,7 +1015,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-21T00:00:00.000Z',
+      date: '2020-11-21T00:00:00.000Z',
       close: 212.16,
       high: 214.58,
       low: 209.53,
@@ -1030,7 +1030,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-22T00:00:00.000Z',
+      date: '2020-11-22T00:00:00.000Z',
       close: 199.7,
       high: 204.88,
       low: 198.99,
@@ -1045,7 +1045,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-26T00:00:00.000Z',
+      date: '2020-11-26T00:00:00.000Z',
       close: 201.72,
       high: 206.8,
       low: 201.0,
@@ -1060,7 +1060,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-27T00:00:00.000Z',
+      date: '2020-11-27T00:00:00.000Z',
       close: 201.18,
       high: 202.99,
       low: 196.75,
@@ -1075,7 +1075,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-28T00:00:00.000Z',
+      date: '2020-11-28T00:00:00.000Z',
       close: 199.49,
       high: 202.37,
       low: 197.62,
@@ -1090,7 +1090,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-05-29T00:00:00.000Z',
+      date: '2020-11-29T00:00:00.000Z',
       close: 207.39,
       high: 207.88,
       low: 196.7,
@@ -1105,8 +1105,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-01T00:00:00.000Z',
-      close: 206.57,
+      date: '2020-12-01T00:00:00.000Z',
+      close: 10,
       high: 207.2,
       low: 203.94,
       open: 205.9,
@@ -1120,8 +1120,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-02T00:00:00.000Z',
-      close: 214.33,
+      date: '2020-12-02T00:00:00.000Z',
+      close: 10,
       high: 214.57,
       low: 207.17,
       open: 207.21,
@@ -1135,8 +1135,8 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-03T00:00:00.000Z',
-      close: 218.61,
+      date: '2020-12-03T00:00:00.000Z',
+      close: 10,
       high: 218.97,
       low: 213.75,
       open: 215.6,
@@ -1150,7 +1150,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-04T00:00:00.000Z',
+      date: '2020-12-04T00:00:00.000Z',
       close: 218.04,
       high: 220.0,
       low: 216.32,
@@ -1165,7 +1165,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-05T00:00:00.000Z',
+      date: '2020-12-05T00:00:00.000Z',
       close: 219.55,
       high: 220.59,
       low: 218.7,
@@ -1180,7 +1180,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-08T00:00:00.000Z',
+      date: '2020-12-08T00:00:00.000Z',
       close: 219.0,
       high: 220.4,
       low: 215.33,
@@ -1195,7 +1195,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-09T00:00:00.000Z',
+      date: '2020-12-09T00:00:00.000Z',
       close: 220.72,
       high: 220.72,
       low: 216.2,
@@ -1210,7 +1210,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-10T00:00:00.000Z',
+      date: '2020-12-10T00:00:00.000Z',
       close: 223.68,
       high: 225.0,
       low: 220.6,
@@ -1225,7 +1225,7 @@ export const API_PRICES = {
       splitFactor: 1.0,
     },
     {
-      date: '2020-06-11T00:00:00.000Z',
+      date: '2020-12-11T00:00:00.000Z',
       close: 215.24,
       high: 219.95,
       low: 213.56,
@@ -1316,36 +1316,6 @@ export const API_PRICES = {
       divCash: 0.0,
       splitFactor: 1.0,
     },
-    {
-      date: yesterday,
-      close: 1489.58,
-      high: 1517.31,
-      low: 1477.26,
-      open: 1490.83,
-      volume: 5992313,
-      adjClose: 1489.58,
-      adjHigh: 1517.31,
-      adjLow: 1477.26,
-      adjOpen: 1490.83,
-      adjVolume: 5992313,
-      divCash: 0.0,
-      splitFactor: 1.0,
-    },
-    {
-      date: today,
-      close: 1452.71,
-      high: 1499.75,
-      low: 1415.01,
-      open: 1499.5365,
-      volume: 8896420,
-      adjClose: 1452.71,
-      adjHigh: 1499.75,
-      adjLow: 1415.01,
-      adjOpen: 1499.5365,
-      adjVolume: 8896420,
-      divCash: 0.0,
-      splitFactor: 1.0,
-    },
   ],
 };
 
@@ -1389,7 +1359,7 @@ export const API_META = {
 };
 
 // copy/paste to quickly mock localstorage
-// window.localStorage.setItem('portfolio',JSON.stringify({ name: 'To The Moon', lots: [ { id: 1234, symbol: 'AMZN', boughtShares: 1, boughtDate: '2020-06-16', broker: 'Robinhood', boughtPrice: 2619.97, soldShares: 1, soldDate: '2020-07-13', soldPrice: 3175.0, }, { id: 3456, symbol: 'MSFT', boughtShares: 5, boughtDate: '2020-07-14', broker: 'Robinhood', boughtPrice: 107.97, soldShares: 0, soldDate: null, soldPrice: null, }, { id: 2345, symbol: 'BABA', boughtShares: 2, boughtDate: '2020-05-07', broker: 'Robinhood', boughtPrice: 199.6, soldShares: 0, soldDate: null, soldPrice: null, }, ],}))
+// window.localStorage.setItem('portfolio',JSON.stringify({ name: 'To The Moon', lots: [ { id: 1234, symbol: 'AMZN', boughtShares: 1, boughtDate: '2020-12-16', broker: 'Robinhood', boughtPrice: 2619.97, soldShares: 1, soldDate: '2020-07-13', soldPrice: 3175.0, }, { id: 3456, symbol: 'MSFT', boughtShares: 5, boughtDate: '2020-07-14', broker: 'Robinhood', boughtPrice: 107.97, soldShares: 0, soldDate: null, soldPrice: null, }, { id: 2345, symbol: 'BABA', boughtShares: 2, boughtDate: '2020-11-07', broker: 'Robinhood', boughtPrice: 199.6, soldShares: 0, soldDate: null, soldPrice: null, }, ],}))
 
 export const DEPOSITS = {
   20200506: 100,

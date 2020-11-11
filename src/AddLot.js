@@ -19,7 +19,6 @@ class AddLot extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.submitted(true);
-    console.log(this.state.date._date);
     Utilities.addLotToPortfolio(
       this.state.symbol,
       this.state.boughtShares,

@@ -92,6 +92,94 @@ export const getDataForChart = (ticker) => {
   return { xAxisLabels, yAxisLabels, name };
 };
 
+export const getStockPrice = (ticker, date) => {
+  const pricesJson = Constants.API_PRICES[ticker];
+  if (!pricesJson) {
+    return;
+  }
+  let apiDate;
+  for (let i = 0; i < pricesJson.length; i++) {
+    apiDate = convertToUtc(pricesJson[i].date);
+    if ((apiDate, apiDate.toISOString() === date.toISOString())) {
+      return pricesJson[i].close;
+    }
+  }
+};
+
+/**
+ *
+ * @param {Object|string} date
+ */
+export const convertToUtc = (date) => {
+  const dateObject = new Date(date);
+  const convertedDate = new Date(
+    Date.UTC(
+      dateObject.getUTCFullYear(),
+      dateObject.getUTCMonth(),
+      dateObject.getUTCDate(),
+      0,
+      0,
+      0
+    )
+  );
+  return convertedDate;
+};
+// // for console testing:
+// api = new Date('2020-11-29T00:00:00.000Z');
+// bnb = new Date('Sun Nov 29 2020 12:00:00 GMT-0800 (Pacific Standard Time)');
+// convertToUtc(bnb);
+
+export const prepareDataForPortfolioChart = (startDate, endDate) => {
+  console.log('prepareDataForPortfolioChart');
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (!portfolio) {
+    return;
+  }
+  let copyOfStartDate = new Date(startDate),
+    numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
+  const xAxisLabels = [],
+    yAxisLabels = [],
+    dateRange = [];
+  // pushes range of dates into array
+  for (; numDates >= 0; numDates--) {
+    dateRange.push(copyOfStartDate.toISOString());
+    copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
+  }
+
+  copyOfStartDate = convertToUtc(copyOfStartDate);
+  let dateIsInRange;
+  let boughtDate;
+  let dateObject;
+  dateRange.forEach((date) => {
+    dateObject = convertToUtc(date);
+    let yValue = 0;
+    for (const lotIndex in portfolio.lots) {
+      boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
+      dateIsInRange = boughtDate <= dateObject;
+      let price;
+      let numShares = portfolio.lots[lotIndex].boughtShares;
+      if (dateIsInRange) {
+        price = getStockPrice(portfolio.lots[lotIndex].symbol, dateObject);
+        console.log(
+          portfolio.lots[lotIndex].symbol,
+          dateObject,
+          price,
+          numShares,
+          price * numShares
+        );
+        yValue += price * numShares;
+      }
+    }
+    yAxisLabels.push(yValue);
+    xAxisLabels.push(`${date}`);
+  });
+
+  console.log('dateRange', dateRange);
+  console.log('xAxisLabels', xAxisLabels);
+  console.log('yAxisLabels', yAxisLabels);
+  // return { xAxisLabels, yAxisLabels };
+};
+
 export function getTodaysDateInIso() {
   const today = new Date().toISOString();
   return today;
