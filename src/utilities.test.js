@@ -39,21 +39,6 @@ const testPortfolio = JSON.stringify({
   ],
 });
 
-describe('formatDateToIso', () => {
-  it('converts given Date object to YYYY-MM-DD format (double digit month)', () => {
-    const date = new Date(
-      'Wed Oct 21 2020 23:48:36 GMT-0700 (Pacific Daylight Time)'
-    );
-    expect(Utilities.formatDateToIso(date)).toEqual('2020-10-21');
-  });
-  it('converts given Date object to YYYY-MM-DD format (single digit month)', () => {
-    const date = new Date(
-      'Wed May 06 2020 23:48:36 GMT-0700 (Pacific Daylight Time)'
-    );
-    expect(Utilities.formatDateToIso(date)).toEqual('2020-05-06');
-  });
-});
-
 describe('API retrieval functions', () => {
   describe('getTodaysPrice', () => {
     it("returns today's close price for a given ticker, if it exists", () => {

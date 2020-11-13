@@ -1,48 +1,50 @@
-import { prototype } from 'chart.js';
 import React, { Component } from 'react';
 import * as Utilities from './utilities';
 
 class StockList extends Component {
-  state = { changed: false, editing: false };
+  state = { rerender: false, editing: false };
 
-  handleDeleteRequest = (id) => {
+  deleteRow = (id) => {
     Utilities.deleteLotFromPortfolio(id);
-    this.setState({ changed: true });
+    this.setState({ rerender: true });
   };
 
-  handleEditRequest = (id) => {
+  editRow = (id) => {
     this.setState({ editing: true, id });
   };
 
-  handleSaveRequest = (id, symbol, boughtShares) => {
-    Utilities.updatePortfolio(id, symbol, boughtShares);
-    this.setState({ editing: false, changed: true });
+  finishEditingRow = (id, symbol, boughtShares) => {
+    if (id) {
+      Utilities.updatePortfolio(id, symbol, boughtShares);
+    }
+    this.setState({ editing: false, rerender: true });
   };
 
   render() {
     const rows = [];
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+
     if (portfolio) {
       for (const lot in portfolio.lots) {
         if (
-          portfolio.lots[lot].id === this.state.id &&
-          this.state.editing === true
+          this.state.editing === true &&
+          portfolio.lots[lot].id === this.state.id
         ) {
           rows.push(
             <EditableStockListRow
+              key={portfolio.lots[lot].id}
               lot={lot}
-              key={lot}
-              onDeleteRequest={this.handleDeleteRequest}
-              onSaveRequest={this.handleSaveRequest}
+              onDelete={this.deleteRow}
+              onSaveOrCancel={this.finishEditingRow}
             />
           );
         } else {
           rows.push(
             <StockListRow
+              key={portfolio.lots[lot].id}
               lot={lot}
-              key={lot}
-              onDeleteRequest={this.handleDeleteRequest}
-              onEditRequest={this.handleEditRequest}
+              onDelete={this.deleteRow}
+              onEdit={this.editRow}
             />
           );
         }
@@ -51,7 +53,7 @@ class StockList extends Component {
 
     return (
       <div className="main">
-        <table>
+        <table id="stocklist">
           <tbody>
             <tr>
               {/* // TODO: Delete 'ID" later */}
@@ -76,11 +78,13 @@ class StockList extends Component {
 }
 
 class StockListRow extends Component {
-  handleDeleteClick = (id) => {
-    this.props.onDeleteRequest(id);
-  };
-  handleEditClick = (id) => {
-    this.props.onEditRequest(id);
+  handleClick = (name, id) => {
+    if (name === 'delete') {
+      this.props.onDelete(id);
+    }
+    if (name === 'edit') {
+      this.props.onEdit(id);
+    }
   };
 
   render() {
@@ -92,7 +96,7 @@ class StockListRow extends Component {
     const yesterdaysPrice = Utilities.getYesterdaysPrice(symbol);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
-
+    const boughtDate = portfolio.lots[this.props.lot].boughtDate;
     return (
       <tr>
         {/* ID TODO: delete later */}
@@ -100,7 +104,7 @@ class StockListRow extends Component {
         {/* Stock */}
         <td>{symbol}</td>
         {/* Graph */}
-        <td>Graph!</td>
+        <td>{boughtDate}</td>
         {/* Today's close */}
         <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
         {/* Change since... */}
@@ -126,10 +130,10 @@ class StockListRow extends Component {
         {/* Total gain */}
         <td></td>
         <td>
-          <button onClick={() => this.handleDeleteClick(id)}>Delete</button>
+          <button onClick={() => this.handleClick('delete', id)}>Delete</button>
         </td>
         <td>
-          <button onClick={() => this.handleEditClick(id)}>Edit</button>
+          <button onClick={() => this.handleClick('edit', id)}>Edit</button>
         </td>
       </tr>
     );
@@ -138,12 +142,18 @@ class StockListRow extends Component {
 
 class EditableStockListRow extends Component {
   state = {};
-  handleDeleteClick = (id) => {
-    this.props.onDeleteRequest(id);
+  handleClick = (name, id, symbol, shares) => {
+    if (name === 'delete') {
+      this.props.onDelete(id);
+    }
+    if (name === 'save') {
+      this.props.onSaveOrCancel(id, symbol, shares);
+    }
+    if (name === 'cancel') {
+      this.props.onSaveOrCancel();
+    }
   };
-  handleSaveClick = (id, symbol, shares) => {
-    this.props.onSaveRequest(id, symbol, shares);
-  };
+
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -204,15 +214,31 @@ class EditableStockListRow extends Component {
         {/* Total gain */}
         <td></td>
         <td>
-          <button onClick={() => this.handleDeleteClick(id)}>Delete</button>
+          <button name="delete" onClick={() => this.handleClick('delete', id)}>
+            Delete
+          </button>
         </td>
         <td>
           <button
+            name="save"
             onClick={() => {
-              this.handleSaveClick(id, this.state.symbol, this.state.numShares);
+              this.handleClick(
+                'save',
+                id,
+                this.state.symbol,
+                this.state.numShares
+              );
             }}
           >
             Save
+          </button>
+          <button
+            name="cancel"
+            onClick={() => {
+              this.handleClick('cancel', id);
+            }}
+          >
+            Cancel
           </button>
         </td>
       </tr>

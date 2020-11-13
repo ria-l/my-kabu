@@ -1,15 +1,9 @@
 @import '~antd/dist/antd.css';
 
-table,
-th,
-tr,
-td {
+#the-chart {
+  height: 400px;
+  width: 600px;
   border: solid 1px black;
-  padding: 3px;
-}
-table {
-  height: 300px;
-  width: 500px;
 }
 
 div.main {
@@ -20,11 +14,21 @@ div.main {
 
 #chart-wrapper {
   position: relative;
-  width: 65vw;
+  width: 30vw;
   float: left;
 }
 
 .ticker-info {
   display: inline-block;
   width: 30vw;
+}
+
+#stocklist td,
+#stocklist th {
+  border: solid 1px black !important;
+  padding: 3px;
+}
+
+#stocklist {
+  width: 500px;
 }

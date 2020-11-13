@@ -1,11 +1,7 @@
 import * as Utilities from './utilities';
 
-let today = new Date();
-today = Utilities.formatDateToIso(today);
-
-let yesterday = new Date();
-yesterday = yesterday.setDate(yesterday.getDate() - 1);
-yesterday = Utilities.formatDateToIso(yesterday);
+const today = Utilities.getTodaysDateInIso().split('T')[0];
+const yesterday = Utilities.getYesterdaysDateInIso().split('T')[0];
 
 describe('getDataForChart', () => {
   it('converts API data into chart-friendly format', () => {
