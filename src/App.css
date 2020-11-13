@@ -1,8 +1,8 @@
 @import '~antd/dist/antd.css';
 
 #the-chart {
-  height: 200px;
-  width: 300px;
+  height: 400px;
+  width: 600px;
   border: solid 1px black;
 }
 
