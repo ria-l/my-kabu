@@ -1,11 +1,7 @@
 import React from 'react';
 import * as Utilities from './utilities';
 import 'react-dates/initialize';
-import {
-  DateRangePicker,
-  SingleDatePicker,
-  DayPickerRangeController,
-} from 'react-dates';
+import { SingleDatePicker } from 'react-dates';
 
 class AddLot extends React.Component {
   state = {
@@ -72,7 +68,6 @@ class AddLot extends React.Component {
           />
           <input type="submit" value="Submit" />
         </form>
-        {this.props.submitted && <h1>{this.state.value}</h1>}
       </>
     );
   }
