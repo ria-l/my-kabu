@@ -2,6 +2,7 @@ import * as Constants from './constants';
 import { v4 as uuidv4 } from 'uuid';
 
 export const falseFunc = () => false;
+
 export function addLotToPortfolio(
   ticker,
   boughtShares,
@@ -73,111 +74,89 @@ export function updatePortfolio(id, symbol, boughtShares) {
   }
 }
 
-export const getDataForChart = (ticker) => {
-  const pricesJson = Constants.API_PRICES[ticker];
-  if (!pricesJson) {
+export const prepDataForPortfolioChart = (startDate, endDate) => {
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (!portfolio) {
     return;
   }
-  const xAxisLabels = [];
-  const yAxisLabels = [];
+  const dateRange = getDateRange(startDate, endDate),
+    xAxisLabels = [],
+    yAxisLabels = [];
 
-  for (let i = 0; i < pricesJson.length; i++) {
-    xAxisLabels.push(pricesJson[i].date.split('T')[0]);
-    yAxisLabels.push(pricesJson[i].close);
-  }
-
-  const metaData = Constants.API_META[ticker];
-  const name = metaData['name'];
-
-  return { xAxisLabels, yAxisLabels, name };
+  dateRange.forEach((date) => {
+    const dateObject = new Date(date);
+    xAxisLabels.push(
+      `${dateObject.getFullYear()}-${
+        dateObject.getMonth() + 1
+      }-${dateObject.getDate()}`
+    );
+    yAxisLabels.push(getYAxisValue(portfolio, dateObject));
+  });
+  return { xAxisLabels, yAxisLabels };
 };
 
-export const getStockPrice = (ticker, date) => {
+const getDateRange = (startDate, endDate) => {
+  const dateRange = [];
+  let copyOfStartDate = new Date(startDate),
+    numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
+
+  for (; numDates >= 0; numDates--) {
+    dateRange.push(copyOfStartDate.toISOString());
+    copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
+  }
+  return dateRange;
+};
+
+const getYAxisValue = (portfolio, dateObject) => {
+  let yValue = 0;
+  for (const lotIndex in portfolio.lots) {
+    const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
+    const dateIsInRange = boughtDate <= dateObject;
+    const numShares = portfolio.lots[lotIndex].boughtShares;
+
+    if (dateIsInRange) {
+      const price = getStockPrice(portfolio.lots[lotIndex].symbol, dateObject);
+      yValue += price * numShares;
+    }
+  }
+  return yValue;
+};
+
+/**
+ *
+ * @param {String} ticker
+ * @param {Object} date
+ */
+const getStockPrice = (ticker, date) => {
   const pricesJson = Constants.API_PRICES[ticker];
   if (!pricesJson) {
     return;
   }
-  let apiDate;
+
   for (let i = 0; i < pricesJson.length; i++) {
-    apiDate = convertToUtc(pricesJson[i].date);
-    if ((apiDate, apiDate.toISOString() === date.toISOString())) {
+    const copyOfDate = convertPickedDateToUtc(date);
+    const apiDate = new Date(pricesJson[i].date);
+    if ((apiDate, apiDate.toISOString() === copyOfDate.toISOString())) {
       return pricesJson[i].close;
     }
   }
 };
 
 /**
+ * Converts Date object from the date picker to UTC,
+ * in order to be compatible with dates sent by the API.
  *
- * @param {Object|string} date
+ * Date picker uses local date, 12pm:
+ * Fri May 01 2020 12:00:00 GMT-0700 (Pacific Daylight Time)
+ * The data's date is UTC 12am: 2020-05-01T00:00:00.000Z
+ *
+ * @param {Object} date
  */
-export const convertToUtc = (date) => {
-  const dateObject = new Date(date);
-  const convertedDate = new Date(
-    Date.UTC(
-      dateObject.getUTCFullYear(),
-      dateObject.getUTCMonth(),
-      dateObject.getUTCDate(),
-      0,
-      0,
-      0
-    )
-  );
-  return convertedDate;
-};
-// // for console testing:
-// api = new Date('2020-11-29T00:00:00.000Z');
-// bnb = new Date('Sun Nov 29 2020 12:00:00 GMT-0800 (Pacific Standard Time)');
-// convertToUtc(bnb);
-
-export const prepareDataForPortfolioChart = (startDate, endDate) => {
-  console.log('prepareDataForPortfolioChart');
-  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-  if (!portfolio) {
-    return;
-  }
-  let copyOfStartDate = new Date(startDate),
-    numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
-  const xAxisLabels = [],
-    yAxisLabels = [],
-    dateRange = [];
-  // pushes range of dates into array
-  for (; numDates >= 0; numDates--) {
-    dateRange.push(copyOfStartDate.toISOString());
-    copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
-  }
-
-  copyOfStartDate = convertToUtc(copyOfStartDate);
-  let dateIsInRange;
-  let boughtDate;
-  let dateObject;
-  dateRange.forEach((date) => {
-    dateObject = convertToUtc(date);
-    let yValue = 0;
-    for (const lotIndex in portfolio.lots) {
-      boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
-      dateIsInRange = boughtDate <= dateObject;
-      let price;
-      let numShares = portfolio.lots[lotIndex].boughtShares;
-      if (dateIsInRange) {
-        price = getStockPrice(portfolio.lots[lotIndex].symbol, dateObject);
-        console.log(
-          portfolio.lots[lotIndex].symbol,
-          dateObject,
-          price,
-          numShares,
-          price * numShares
-        );
-        yValue += price * numShares;
-      }
-    }
-    yAxisLabels.push(yValue);
-    xAxisLabels.push(`${date}`);
-  });
-
-  console.log('dateRange', dateRange);
-  console.log('xAxisLabels', xAxisLabels);
-  console.log('yAxisLabels', yAxisLabels);
-  // return { xAxisLabels, yAxisLabels };
+const convertPickedDateToUtc = (date) => {
+  const timezoneOffset = date.getTimezoneOffset();
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() - timezoneOffset / 60 - 12);
+  return newDate;
 };
 
 export function getTodaysDateInIso() {
@@ -191,10 +170,7 @@ export function getYesterdaysDateInIso() {
   yesterday = yesterday.toISOString();
   return yesterday;
 }
-/**
- *
- * @param {string} ticker
- */
+
 export function getTodaysPrice(ticker) {
   const today = getTodaysDateInIso().split('T')[0];
   const tickerData = Constants.API_PRICES[ticker];
@@ -207,10 +183,6 @@ export function getTodaysPrice(ticker) {
   }
 }
 
-/**
- *
- * @param {string} ticker
- */
 export function getYesterdaysPrice(ticker) {
   const yesterday = getYesterdaysDateInIso().split('T')[0];
   for (const entry in Constants.API_PRICES[ticker]) {
@@ -234,14 +206,10 @@ export function calculatePercentChange(oldValue, newValue) {
   }
 }
 
-/**
- *
- * @param {number} lot
- */
-export function getNumberOfShares(lot) {
+export function getNumberOfShares(index) {
   const portfolio = window.localStorage.getItem('portfolio');
   if (portfolio) {
-    const portfolioEntry = JSON.parse(portfolio).lots[lot];
+    const portfolioEntry = JSON.parse(portfolio).lots[index];
     return portfolioEntry.boughtShares - portfolioEntry.soldShares;
   }
   return 0;
