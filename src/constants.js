@@ -7,7 +7,7 @@ export const API_PRICES = {
   AMZN: [
     {
       date: '2020-11-06T00:00:00.000Z',
-      close: 2351.26,
+      close: 1000,
       high: 2357.45,
       low: 2320.0,
       open: 2329.44,
@@ -22,7 +22,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-07T00:00:00.000Z',
-      close: 2367.61,
+      close: 1000,
       high: 2376.0,
       low: 2343.11,
       open: 2374.78,
@@ -37,7 +37,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-08T00:00:00.000Z',
-      close: 2379.61,
+      close: 1000,
       high: 2387.24,
       low: 2357.0,
       open: 2372.14,
@@ -52,7 +52,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-11T00:00:00.000Z',
-      close: 2409.0,
+      close: 1000,
       high: 2419.66,
       low: 2372.11,
       open: 2374.7,
@@ -67,7 +67,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-12T00:00:00.000Z',
-      close: 2356.95,
+      close: 1000,
       high: 2419.0,
       low: 2355.0,
       open: 2411.85,
@@ -82,7 +82,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-13T00:00:00.000Z',
-      close: 2367.92,
+      close: 1000,
       high: 2407.7,
       low: 2337.8,
       open: 2366.8,
@@ -97,7 +97,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-14T00:00:00.000Z',
-      close: 2388.85,
+      close: 1000,
       high: 2391.37,
       low: 2353.21,
       open: 2361.01,
@@ -112,7 +112,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-15T00:00:00.000Z',
-      close: 2409.78,
+      close: 1000,
       high: 2411.0,
       low: 2356.37,
       open: 2368.52,
@@ -127,7 +127,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-18T00:00:00.000Z',
-      close: 2426.26,
+      close: 1000,
       high: 2433.0,
       low: 2384.01,
       open: 2402.48,
@@ -142,7 +142,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-19T00:00:00.000Z',
-      close: 2449.33,
+      close: 1000,
       high: 2484.99,
       low: 2428.97,
       open: 2429.83,
@@ -157,7 +157,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-20T00:00:00.000Z',
-      close: 2497.94,
+      close: 1000,
       high: 2500.01,
       low: 2467.27,
       open: 2477.87,
@@ -172,7 +172,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-21T00:00:00.000Z',
-      close: 2446.74,
+      close: 1000,
       high: 2525.45,
       low: 2442.54,
       open: 2500.0,
@@ -187,7 +187,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-22T00:00:00.000Z',
-      close: 2436.88,
+      close: 1000,
       high: 2469.85,
       low: 2430.13,
       open: 2455.01,
@@ -202,7 +202,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-26T00:00:00.000Z',
-      close: 2421.86,
+      close: 1000,
       high: 2462.0,
       low: 2414.06,
       open: 2458.0,
@@ -217,7 +217,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-27T00:00:00.000Z',
-      close: 2410.39,
+      close: 1000,
       high: 2413.58,
       low: 2330.0,
       open: 2404.99,
@@ -232,7 +232,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-28T00:00:00.000Z',
-      close: 2401.1,
+      close: 1000,
       high: 2436.97,
       low: 2378.23,
       open: 2384.33,
@@ -247,7 +247,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-29T00:00:00.000Z',
-      close: 2442.37,
+      close: 1000,
       high: 2442.37,
       low: 2398.2,
       open: 2415.94,
@@ -307,7 +307,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-04T00:00:00.000Z',
-      close: 2460.6,
+      close: 1000,
       high: 2507.54,
       low: 2450.01,
       open: 2477.43,
@@ -322,7 +322,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-05T00:00:00.000Z',
-      close: 2483.0,
+      close: 1000,
       high: 2488.64,
       low: 2437.13,
       open: 2444.51,
@@ -337,7 +337,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-08T00:00:00.000Z',
-      close: 2524.06,
+      close: 1000,
       high: 2530.0,
       low: 2487.34,
       open: 2500.2,
@@ -352,7 +352,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-09T00:00:00.000Z',
-      close: 2600.86,
+      close: 1000,
       high: 2626.43,
       low: 2525.0,
       open: 2529.44,
@@ -367,7 +367,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-10T00:00:00.000Z',
-      close: 2647.45,
+      close: 1000,
       high: 2722.35,
       low: 2626.26,
       open: 2645.0,
@@ -382,7 +382,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-11T00:00:00.000Z',
-      close: 2557.96,
+      close: 1000,
       high: 2671.38,
       low: 2536.23,
       open: 2603.5,
@@ -397,7 +397,7 @@ export const API_PRICES = {
     },
     {
       date: yesterday,
-      close: 2545.02,
+      close: 1000,
       high: 2621.48,
       low: 2503.35,
       open: 2601.21,
@@ -412,7 +412,7 @@ export const API_PRICES = {
     },
     {
       date: today,
-      close: 3125,
+      close: 1000,
       high: 3195.7965,
       low: 3123,
       open: 3153.63,
@@ -429,7 +429,7 @@ export const API_PRICES = {
   MSFT: [
     {
       date: '2020-11-06T00:00:00.000Z',
-      close: 182.54,
+      close: 100,
       high: 184.2,
       low: 181.63,
       open: 182.08,
@@ -444,7 +444,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-07T00:00:00.000Z',
-      close: 183.6,
+      close: 100,
       high: 184.55,
       low: 182.58,
       open: 184.17,
@@ -459,7 +459,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-08T00:00:00.000Z',
-      close: 184.68,
+      close: 100,
       high: 185.0,
       low: 183.36,
       open: 184.98,
@@ -474,7 +474,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-11T00:00:00.000Z',
-      close: 186.74,
+      close: 100,
       high: 187.51,
       low: 182.85,
       open: 183.15,
@@ -489,7 +489,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-12T00:00:00.000Z',
-      close: 182.51,
+      close: 100,
       high: 187.04,
       low: 182.3,
       open: 186.8,
@@ -504,7 +504,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-13T00:00:00.000Z',
-      close: 179.75,
+      close: 100,
       high: 184.05,
       low: 176.54,
       open: 182.55,
@@ -519,7 +519,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-14T00:00:00.000Z',
-      close: 180.53,
+      close: 100,
       high: 180.69,
       low: 175.68,
       open: 177.54,
@@ -534,7 +534,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-15T00:00:00.000Z',
-      close: 183.16,
+      close: 100,
       high: 187.06,
       low: 177.0,
       open: 179.06,
@@ -549,7 +549,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-18T00:00:00.000Z',
-      close: 184.91,
+      close: 100,
       high: 186.2,
       low: 183.96,
       open: 185.75,
@@ -564,7 +564,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-19T00:00:00.000Z',
-      close: 183.63,
+      close: 100,
       high: 186.6,
       low: 183.49,
       open: 185.03,
@@ -579,7 +579,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-20T00:00:00.000Z',
-      close: 185.66,
+      close: 100,
       high: 185.85,
       low: 183.94,
       open: 184.81,
@@ -594,7 +594,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-21T00:00:00.000Z',
-      close: 183.43,
+      close: 100,
       high: 186.67,
       low: 183.29,
       open: 185.4,
@@ -609,7 +609,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-22T00:00:00.000Z',
-      close: 183.51,
+      close: 100,
       high: 184.46,
       low: 182.54,
       open: 183.19,
@@ -624,7 +624,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-26T00:00:00.000Z',
-      close: 181.57,
+      close: 100,
       high: 186.5,
       low: 181.1,
       open: 186.34,
@@ -639,7 +639,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-27T00:00:00.000Z',
-      close: 181.81,
+      close: 100,
       high: 181.99,
       low: 176.6,
       open: 180.2,
@@ -654,7 +654,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-28T00:00:00.000Z',
-      close: 181.4,
+      close: 100,
       high: 184.15,
       low: 180.38,
       open: 180.74,
@@ -669,7 +669,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-29T00:00:00.000Z',
-      close: 183.25,
+      close: 100,
       high: 184.27,
       low: 180.41,
       open: 182.73,
@@ -729,7 +729,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-04T00:00:00.000Z',
-      close: 182.92,
+      close: 100,
       high: 185.84,
       low: 182.3,
       open: 184.3,
@@ -744,7 +744,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-05T00:00:00.000Z',
-      close: 187.2,
+      close: 100,
       high: 187.73,
       low: 182.01,
       open: 182.62,
@@ -759,7 +759,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-08T00:00:00.000Z',
-      close: 188.36,
+      close: 100,
       high: 188.55,
       low: 184.44,
       open: 185.94,
@@ -774,7 +774,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-09T00:00:00.000Z',
-      close: 189.8,
+      close: 100,
       high: 190.7,
       low: 187.26,
       open: 188.0,
@@ -789,7 +789,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-10T00:00:00.000Z',
-      close: 196.84,
+      close: 100,
       high: 198.52,
       low: 191.01,
       open: 191.13,
@@ -804,7 +804,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-11T00:00:00.000Z',
-      close: 186.27,
+      close: 100,
       high: 195.76,
       low: 186.07,
       open: 193.13,
@@ -834,7 +834,7 @@ export const API_PRICES = {
     },
     {
       date: today,
-      close: 3221.26,
+      close: 100,
       high: 3224,
       low: 3172,
       open: 3208,
@@ -851,7 +851,7 @@ export const API_PRICES = {
   BABA: [
     {
       date: '2020-11-06T00:00:00.000Z',
-      close: 195.17,
+      close: 10,
       high: 198.91,
       low: 194.93,
       open: 197.67,
@@ -866,7 +866,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-07T00:00:00.000Z',
-      close: 196.49,
+      close: 10,
       high: 198.09,
       low: 194.78,
       open: 198.0,
@@ -881,7 +881,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-08T00:00:00.000Z',
-      close: 201.19,
+      close: 10,
       high: 203.02,
       low: 198.68,
       open: 199.8,
@@ -896,7 +896,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-11T00:00:00.000Z',
-      close: 205.4,
+      close: 10,
       high: 206.64,
       low: 202.38,
       open: 202.78,
@@ -911,7 +911,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-12T00:00:00.000Z',
-      close: 200.31,
+      close: 10,
       high: 208.05,
       low: 200.02,
       open: 206.95,
@@ -926,7 +926,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-13T00:00:00.000Z',
-      close: 199.46,
+      close: 10,
       high: 204.68,
       low: 197.98,
       open: 203.62,
@@ -941,7 +941,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-14T00:00:00.000Z',
-      close: 201.3,
+      close: 10,
       high: 201.77,
       low: 194.03,
       open: 195.5,
@@ -956,7 +956,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-15T00:00:00.000Z',
-      close: 203.68,
+      close: 10,
       high: 204.4899,
       low: 200.1,
       open: 200.7,
@@ -971,7 +971,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-18T00:00:00.000Z',
-      close: 215.28,
+      close: 10,
       high: 215.47,
       low: 210.37,
       open: 212.5,
@@ -986,7 +986,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-19T00:00:00.000Z',
-      close: 217.2,
+      close: 10,
       high: 220.59,
       low: 215.19,
       open: 216.73,
@@ -1001,7 +1001,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-20T00:00:00.000Z',
-      close: 216.79,
+      close: 10,
       high: 221.1574,
       low: 210.58,
       open: 220.0,
@@ -1016,7 +1016,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-21T00:00:00.000Z',
-      close: 212.16,
+      close: 10,
       high: 214.58,
       low: 209.53,
       open: 211.29,
@@ -1031,7 +1031,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-22T00:00:00.000Z',
-      close: 199.7,
+      close: 10,
       high: 204.88,
       low: 198.99,
       open: 203.23,
@@ -1046,7 +1046,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-26T00:00:00.000Z',
-      close: 201.72,
+      close: 10,
       high: 206.8,
       low: 201.0,
       open: 205.94,
@@ -1061,7 +1061,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-27T00:00:00.000Z',
-      close: 201.18,
+      close: 10,
       high: 202.99,
       low: 196.75,
       open: 202.99,
@@ -1076,7 +1076,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-28T00:00:00.000Z',
-      close: 199.49,
+      close: 10,
       high: 202.37,
       low: 197.62,
       open: 199.0,
@@ -1091,7 +1091,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-11-29T00:00:00.000Z',
-      close: 207.39,
+      close: 10,
       high: 207.88,
       low: 196.7,
       open: 200.0,
@@ -1151,7 +1151,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-04T00:00:00.000Z',
-      close: 218.04,
+      close: 10,
       high: 220.0,
       low: 216.32,
       open: 217.28,
@@ -1166,7 +1166,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-05T00:00:00.000Z',
-      close: 219.55,
+      close: 10,
       high: 220.59,
       low: 218.7,
       open: 220.0,
@@ -1181,7 +1181,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-08T00:00:00.000Z',
-      close: 219.0,
+      close: 10,
       high: 220.4,
       low: 215.33,
       open: 219.6,
@@ -1196,7 +1196,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-09T00:00:00.000Z',
-      close: 220.72,
+      close: 10,
       high: 220.72,
       low: 216.2,
       open: 216.31,
@@ -1211,7 +1211,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-10T00:00:00.000Z',
-      close: 223.68,
+      close: 10,
       high: 225.0,
       low: 220.6,
       open: 222.0,
@@ -1226,7 +1226,7 @@ export const API_PRICES = {
     },
     {
       date: '2020-12-11T00:00:00.000Z',
-      close: 215.24,
+      close: 10,
       high: 219.95,
       low: 213.56,
       open: 218.0,
@@ -1241,7 +1241,7 @@ export const API_PRICES = {
     },
     {
       date: yesterday,
-      close: 217.64,
+      close: 10,
       high: 219.5,
       low: 213.88,
       open: 218.5,
@@ -1256,7 +1256,7 @@ export const API_PRICES = {
     },
     {
       date: today,
-      close: 290.05,
+      close: 10,
       high: 295.59,
       low: 288.25,
       open: 295.26,
