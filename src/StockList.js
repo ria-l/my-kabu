@@ -7,6 +7,7 @@ class StockList extends Component {
   deleteRow = (id) => {
     Utilities.deleteLotFromPortfolio(id);
     this.setState({ rerender: true });
+    this.props.submitted(true);
   };
 
   editRow = (id) => {
@@ -18,6 +19,7 @@ class StockList extends Component {
       Utilities.updatePortfolio(id, symbol, boughtShares);
     }
     this.setState({ editing: false, rerender: true });
+    this.props.submitted(true);
   };
 
   render() {
