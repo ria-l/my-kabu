@@ -74,6 +74,11 @@ export function updatePortfolio(id, symbol, boughtShares) {
   }
 }
 
+/**
+ *
+ * @param {Object} startDate
+ * @param {Object} endDate
+ */
 export const prepDataForPortfolioChart = (startDate, endDate) => {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (!portfolio) {
@@ -82,7 +87,6 @@ export const prepDataForPortfolioChart = (startDate, endDate) => {
   const dateRange = getDateRange(startDate, endDate),
     xAxisLabels = [],
     yAxisLabels = [];
-
   dateRange.forEach((date) => {
     const dateObject = new Date(date);
     xAxisLabels.push(
@@ -95,11 +99,15 @@ export const prepDataForPortfolioChart = (startDate, endDate) => {
   return { xAxisLabels, yAxisLabels };
 };
 
+/**
+ *
+ * @param {Object} startDate
+ * @param {Object} endDate
+ */
 const getDateRange = (startDate, endDate) => {
   const dateRange = [];
   let copyOfStartDate = new Date(startDate),
     numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
-
   for (; numDates >= 0; numDates--) {
     dateRange.push(copyOfStartDate.toISOString());
     copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
