@@ -135,8 +135,21 @@ const getYAxisValue = (portfolio, dateObject) => {
  * @param {String} ticker
  * @param {Object} date
  */
-const getStockPrice = (ticker, date) => {
-  const pricesJson = Constants.API_PRICES[ticker];
+async function getStockPrice(ticker, date) {
+  const pricesApiUrl = `/prices/${ticker}`;
+  const pricesResponse = await fetch(pricesApiUrl);
+  const pricesJson = await pricesResponse.json();
+  // const pricesJson = Constants.API_PRICES[ticker];
+
+  // if (pricesJson['detail']) {
+  //   console.log('ofuk');
+  //   return {
+  //     xAxisLabels: [],
+  //     yAxisLabels: [],
+  //     name: `Invalid ticker ${ticker}`,
+  //   };
+  // }
+
   if (!pricesJson) {
     return;
   }
@@ -148,7 +161,7 @@ const getStockPrice = (ticker, date) => {
       return pricesJson[i].close;
     }
   }
-};
+}
 
 /**
  * Converts Date object from the date picker to UTC,
