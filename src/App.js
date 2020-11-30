@@ -16,7 +16,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <PortfolioSummary />
+        <PortfolioSummary submitted={this.setSubmittedState} />
         <AddLot submitted={this.setSubmittedState} />
         <StockList submitted={this.setSubmittedState} />
       </>
