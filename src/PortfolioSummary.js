@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import * as Constants from './constants';
-import { Line } from 'react-chartjs-2';
 import 'react-dates/initialize';
-import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import { DateRangePicker } from 'react-dates';
+import { Line } from 'react-chartjs-2';
+import * as Constants from './constants';
 import * as Utilities from './utilities';
+import React, { Component } from 'react';
 
 const getCurrentValue = (ticker) => {
   return 30; // FIXME:
@@ -58,29 +58,52 @@ class PortfolioSummary extends Component {
 }
 
 class PortfolioChart extends Component {
-  state = {};
+  state = {
+    apiData: {
+      xAxisLabels: [
+        '2020-11-15',
+        '2020-11-16',
+        '2020-11-17',
+        '2020-11-18',
+        '2020-11-19',
+        '2020-11-20',
+        '2020-11-21',
+        '2020-11-22',
+      ],
+      yAxisLabels: [0, 0, 270.74, 255.83, 259.89, 256.8, 0, 0],
+    },
+    submitted: false,
+  };
 
   getOptions = () => {
     return {
       responsive: true,
-      scales: { yAxes: [{ ticks: { suggestedMin: -10 } }] },
+      // scales: { yAxes: [{ ticks: { suggestedMin: -10 } }] },
     };
   };
 
-  getData = () => {
+  getData = async () => {
+    // debugger;
     let chartData;
     if (this.state.startDate && this.state.endDate) {
-      chartData = Utilities.prepDataForPortfolioChart(
+      chartData = await Utilities.prepDataForPortfolioChart(
         this.state.startDate._d,
         this.state.endDate._d
       );
     } else {
+      // Hour must be set to '12' to mimic the date picker's behavior
       const today = new Date();
+      today.setHours(12, 0, 0, 0);
       let startDate = new Date();
-      startDate.setDate(startDate.getDate() - 7);
-      chartData = Utilities.prepDataForPortfolioChart(startDate, today);
+      startDate.setHours(12, 0, 0, 0);
+      startDate.setDate(startDate.getDate() - 6);
+      // debugger;
+      chartData = await Utilities.prepDataForPortfolioChart(startDate, today);
+      // debugger;
+      console.log(chartData); // this is fine ¯\_(ツ)_/¯
     }
-    return {
+
+    const result = {
       labels: chartData.xAxisLabels,
       datasets: [
         {
@@ -93,6 +116,30 @@ class PortfolioChart extends Component {
         },
       ],
     };
+
+    console.log(result);
+    return result;
+  };
+
+  async componentDidMount() {
+    const apiData = await this.getData();
+    this.setState({ apiData: apiData }, () => {
+      console.log(this.state);
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    let toggle = this.state.submitted;
+    toggle = !toggle;
+
+    const apiData = this.getData();
+    // debugger;
+    console.log('getdate', apiData);
+    this.setState({ apiData: apiData }, () => {
+      this.setState({ submitted: toggle });
+      console.log(this.state); // console log works, but setstate is not rendering!! DX
+    });
   };
 
   render() {
@@ -104,25 +151,32 @@ class PortfolioChart extends Component {
             <tr>
               <td>
                 <div className="chart-wrapper">
-                  <Line data={this.getData()} Options={this.getOptions()} />
+                  <Line
+                    redraw={true}
+                    data={this.state.apiData}
+                    options={this.getOptions()}
+                  />
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
-        Select a date range
-        <DateRangePicker
-          startDate={this.state.startDate}
-          startDateId="start-date"
-          endDate={this.state.endDate}
-          endDateId="end-date"
-          onDatesChange={({ startDate, endDate }) =>
-            this.setState({ startDate, endDate })
-          }
-          focusedInput={this.state.focusedInput}
-          onFocusChange={(focusedInput) => this.setState({ focusedInput })}
-          isOutsideRange={Utilities.falseFunc}
-        />
+        <form onSubmit={this.handleSubmit}>
+          <label>Select a date range</label>
+          <DateRangePicker
+            startDate={this.state.startDate}
+            startDateId="start-date"
+            endDate={this.state.endDate}
+            endDateId="end-date"
+            onDatesChange={({ startDate, endDate }) =>
+              this.setState({ startDate, endDate })
+            }
+            focusedInput={this.state.focusedInput}
+            onFocusChange={(focusedInput) => this.setState({ focusedInput })}
+            isOutsideRange={Utilities.falseFunc}
+          />
+          <input type="submit" value="Submit"></input>
+        </form>
       </div>
     );
   }
