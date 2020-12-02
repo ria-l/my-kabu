@@ -79,7 +79,7 @@ export function updatePortfolio(id, symbol, boughtShares) {
  * @param {Object} startDate
  * @param {Object} endDate
  */
-export const prepDataForPortfolioChart = (startDate, endDate) => {
+export const prepDataForPortfolioChart = async (startDate, endDate) => {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (!portfolio) {
     return;
@@ -87,14 +87,15 @@ export const prepDataForPortfolioChart = (startDate, endDate) => {
   const dateRange = getDateRange(startDate, endDate),
     xAxisLabels = [],
     yAxisLabels = [];
-  dateRange.forEach((date) => {
+  dateRange.forEach(async (date) => {
     const dateObject = new Date(date);
-    xAxisLabels.push(
-      `${dateObject.getFullYear()}-${
-        dateObject.getMonth() + 1
-      }-${dateObject.getDate()}`
-    );
-    yAxisLabels.push(getYAxisValue(portfolio, dateObject));
+    const dateTwo = ('0' + dateObject.getDate()).substr(-2);
+    const monthTwo = ('0' + (dateObject.getMonth() + 1)).substr(-2);
+    const yValue = await getYAxisValue(portfolio, dateObject);
+    if (!isNaN(yValue)) {
+      yAxisLabels.push(yValue);
+      xAxisLabels.push(`${dateObject.getFullYear()}-${monthTwo}-${dateTwo}`);
+    }
   });
   return { xAxisLabels, yAxisLabels };
 };
@@ -106,8 +107,8 @@ export const prepDataForPortfolioChart = (startDate, endDate) => {
  */
 const getDateRange = (startDate, endDate) => {
   const dateRange = [];
-  let copyOfStartDate = new Date(startDate),
-    numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
+  let copyOfStartDate = new Date(startDate);
+  let numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
   for (; numDates >= 0; numDates--) {
     dateRange.push(copyOfStartDate.toISOString());
     copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
@@ -115,17 +116,29 @@ const getDateRange = (startDate, endDate) => {
   return dateRange;
 };
 
-const getYAxisValue = (portfolio, dateObject) => {
+const getYAxisValue = async (portfolio, dateObject) => {
   let yValue = 0;
+  const promises = [];
+  const numArr = [];
+
   for (const lotIndex in portfolio.lots) {
     const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
     const dateIsInRange = boughtDate <= dateObject;
     const numShares = portfolio.lots[lotIndex].boughtShares;
 
     if (dateIsInRange) {
-      const price = getStockPrice(portfolio.lots[lotIndex].symbol, dateObject);
-      yValue += price * numShares;
+      const stockPromise = new Promise((resolve, reject) => {
+        resolve(getStockPrice(portfolio.lots[lotIndex].symbol, dateObject));
+      });
+
+      promises.push(stockPromise); // stockPromise is a promise, that resolves to thet stock price
+      numArr.push(numShares);
     }
+  }
+
+  const resolvedJunk = await Promise.all(promises); // this is an object that contains the resolution of all the promises
+  for (let i = 0; i < resolvedJunk.length; i++) {
+    yValue += resolvedJunk[i] * numArr[i];
   }
   return yValue;
 };
@@ -136,20 +149,21 @@ const getYAxisValue = (portfolio, dateObject) => {
  * @param {Object} date
  */
 async function getStockPrice(ticker, date) {
-  const pricesApiUrl = `/prices/${ticker}`;
+  const apiDate = convertPickedDateToUtc(date).toISOString().split('T')[0];
+  const pricesApiUrl = `/prices/${ticker}/${apiDate}`;
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
-  // const pricesJson = Constants.API_PRICES[ticker];
 
-  // if (pricesJson['detail']) {
-  //   console.log('ofuk');
-  //   return {
-  //     xAxisLabels: [],
-  //     yAxisLabels: [],
-  //     name: `Invalid ticker ${ticker}`,
-  //   };
-  // }
-
+  // If ticker is invalid
+  if (pricesJson['detail']) {
+    // TODO: should not return an object from this function
+    console.error(`Invalid ticker ${ticker}`);
+    return {
+      xAxisLabels: [],
+      yAxisLabels: [],
+      name: `Invalid ticker ${ticker}`,
+    };
+  }
   if (!pricesJson) {
     return;
   }
@@ -157,7 +171,7 @@ async function getStockPrice(ticker, date) {
   for (let i = 0; i < pricesJson.length; i++) {
     const copyOfDate = convertPickedDateToUtc(date);
     const apiDate = new Date(pricesJson[i].date);
-    if ((apiDate, apiDate.toISOString() === copyOfDate.toISOString())) {
+    if (apiDate.toISOString() === copyOfDate.toISOString()) {
       return pricesJson[i].close;
     }
   }
