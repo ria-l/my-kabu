@@ -58,27 +58,11 @@ class PortfolioSummary extends Component {
 }
 
 class PortfolioChart extends Component {
-  state = {
-    apiData: {
-      xAxisLabels: [
-        '2020-11-15',
-        '2020-11-16',
-        '2020-11-17',
-        '2020-11-18',
-        '2020-11-19',
-        '2020-11-20',
-        '2020-11-21',
-        '2020-11-22',
-      ],
-      yAxisLabels: [0, 0, 270.74, 255.83, 259.89, 256.8, 0, 0],
-    },
-    submitted: false,
-  };
+  state = { submitted: false };
 
   getOptions = () => {
     return {
       responsive: true,
-      // scales: { yAxes: [{ ticks: { suggestedMin: -10 } }] },
     };
   };
 
