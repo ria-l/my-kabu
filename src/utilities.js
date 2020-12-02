@@ -119,6 +119,7 @@ const getDateRange = (startDate, endDate) => {
 const getYAxisValue = async (portfolio, dateObject) => {
   let yValue = 0;
   const promises = [];
+  const numArr = [];
 
   for (const lotIndex in portfolio.lots) {
     const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
@@ -132,8 +133,6 @@ const getYAxisValue = async (portfolio, dateObject) => {
 
       promises.push(stockPromise); // stockPromise is a promise, that resolves to thet stock price
       numArr.push(numShares);
-
-      // console.log('wtf: ', price);
     }
   }
 
