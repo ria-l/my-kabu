@@ -1,7 +1,7 @@
-import React from 'react';
-import * as Utilities from './utilities';
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
+import * as Utilities from './utilities';
+import React from 'react';
 
 class AddLot extends React.Component {
   state = {
