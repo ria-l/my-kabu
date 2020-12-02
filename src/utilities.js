@@ -87,18 +87,16 @@ export const prepDataForPortfolioChart = async (startDate, endDate) => {
   const dateRange = getDateRange(startDate, endDate),
     xAxisLabels = [],
     yAxisLabels = [];
-  await dateRange.forEach(async (date) => {
+  dateRange.forEach(async (date) => {
     const dateObject = new Date(date);
-    xAxisLabels.push(
-      `${dateObject.getFullYear()}-${
-        dateObject.getMonth() + 1
-      }-${dateObject.getDate()}`
-    );
-    const poop = await getYAxisValue(portfolio, dateObject);
-    yAxisLabels.push(poop);
+    const dateTwo = ('0' + dateObject.getDate()).substr(-2);
+    const monthTwo = ('0' + (dateObject.getMonth() + 1)).substr(-2);
+    const yValue = await getYAxisValue(portfolio, dateObject);
+    if (!isNaN(yValue)) {
+      yAxisLabels.push(yValue);
+      xAxisLabels.push(`${dateObject.getFullYear()}-${monthTwo}-${dateTwo}`);
+    }
   });
-  console.log(yAxisLabels);
-  // const yAxisLabels = getYAxisValue(portfolio, dateRange);
   return { xAxisLabels, yAxisLabels };
 };
 
@@ -109,8 +107,8 @@ export const prepDataForPortfolioChart = async (startDate, endDate) => {
  */
 const getDateRange = (startDate, endDate) => {
   const dateRange = [];
-  let copyOfStartDate = new Date(startDate),
-    numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
+  let copyOfStartDate = new Date(startDate);
+  let numDates = (endDate - startDate) / (60 * 60 * 24 * 1000);
   for (; numDates >= 0; numDates--) {
     dateRange.push(copyOfStartDate.toISOString());
     copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
@@ -120,31 +118,29 @@ const getDateRange = (startDate, endDate) => {
 
 const getYAxisValue = async (portfolio, dateObject) => {
   let yValue = 0;
-
   const promises = [];
+
   for (const lotIndex in portfolio.lots) {
     const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
     const dateIsInRange = boughtDate <= dateObject;
     const numShares = portfolio.lots[lotIndex].boughtShares;
 
     if (dateIsInRange) {
-      const p = new Promise((resolve, reject) => {
+      const stockPromise = new Promise((resolve, reject) => {
         resolve(getStockPrice(portfolio.lots[lotIndex].symbol, dateObject));
       });
 
-      promises.push(p); // p is a promise, that resolves to thet stock price
+      promises.push(stockPromise); // stockPromise is a promise, that resolves to thet stock price
+      numArr.push(numShares);
+
       // console.log('wtf: ', price);
     }
   }
 
   const resolvedJunk = await Promise.all(promises); // this is an object that contains the resolution of all the promises
-  let y = resolvedJunk.filter((x) => x);
-  // console.log('poopie', y, y[0]);
-  y.forEach((value) => {
-    yValue += value;
-  });
-  // console.log(yValue);
-  // yValue += price * numShares;
+  for (let i = 0; i < resolvedJunk.length; i++) {
+    yValue += resolvedJunk[i] * numArr[i];
+  }
   return yValue;
 };
 
@@ -159,6 +155,7 @@ async function getStockPrice(ticker, date) {
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
 
+  // If ticker is invalid
   if (pricesJson['detail']) {
     // TODO: should not return an object from this function
     console.error(`Invalid ticker ${ticker}`);
