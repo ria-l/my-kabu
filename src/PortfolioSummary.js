@@ -2,6 +2,7 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
+import * as Constants from './constants';
 import * as Utilities from './utilities';
 import React, { Component } from 'react';
 
@@ -18,9 +19,7 @@ class PortfolioSummary extends Component {
     if (!portfolio) {
       return 0;
     }
-
-    const today = new Date();
-    today.setHours(12, 0, 0, 0);
+    const today = Constants.getToday();
     currValue = await Utilities.getYAxisValue(portfolio, today);
     console.log(currValue);
     return currValue;
@@ -80,9 +79,7 @@ class PortfolioChart extends Component {
         this.state.endDate._d
       );
     } else {
-      // Hour must be set to '12' to mimic the date picker's behavior
-      const today = new Date();
-      today.setHours(12, 0, 0, 0);
+      const today = Constants.getToday();
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
