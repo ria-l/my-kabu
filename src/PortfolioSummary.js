@@ -27,7 +27,6 @@ class PortfolioSummary extends Component {
   };
 
   async componentDidMount() {
-    debugger;
     const currValue = await this.getPortfolioValue();
     this.setState({ currValue: currValue }, () => {
       console.log(this.state);
