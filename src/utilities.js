@@ -116,7 +116,7 @@ const getDateRange = (startDate, endDate) => {
   return dateRange;
 };
 
-const getYAxisValue = async (portfolio, dateObject) => {
+export const getYAxisValue = async (portfolio, dateObject) => {
   let yValue = 0;
   const promises = [];
   const numArr = [];

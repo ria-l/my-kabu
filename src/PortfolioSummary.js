@@ -2,13 +2,8 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
-import * as Constants from './constants';
 import * as Utilities from './utilities';
 import React, { Component } from 'react';
-
-const getCurrentValue = (ticker) => {
-  return 30; // FIXME:
-};
 
 class PortfolioSummary extends Component {
   state = { submitted: false };
@@ -17,25 +12,37 @@ class PortfolioSummary extends Component {
     this.setState({ submitted: state });
   };
 
+  getPortfolioValue = async () => {
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    let currValue;
+    if (!portfolio) {
+      return 0;
+    }
+
+    const today = new Date();
+    today.setHours(12, 0, 0, 0);
+    currValue = await Utilities.getYAxisValue(portfolio, today);
+    console.log(currValue);
+    return currValue;
+  };
+
+  async componentDidMount() {
+    debugger;
+    const currValue = await this.getPortfolioValue();
+    this.setState({ currValue: currValue }, () => {
+      console.log(this.state);
+    });
+  }
+
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
 
-    let currValue = 0;
-    if (portfolio) {
-      for (const lot in portfolio.lots) {
-        let currentShares =
-          portfolio.lots[lot].boughtShares - portfolio.lots[lot].soldShares;
-        currValue +=
-          getCurrentValue(portfolio.lots[lot].symbol) * currentShares;
-      }
-    }
+    // let depositValue = 0;
 
-    let depositValue = 0;
-
-    for (const deposit in Constants.DEPOSITS) {
-      depositValue += Constants.DEPOSITS[deposit];
-    }
-    const totalGain = currValue - depositValue;
+    // for (const deposit in Constants.DEPOSITS) {
+    //   depositValue += Constants.DEPOSITS[deposit];
+    // }
+    // const totalGain = currValue - depositValue;
     const prevValue = 6; // FIXME:
     const dayGain = 7; // FIXME:
 
@@ -43,13 +50,13 @@ class PortfolioSummary extends Component {
       <div className="main">
         <div>
           <h1>{portfolio && portfolio.name}</h1>
-          <h2>${currValue}</h2>
+          <h2>${this.state.currValue}</h2>
         </div>
         <div>
           Day Gain: ${dayGain} (+{((dayGain / prevValue) * 100).toFixed(2)}%)
           <br />
-          Total Gain: ${totalGain} (
-          {((totalGain / depositValue) * 100).toFixed(2)}%)
+          {/* Total Gain: ${totalGain} (
+          {((totalGain / depositValue) * 100).toFixed(2)}%) */}
         </div>
         <PortfolioChart submitted={this.setSubmittedState} />
       </div>
