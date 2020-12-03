@@ -177,8 +177,7 @@ class EditableStockListRow extends Component {
         <td>
           <input
             name="symbol"
-            defaultValue={symbol}
-            value={this.state.symbol}
+            value={this.state.symbol || symbol}
             onChange={this.handleChange}
           />
         </td>
@@ -198,8 +197,7 @@ class EditableStockListRow extends Component {
         <td>
           <input
             name="numShares"
-            defaultValue={numShares}
-            value={this.state.numShares}
+            value={this.state.numShares || numShares}
             onChange={this.handleChange}
           />
         </td>
