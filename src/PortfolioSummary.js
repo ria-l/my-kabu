@@ -21,7 +21,6 @@ class PortfolioSummary extends Component {
     }
     const today = Constants.getToday();
     currValue = await Utilities.getYAxisValue(portfolio, today);
-    console.log(currValue);
     return currValue;
   };
 
@@ -136,7 +135,21 @@ class PortfolioChart extends Component {
                 <div className="chart-wrapper">
                   <Line
                     redraw={true}
-                    data={this.state.apiData}
+                    data={
+                      this.state.apiData || {
+                        labels: [],
+                        datasets: [
+                          {
+                            label: 'Portfolio value over time',
+                            data: [],
+                            fill: false,
+                            borderColor: ['rgba(0, 200, 5, 1)'],
+                            borderWidth: 1,
+                            lineTension: 0,
+                          },
+                        ],
+                      }
+                    }
                     options={this.getOptions()}
                   />
                 </div>
