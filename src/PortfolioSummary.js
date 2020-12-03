@@ -74,7 +74,6 @@ class PortfolioChart extends Component {
   };
 
   getData = async () => {
-    // debugger;
     let chartData;
     if (this.state.startDate && this.state.endDate) {
       chartData = await Utilities.prepDataForPortfolioChart(
@@ -88,10 +87,8 @@ class PortfolioChart extends Component {
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
-      // debugger;
       chartData = await Utilities.prepDataForPortfolioChart(startDate, today);
-      // debugger;
-      console.log(chartData); // this is fine ¯\_(ツ)_/¯
+      console.log(chartData);
     }
 
     const result = {
@@ -125,11 +122,10 @@ class PortfolioChart extends Component {
     toggle = !toggle;
 
     const apiData = this.getData();
-    // debugger;
     console.log('getdate', apiData);
     this.setState({ apiData: apiData }, () => {
       this.setState({ submitted: toggle });
-      console.log(this.state); // console log works, but setstate is not rendering!! DX
+      console.log(this.state);
     });
   };
 
