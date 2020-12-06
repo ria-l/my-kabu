@@ -3,6 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const falseFunc = () => false;
 
+export const getToday = () => {
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+  return today;
+};
+
 export function addLotToPortfolio(
   ticker,
   boughtShares,

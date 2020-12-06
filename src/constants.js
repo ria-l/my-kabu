@@ -7,11 +7,6 @@ const yesterday = Utilities.getYesterdaysDateInIso();
  * Returns properly formatted Date object for today (local time).
  * Hour must be set to '12' to mimic the date picker's behavior
  */
-export const getToday = () => {
-  const today = new Date();
-  today.setHours(12, 0, 0, 0);
-  return today;
-};
 
 export const API_PRICES = {
   AMZN: [
