@@ -1,0 +1,72 @@
+import { v4 as uuidv4 } from 'uuid';
+
+export function addLotToPortfolio(
+  ticker,
+  boughtShares,
+  boughtPrice,
+  boughtDate,
+  broker
+) {
+  if (ticker) {
+    let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    if (!portfolio) {
+      window.localStorage.setItem(
+        'portfolio',
+        JSON.stringify({
+          name: 'To The Moon',
+          lots: [],
+        })
+      );
+      portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    }
+    portfolio.lots.push({
+      id: uuidv4(),
+      symbol: ticker.toUpperCase(),
+      boughtShares,
+      boughtDate,
+      boughtPrice,
+      broker,
+      soldShares: 0,
+      soldDate: null,
+      soldPrice: null,
+    });
+    window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+  }
+}
+
+export function deleteLotFromPortfolio(id) {
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (portfolio) {
+    let index;
+    for (let i = 0; i < portfolio.lots.length; i++) {
+      if (id === portfolio.lots[i]['id']) {
+        index = i;
+      }
+    }
+    if (index >= 0) {
+      portfolio.lots.splice(index, 1);
+      window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+    }
+  }
+}
+
+export function updatePortfolio(id, symbol, boughtShares) {
+  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  if (portfolio) {
+    let index;
+    for (let i = 0; i < portfolio.lots.length; i++) {
+      if (id === portfolio.lots[i]['id']) {
+        index = i;
+      }
+    }
+    if (index >= 0) {
+      if (symbol) {
+        portfolio.lots[index].symbol = symbol;
+      }
+      if (boughtShares) {
+        portfolio.lots[index].boughtShares = boughtShares;
+      }
+      window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
+    }
+  }
+}

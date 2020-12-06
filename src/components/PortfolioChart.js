@@ -1,64 +1,11 @@
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
-import * as Utilities from './utilities';
+import * as Utilities from '../utils/utilities';
+import * as DateUtils from '../utils/dateUtils';
+import * as ChartUtils from '../utils/chartUtils';
 import React, { Component } from 'react';
 
-class PortfolioSummary extends Component {
-  state = { submitted: false };
-
-  setSubmittedState = (state) => {
-    this.setState({ submitted: state });
-  };
-
-  getPortfolioValue = async () => {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    let currValue;
-    if (!portfolio) {
-      return 0;
-    }
-    const today = Utilities.getToday();
-    currValue = await Utilities.getYAxisValue(portfolio, today);
-    return currValue;
-  };
-
-  async componentDidMount() {
-    const currValue = await this.getPortfolioValue();
-    this.setState({ currValue: currValue });
-  }
-
-  render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-
-    // let depositValue = 0;
-
-    // for (const deposit in Constants.DEPOSITS) {
-    //   depositValue += Constants.DEPOSITS[deposit];
-    // }
-    // const totalGain = currValue - depositValue;
-    const prevValue = 6; // FIXME:
-    const dayGain = 7; // FIXME:
-
-    return (
-      <div className="main">
-        <div>
-          <h1>{portfolio && portfolio.name}</h1>
-          <h2>${this.state.currValue}</h2>
-        </div>
-        <div>
-          Day Gain: ${dayGain} (+{((dayGain / prevValue) * 100).toFixed(2)}%)
-          <br />
-          {/* Total Gain: ${totalGain} (
-          {((totalGain / depositValue) * 100).toFixed(2)}%) */}
-        </div>
-        <PortfolioChart submitted={this.setSubmittedState} />
-      </div>
-    );
-  }
-}
-
-class PortfolioChart extends Component {
+export class PortfolioChart extends Component {
   state = { submitted: false };
 
   getOptions = () => {
@@ -70,16 +17,16 @@ class PortfolioChart extends Component {
   getData = async () => {
     let chartData;
     if (this.state.startDate && this.state.endDate) {
-      chartData = await Utilities.prepDataForPortfolioChart(
+      chartData = await ChartUtils.prepDataForPortfolioChart(
         this.state.startDate._d,
         this.state.endDate._d
       );
     } else {
-      const today = Utilities.getToday();
+      const today = DateUtils.getToday();
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
-      chartData = await Utilities.prepDataForPortfolioChart(startDate, today);
+      chartData = await ChartUtils.prepDataForPortfolioChart(startDate, today);
     }
 
     const result = {
@@ -170,5 +117,3 @@ class PortfolioChart extends Component {
     );
   }
 }
-
-export default PortfolioSummary;

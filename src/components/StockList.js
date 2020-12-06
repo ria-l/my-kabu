@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import * as Utilities from './utilities';
+import * as Utilities from '../utils/utilities';
+import * as PortfolioUtils from '../utils/portfolioUtils';
+import * as ApiCalls from '../utils/apiCalls';
 
 class StockList extends Component {
   state = { rerender: false, editing: false };
 
   deleteRow = (id) => {
-    Utilities.deleteLotFromPortfolio(id);
+    PortfolioUtils.deleteLotFromPortfolio(id);
     this.setState({ rerender: true });
     this.props.submitted(true);
   };
@@ -16,7 +18,7 @@ class StockList extends Component {
 
   finishEditingRow = (id, symbol, boughtShares) => {
     if (id) {
-      Utilities.updatePortfolio(id, symbol, boughtShares);
+      PortfolioUtils.updatePortfolio(id, symbol, boughtShares);
     }
     this.setState({ editing: false, rerender: true });
     this.props.submitted(true);
@@ -94,8 +96,8 @@ class StockListRow extends Component {
     const symbol = portfolio.lots[this.props.lot].symbol;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = Utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = Utilities.getTodaysPrice(symbol);
-    const yesterdaysPrice = Utilities.getYesterdaysPrice(symbol);
+    const todaysPrice = ApiCalls.getTodaysPrice(symbol);
+    const yesterdaysPrice = ApiCalls.getYesterdaysPrice(symbol);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
     const boughtDate = portfolio.lots[this.props.lot].boughtDate;
@@ -164,8 +166,8 @@ class EditableStockListRow extends Component {
     const symbol = portfolio.lots[this.props.lot].symbol;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = Utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = Utilities.getTodaysPrice(symbol);
-    const yesterdaysPrice = Utilities.getYesterdaysPrice(symbol);
+    const todaysPrice = ApiCalls.getTodaysPrice(symbol);
+    const yesterdaysPrice = ApiCalls.getYesterdaysPrice(symbol);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
 

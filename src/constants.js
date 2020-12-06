@@ -1,7 +1,7 @@
-import * as Utilities from './utilities';
+import * as DateUtils from './utils/dateUtils';
 
-const today = Utilities.getTodaysDateInIso();
-const yesterday = Utilities.getYesterdaysDateInIso();
+const today = DateUtils.getTodaysDateInIso();
+const yesterday = DateUtils.getYesterdaysDateInIso();
 
 /**
  * Returns properly formatted Date object for today (local time).
