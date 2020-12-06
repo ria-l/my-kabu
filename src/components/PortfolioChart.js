@@ -1,9 +1,11 @@
+import React, { Component } from 'react';
+
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
-import * as utilities from '../utils/utilities';
-import * as dateUtils from '../utils/dateUtils';
+
 import * as chartUtils from '../utils/chartUtils';
-import React, { Component } from 'react';
+import * as dateUtils from '../utils/dateUtils';
+import * as utilities from '../utils/utilities';
 
 export class PortfolioChart extends Component {
   state = { submitted: false };
