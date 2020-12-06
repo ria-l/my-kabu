@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 export class PortfolioChart extends Component {
   state = { submitted: false };
 
+  // Options for Chartjs rendering.
   getOptions = () => {
     return {
       responsive: true,
@@ -17,7 +18,7 @@ export class PortfolioChart extends Component {
   getData = async () => {
     let chartData;
     if (this.state.startDate && this.state.endDate) {
-      chartData = await chartUtils.prepDataForPortfolioChart(
+      chartData = await chartUtils.getChartLabels(
         this.state.startDate._d,
         this.state.endDate._d
       );
@@ -26,7 +27,7 @@ export class PortfolioChart extends Component {
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
-      chartData = await chartUtils.prepDataForPortfolioChart(startDate, today);
+      chartData = await chartUtils.getChartLabels(startDate, today);
     }
 
     const result = {

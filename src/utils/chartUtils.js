@@ -6,7 +6,7 @@ import * as apiCalls from './apiCalls';
  * @param {Object} startDate
  * @param {Object} endDate
  */
-export const prepDataForPortfolioChart = async (startDate, endDate) => {
+export const getChartLabels = async (startDate, endDate) => {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (!portfolio) {
     return;
