@@ -19,16 +19,14 @@ class PortfolioSummary extends Component {
     if (!portfolio) {
       return 0;
     }
-    const today = Constants.getToday();
+    const today = Utilities.getToday();
     currValue = await Utilities.getYAxisValue(portfolio, today);
     return currValue;
   };
 
   async componentDidMount() {
     const currValue = await this.getPortfolioValue();
-    this.setState({ currValue: currValue }, () => {
-      console.log(this.state);
-    });
+    this.setState({ currValue: currValue });
   }
 
   render() {
@@ -78,7 +76,7 @@ class PortfolioChart extends Component {
         this.state.endDate._d
       );
     } else {
-      const today = Constants.getToday();
+      const today = Utilities.getToday();
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
@@ -99,15 +97,12 @@ class PortfolioChart extends Component {
       ],
     };
 
-    console.log(result);
     return result;
   };
 
   async componentDidMount() {
     const apiData = await this.getData();
-    this.setState({ apiData: apiData }, () => {
-      console.log(this.state);
-    });
+    this.setState({ apiData: apiData });
   }
 
   async componentDidUpdate(prevProps, prevState) {
