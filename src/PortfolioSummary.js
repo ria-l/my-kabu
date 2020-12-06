@@ -2,7 +2,6 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
-import * as Constants from './constants';
 import * as Utilities from './utilities';
 import React, { Component } from 'react';
 
