@@ -1,4 +1,4 @@
-import * as DateUtils from './dateUtils';
+import * as dateUtils from './dateUtils';
 import * as Constants from '../constants';
 
 export function getTodaysPrice(ticker) {
@@ -32,7 +32,8 @@ export function getYesterdaysPrice(ticker) {
  * @param {Object} date
  */
 export async function getStockPrice(ticker, date) {
-  const apiDate = DateUtils.convertPickedDateToUtc(date)
+  const apiDate = dateUtils
+    .convertPickedDateToUtc(date)
     .toISOString()
     .split('T')[0];
   const pricesApiUrl = `/prices/${ticker}/${apiDate}`;
@@ -54,7 +55,7 @@ export async function getStockPrice(ticker, date) {
   }
 
   for (let i = 0; i < pricesJson.length; i++) {
-    const copyOfDate = DateUtils.convertPickedDateToUtc(date);
+    const copyOfDate = dateUtils.convertPickedDateToUtc(date);
     const apiDate = new Date(pricesJson[i].date);
     if (apiDate.toISOString() === copyOfDate.toISOString()) {
       return pricesJson[i].close;

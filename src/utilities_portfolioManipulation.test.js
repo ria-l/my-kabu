@@ -1,4 +1,4 @@
-import * as Utilities from './utils/utilities';
+import * as utilities from './utils/utilities';
 
 class LocalStorageMock {
   constructor() {
@@ -33,31 +33,31 @@ describe('Functions that manipulate the portfolio (CRUD)', () => {
     });
 
     it('correctly adds inputted ticker to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
+      utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots.length).toEqual(1);
       expect(portfolio.lots[0].ticker).toEqual('FAKE');
     });
 
     it('correctly adds inputted number of shares to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
+      utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots[0].boughtShares).toEqual(3);
     });
 
     it('correctly adds inputted bought price to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
+      utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots[0].boughtPrice).toEqual(40.23);
     });
 
     it('correctly adds inputted bought date to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
+      utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots[0].boughtDate).toEqual('2020-05-06T00:00:00.000Z');
     });
     it('correctly adds inputted broker to portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
+      utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots[0].broker).toEqual('RobinHood');
     });
@@ -65,8 +65,8 @@ describe('Functions that manipulate the portfolio (CRUD)', () => {
 
   describe('deleteLotFromPortfolio', () => {
     it('removes a lot from the localstorage portfolio', () => {
-      Utilities.addLotToPortfolio('FAKE');
-      Utilities.deleteLotFromPortfolio(1234);
+      utilities.addLotToPortfolio('FAKE');
+      utilities.deleteLotFromPortfolio(1234);
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots.length).toEqual(0);
     });

@@ -1,7 +1,7 @@
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
-import * as Utilities from '../utils/utilities';
-import * as PortfolioUtils from '../utils/portfolioUtils';
+import * as utilities from '../utils/utilities';
+import * as portfolioUtils from '../utils/portfolioUtils';
 import React from 'react';
 
 class AddLot extends React.Component {
@@ -16,7 +16,7 @@ class AddLot extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.submitted(true);
-    PortfolioUtils.addLotToPortfolio(
+    portfolioUtils.addLotToPortfolio(
       this.state.ticker,
       this.state.boughtShares,
       this.state.boughtPrice,
@@ -58,7 +58,7 @@ class AddLot extends React.Component {
             focused={this.state.focused}
             onFocusChange={({ focused }) => this.setState({ focused })}
             id="your_unique_id"
-            isOutsideRange={Utilities.falseFunc}
+            isOutsideRange={utilities.falseFunc}
           />
           <br />
           <label>Broker: </label>

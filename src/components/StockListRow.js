@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import * as Utilities from '../utils/utilities';
-import * as ApiCalls from '../utils/apiCalls';
+import * as utilities from '../utils/utilities';
+import * as apiCalls from '../utils/apiCalls';
 
 export class StockListRow extends Component {
   handleClick = (name, id) => {
@@ -16,9 +16,9 @@ export class StockListRow extends Component {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
-    const numShares = Utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = ApiCalls.getTodaysPrice(ticker);
-    const yesterdaysPrice = ApiCalls.getYesterdaysPrice(ticker);
+    const numShares = utilities.getNumberOfShares(this.props.lot);
+    const todaysPrice = apiCalls.getTodaysPrice(ticker);
+    const yesterdaysPrice = apiCalls.getYesterdaysPrice(ticker);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
     const boughtDate = portfolio.lots[this.props.lot].boughtDate;
@@ -37,7 +37,7 @@ export class StockListRow extends Component {
             ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}`
             : null}
           <br />
-          {Utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
+          {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
         </td>
 
         <td>{numShares}</td>
@@ -49,7 +49,7 @@ export class StockListRow extends Component {
             ? `$${(todaysValue - yesterdaysValue).toFixed(2)}`
             : null}
           <br />
-          {Utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
+          {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
 
         <td></td>
