@@ -1,7 +1,7 @@
-import * as DateUtils from './utils/dateUtils';
-
-const today = DateUtils.getTodaysDateInIso();
-const yesterday = DateUtils.getYesterdaysDateInIso();
+const today = new Date().toISOString();
+let yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+yesterday = yesterday.toISOString();
 
 /**
  * Returns properly formatted Date object for today (local time).

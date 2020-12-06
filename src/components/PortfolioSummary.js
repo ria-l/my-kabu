@@ -18,7 +18,7 @@ class PortfolioSummary extends Component {
     if (!portfolio) {
       return 0;
     }
-    const today = DateUtils.getToday();
+    const today = DateUtils.convertToPickedDate(new Date());
     currValue = await ChartUtils.getYAxisValue(portfolio, today);
     return currValue;
   };

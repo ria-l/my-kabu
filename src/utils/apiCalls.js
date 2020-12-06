@@ -2,7 +2,7 @@ import * as DateUtils from './dateUtils';
 import * as Constants from '../constants';
 
 export function getTodaysPrice(ticker) {
-  const today = DateUtils.getTodaysDateInIso().split('T')[0];
+  const today = new Date().toISOString().split('T')[0];
   const tickerData = Constants.API_PRICES[ticker];
   for (const entry in tickerData) {
     const cleanDate = tickerData[entry].date.split('T')[0];
@@ -14,7 +14,10 @@ export function getTodaysPrice(ticker) {
 }
 
 export function getYesterdaysPrice(ticker) {
-  const yesterday = DateUtils.getYesterdaysDateInIso().split('T')[0];
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  yesterday = yesterday.toISOString().split('T')[0];
+
   for (const entry in Constants.API_PRICES[ticker]) {
     const cleanDate = Constants.API_PRICES[ticker][entry].date.split('T')[0];
     if (cleanDate === yesterday) {

@@ -43,13 +43,13 @@ const testPortfolio = JSON.stringify({
 describe('API retrieval functions', () => {
   describe('getTodaysPrice', () => {
     it("returns today's close price for a given ticker, if it exists", () => {
-      expect(Utilities.getTodaysPrice('FAKE')).toEqual(1452.71);
+      expect(DateUtils.getTodaysPrice('FAKE')).toEqual(1452.71);
     });
   });
 
   describe('getYesterdaysPrice', () => {
     it("returns yesterday's close price for a given ticker, if it exists", () => {
-      expect(Utilities.getYesterdaysPrice('FAKE')).toEqual(1489.58);
+      expect(DateUtils.getYesterdaysPrice('FAKE')).toEqual(1489.58);
     });
   });
 });

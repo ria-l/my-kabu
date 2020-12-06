@@ -22,7 +22,7 @@ export class PortfolioChart extends Component {
         this.state.endDate._d
       );
     } else {
-      const today = DateUtils.getToday();
+      const today = DateUtils.convertToPickedDate(new Date());
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);

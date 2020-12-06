@@ -1,10 +1,6 @@
-export const getToday = () => {
-  const today = new Date();
-  today.setHours(12, 0, 0, 0);
-  return today;
-};
-
 /**
+ * Takes two dates and creates an array of all dates
+ * between them, inclusive.
  *
  * @param {Object} startDate
  * @param {Object} endDate
@@ -18,6 +14,18 @@ export const getDateRange = (startDate, endDate) => {
     copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
   }
   return dateRange;
+};
+
+/**
+ * Converts Date objects to match the date picker's
+ * format. Basically the date picker just defaults
+ * dates to local date, 12pm.
+ *
+ * @param {Object} date
+ */
+export const convertToPickedDate = (date) => {
+  date.setHours(12, 0, 0, 0);
+  return date;
 };
 
 /**
@@ -36,15 +44,3 @@ export const convertPickedDateToUtc = (date) => {
   newDate.setHours(newDate.getHours() - timezoneOffset / 60 - 12);
   return newDate;
 };
-
-export function getTodaysDateInIso() {
-  const today = new Date().toISOString();
-  return today;
-}
-
-export function getYesterdaysDateInIso() {
-  let yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  yesterday = yesterday.toISOString();
-  return yesterday;
-}
