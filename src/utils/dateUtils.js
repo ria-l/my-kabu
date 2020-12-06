@@ -1,4 +1,6 @@
 /**
+ * Takes two dates and creates an array of all dates
+ * between them, inclusive.
  *
  * @param {Object} startDate
  * @param {Object} endDate
