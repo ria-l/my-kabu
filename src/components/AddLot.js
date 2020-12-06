@@ -1,6 +1,7 @@
 import 'react-dates/initialize';
 import { SingleDatePicker } from 'react-dates';
-import * as Utilities from './utilities';
+import * as Utilities from '../utils/utilities';
+import * as PortfolioUtils from '../utils/portfolioUtils';
 import React from 'react';
 
 class AddLot extends React.Component {
@@ -15,7 +16,7 @@ class AddLot extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.submitted(true);
-    Utilities.addLotToPortfolio(
+    PortfolioUtils.addLotToPortfolio(
       this.state.symbol,
       this.state.boughtShares,
       this.state.boughtPrice,

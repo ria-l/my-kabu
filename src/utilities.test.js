@@ -1,4 +1,5 @@
-import * as Utilities from './utilities';
+import * as Utilities from './utils/utilities';
+import * as DateUtils from '../utils/dateUtils';
 
 const testPortfolio = JSON.stringify({
   name: 'To The Moon',

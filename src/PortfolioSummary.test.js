@@ -1,7 +1,8 @@
-import * as Utilities from './utilities';
+import * as Utilities from './utils/utilities';
+import * as DateUtils from '../utils/dateUtils';
 
-const today = Utilities.getTodaysDateInIso().split('T')[0];
-const yesterday = Utilities.getYesterdaysDateInIso().split('T')[0];
+const today = DateUtils.getTodaysDateInIso().split('T')[0];
+const yesterday = DateUtils.getYesterdaysDateInIso().split('T')[0];
 
 describe('getDataForChart', () => {
   it('converts API data into chart-friendly format', () => {

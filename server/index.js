@@ -17,19 +17,10 @@ app.get('/prices/:ticker/:date', async (request, response) => {
     const apiUrl = `https://api.tiingo.com/tiingo/daily/${ticker}/prices?startDate=${apiDate}&endDate=${apiDate}&token=${tiingo_api_key}`;
     const fetchResponse = await fetch(apiUrl);
     const json = await fetchResponse.json();
-    console.log(json);
     response.json(json);
   } catch (err) {
     console.error(err);
   }
-});
-
-app.get('/meta/:ticker', async (request, response) => {
-  const ticker = request.params.ticker;
-  const apiUrl = `https://api.tiingo.com/tiingo/daily/${ticker}?token=${tiingo_api_key}`;
-  const fetchResponse = await fetch(apiUrl);
-  const json = await fetchResponse.json();
-  response.json(json);
 });
 
 const port = process.env.PORT || 3001;

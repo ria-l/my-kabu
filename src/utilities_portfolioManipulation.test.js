@@ -1,4 +1,4 @@
-import * as Utilities from './utilities';
+import * as Utilities from './utils/utilities';
 
 class LocalStorageMock {
   constructor() {
