@@ -1,9 +1,3 @@
-export const getToday = () => {
-  const today = new Date();
-  today.setHours(12, 0, 0, 0);
-  return today;
-};
-
 /**
  *
  * @param {Object} startDate
@@ -18,6 +12,18 @@ export const getDateRange = (startDate, endDate) => {
     copyOfStartDate.setDate(copyOfStartDate.getDate() + 1);
   }
   return dateRange;
+};
+
+/**
+ * Converts Date objects to match the date picker's
+ * format. Basically the date picker just defaults
+ * dates to local date, 12pm.
+ *
+ * @param {Object} date
+ */
+export const convertToPickedDate = (date) => {
+  date.setHours(12, 0, 0, 0);
+  return date;
 };
 
 /**
