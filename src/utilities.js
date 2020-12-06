@@ -84,19 +84,30 @@ export const prepDataForPortfolioChart = async (startDate, endDate) => {
   if (!portfolio) {
     return;
   }
-  const dateRange = getDateRange(startDate, endDate),
-    xAxisLabels = [],
-    yAxisLabels = [];
-  dateRange.forEach(async (date) => {
+  const dateRange = getDateRange(startDate, endDate);
+  const xAxisLabels = [];
+  const yAxisLabels = [];
+  const promises = [];
+  dateRange.forEach((date) => {
+    const dateObject = new Date(date);
+    promises.push(
+      new Promise(async (resolve) =>
+        resolve(await getYAxisValue(portfolio, dateObject))
+      )
+    );
+  });
+  const promiseArray = await Promise.all(promises);
+  dateRange.forEach((date, i) => {
     const dateObject = new Date(date);
     const dateTwo = ('0' + dateObject.getDate()).substr(-2);
     const monthTwo = ('0' + (dateObject.getMonth() + 1)).substr(-2);
-    const yValue = await getYAxisValue(portfolio, dateObject);
+    const yValue = promiseArray[i];
     if (!isNaN(yValue)) {
       yAxisLabels.push(yValue);
       xAxisLabels.push(`${dateObject.getFullYear()}-${monthTwo}-${dateTwo}`);
     }
   });
+
   return { xAxisLabels, yAxisLabels };
 };
 
@@ -127,15 +138,18 @@ export const getYAxisValue = async (portfolio, dateObject) => {
     const numShares = portfolio.lots[lotIndex].boughtShares;
 
     if (dateIsInRange) {
-      const stockPromise = new Promise((resolve, reject) => {
-        resolve(getStockPrice(portfolio.lots[lotIndex].symbol, dateObject));
+      const stockPromise = new Promise(async (resolve, reject) => {
+        const stockPrice = await getStockPrice(
+          portfolio.lots[lotIndex].symbol,
+          dateObject
+        );
+        resolve(stockPrice);
       });
 
       promises.push(stockPromise); // stockPromise is a promise, that resolves to thet stock price
       numArr.push(numShares);
     }
   }
-
   const resolvedJunk = await Promise.all(promises); // this is an object that contains the resolution of all the promises
   for (let i = 0; i < resolvedJunk.length; i++) {
     yValue += resolvedJunk[i] * numArr[i];

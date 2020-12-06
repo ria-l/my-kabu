@@ -83,7 +83,6 @@ class PortfolioChart extends Component {
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
       chartData = await Utilities.prepDataForPortfolioChart(startDate, today);
-      console.log(chartData);
     }
 
     const result = {
@@ -111,17 +110,19 @@ class PortfolioChart extends Component {
     });
   }
 
-  handleSubmit = (e) => {
+  async componentDidUpdate(prevProps, prevState) {
+    if (this.state.submitted !== prevState.submitted) {
+      const apiData = await this.getData();
+      this.setState({ apiData: apiData });
+    }
+  }
+
+  handleSubmit = async (e) => {
     e.preventDefault();
     let toggle = this.state.submitted;
     toggle = !toggle;
-
-    const apiData = this.getData();
-    console.log('getdate', apiData);
-    this.setState({ apiData: apiData }, () => {
-      this.setState({ submitted: toggle });
-      console.log(this.state);
-    });
+    const apiData = await this.getData();
+    this.setState({ apiData: apiData });
   };
 
   render() {
