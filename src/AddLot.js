@@ -33,21 +33,21 @@ class AddLot extends React.Component {
           <input
             name="symbol"
             onChange={this.handleChange}
-            value={this.state.symbol}
+            value={this.state.symbol || ''}
           />
           <br />
           <label>Number of shares: </label>
           <input
             name="boughtShares"
             onChange={this.handleChange}
-            value={this.state.boughtShares}
+            value={this.state.boughtShares || ''}
           />
           <br />
           <label>Buy price: </label>
           <input
             name="boughtPrice"
             onChange={this.handleChange}
-            value={this.state.boughtPrice}
+            value={this.state.boughtPrice || ''}
           />
           <br />
           <label>Buy date: </label>
@@ -64,7 +64,7 @@ class AddLot extends React.Component {
           <input
             name="broker"
             onChange={this.handleChange}
-            value={this.state.broker}
+            value={this.state.broker || ''}
           />
           <input type="submit" value="Submit" />
         </form>
