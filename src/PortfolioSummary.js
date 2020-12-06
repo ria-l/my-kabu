@@ -119,8 +119,6 @@ class PortfolioChart extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    let toggle = this.state.submitted;
-    toggle = !toggle;
     const apiData = await this.getData();
     this.setState({ apiData: apiData });
   };
@@ -135,7 +133,7 @@ class PortfolioChart extends Component {
               <td>
                 <div className="chart-wrapper">
                   <Line
-                    redraw={true}
+                    redraw={false}
                     data={
                       this.state.apiData || {
                         labels: [],
