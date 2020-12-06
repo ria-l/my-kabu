@@ -1,7 +1,7 @@
 import * as Utilities from './utils/utilities';
 import * as DateUtils from '../utils/dateUtils';
 
-const today = DateUtils.getTodaysDateInIso().split('T')[0];
+const today = new Date().toISOString().split('T')[0];
 const yesterday = DateUtils.getYesterdaysDateInIso().split('T')[0];
 
 describe('getDataForChart', () => {

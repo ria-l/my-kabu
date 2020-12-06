@@ -42,15 +42,3 @@ export const convertPickedDateToUtc = (date) => {
   newDate.setHours(newDate.getHours() - timezoneOffset / 60 - 12);
   return newDate;
 };
-
-export function getTodaysDateInIso() {
-  const today = new Date().toISOString();
-  return today;
-}
-
-export function getYesterdaysDateInIso() {
-  let yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  yesterday = yesterday.toISOString();
-  return yesterday;
-}
