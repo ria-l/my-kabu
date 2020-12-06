@@ -36,7 +36,7 @@ describe('Functions that manipulate the portfolio (CRUD)', () => {
       Utilities.addLotToPortfolio('FAKE', 3, 40.23, '2020-05-06', 'RobinHood');
       const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
       expect(portfolio.lots.length).toEqual(1);
-      expect(portfolio.lots[0].symbol).toEqual('FAKE');
+      expect(portfolio.lots[0].ticker).toEqual('FAKE');
     });
 
     it('correctly adds inputted number of shares to portfolio', () => {

@@ -16,9 +16,9 @@ class StockList extends Component {
     this.setState({ editing: true, id });
   };
 
-  finishEditingRow = (id, symbol, boughtShares) => {
+  finishEditingRow = (id, ticker, boughtShares) => {
     if (id) {
-      PortfolioUtils.updatePortfolio(id, symbol, boughtShares);
+      PortfolioUtils.updatePortfolio(id, ticker, boughtShares);
     }
     this.setState({ editing: false, rerender: true });
     this.props.submitted(true);

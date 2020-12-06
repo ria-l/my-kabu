@@ -6,7 +6,7 @@ const testPortfolio = JSON.stringify({
   lots: [
     {
       id: 1234,
-      symbol: 'AMZN',
+      ticker: 'AMZN',
       boughtShares: 1,
       boughtDate: '2020-06-16',
       broker: 'Robinhood',
@@ -17,7 +17,7 @@ const testPortfolio = JSON.stringify({
     },
     {
       id: 2345,
-      symbol: 'MSFT',
+      ticker: 'MSFT',
       boughtShares: 5,
       boughtDate: '2020-07-14',
       broker: 'Robinhood',
@@ -28,7 +28,7 @@ const testPortfolio = JSON.stringify({
     },
     {
       id: 3456,
-      symbol: 'BABA',
+      ticker: 'BABA',
       boughtShares: 2,
       boughtDate: '2020-05-07',
       broker: 'Robinhood',

@@ -4,12 +4,13 @@ import * as ApiCalls from '../utils/apiCalls';
 
 export class EditableStockListRow extends Component {
   state = {};
-  handleClick = (name, id, symbol, shares) => {
+
+  handleClick = (name, id, ticker, shares) => {
     if (name === 'delete') {
       this.props.onDelete(id);
     }
     if (name === 'save') {
-      this.props.onSaveOrCancel(id, symbol, shares);
+      this.props.onSaveOrCancel(id, ticker, shares);
     }
     if (name === 'cancel') {
       this.props.onSaveOrCancel();
@@ -19,13 +20,14 @@ export class EditableStockListRow extends Component {
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const symbol = portfolio.lots[this.props.lot].symbol;
+    const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = Utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = ApiCalls.getTodaysPrice(symbol);
-    const yesterdaysPrice = ApiCalls.getYesterdaysPrice(symbol);
+    const todaysPrice = ApiCalls.getTodaysPrice(ticker);
+    const yesterdaysPrice = ApiCalls.getYesterdaysPrice(ticker);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
 
@@ -35,8 +37,8 @@ export class EditableStockListRow extends Component {
 
         <td>
           <input
-            name="symbol"
-            value={this.state.symbol || symbol}
+            name="ticker"
+            value={this.state.ticker || ticker}
             onChange={this.handleChange}
           />
         </td>
@@ -84,7 +86,7 @@ export class EditableStockListRow extends Component {
               this.handleClick(
                 'save',
                 id,
-                this.state.symbol,
+                this.state.ticker,
                 this.state.numShares
               );
             }}

@@ -17,7 +17,7 @@ class AddLot extends React.Component {
     e.preventDefault();
     this.props.submitted(true);
     PortfolioUtils.addLotToPortfolio(
-      this.state.symbol,
+      this.state.ticker,
       this.state.boughtShares,
       this.state.boughtPrice,
       this.state.date._d,
@@ -32,9 +32,9 @@ class AddLot extends React.Component {
           <h2>What did you buy??</h2>
           <label>Stock: </label>
           <input
-            name="symbol"
+            name="ticker"
             onChange={this.handleChange}
-            value={this.state.symbol || ''}
+            value={this.state.ticker || ''}
           />
           <br />
           <label>Number of shares: </label>

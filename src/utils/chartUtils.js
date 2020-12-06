@@ -51,7 +51,7 @@ export const getYAxisValue = async (portfolio, dateObject) => {
     if (dateIsInRange) {
       const stockPromise = new Promise(async (resolve, reject) => {
         const stockPrice = await ApiCalls.getStockPrice(
-          portfolio.lots[lotIndex].symbol,
+          portfolio.lots[lotIndex].ticker,
           dateObject
         );
         resolve(stockPrice);
