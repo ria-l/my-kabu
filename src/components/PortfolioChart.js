@@ -1,13 +1,16 @@
+import React, { Component } from 'react';
+
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
-import * as Utilities from '../utils/utilities';
-import * as DateUtils from '../utils/dateUtils';
-import * as ChartUtils from '../utils/chartUtils';
-import React, { Component } from 'react';
+
+import * as chartUtils from '../utils/chartUtils';
+import * as dateUtils from '../utils/dateUtils';
+import * as utilities from '../utils/utilities';
 
 export class PortfolioChart extends Component {
   state = { submitted: false };
 
+  // Options for Chartjs rendering.
   getOptions = () => {
     return {
       responsive: true,
@@ -17,16 +20,16 @@ export class PortfolioChart extends Component {
   getData = async () => {
     let chartData;
     if (this.state.startDate && this.state.endDate) {
-      chartData = await ChartUtils.prepDataForPortfolioChart(
+      chartData = await chartUtils.getChartLabels(
         this.state.startDate._d,
         this.state.endDate._d
       );
     } else {
-      const today = DateUtils.convertToPickedDate(new Date());
+      const today = dateUtils.setTimeToNoon(new Date());
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
-      chartData = await ChartUtils.prepDataForPortfolioChart(startDate, today);
+      chartData = await chartUtils.getChartLabels(startDate, today);
     }
 
     const result = {
@@ -109,7 +112,7 @@ export class PortfolioChart extends Component {
             }
             focusedInput={this.state.focusedInput}
             onFocusChange={(focusedInput) => this.setState({ focusedInput })}
-            isOutsideRange={Utilities.falseFunc}
+            isOutsideRange={utilities.falseFunc}
           />
           <input type="submit" value="Submit"></input>
         </form>

@@ -2,8 +2,8 @@ import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import React, { Component } from 'react';
 import { PortfolioChart } from './PortfolioChart';
-import * as DateUtils from '../utils/dateUtils';
-import * as ChartUtils from '../utils/chartUtils';
+import * as dateUtils from '../utils/dateUtils';
+import * as chartUtils from '../utils/chartUtils';
 
 class PortfolioSummary extends Component {
   state = { submitted: false };
@@ -14,13 +14,12 @@ class PortfolioSummary extends Component {
 
   getPortfolioValue = async () => {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    let currValue;
     if (!portfolio) {
       return 0;
     }
-    const today = DateUtils.convertToPickedDate(new Date());
-    currValue = await ChartUtils.getYAxisValue(portfolio, today);
-    return currValue;
+    const today = dateUtils.setTimeToNoon(new Date());
+
+    return await chartUtils.getYAxisValue(portfolio, today);
   };
 
   async componentDidMount() {

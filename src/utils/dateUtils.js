@@ -21,24 +21,24 @@ export const getDateRange = (startDate, endDate) => {
  * format. Basically the date picker just defaults
  * dates to local date, 12pm.
  *
- * @param {Object} date
+ * @param {Date} date
  */
-export const convertToPickedDate = (date) => {
-  date.setHours(12, 0, 0, 0);
-  return date;
+export const setTimeToNoon = (date) => {
+  const dateCopy = new Date(date);
+  dateCopy.setHours(12, 0, 0, 0);
+  return dateCopy;
 };
 
 /**
- * Converts Date object from the date picker to UTC,
- * in order to be compatible with dates sent by the API.
+ * Converts 12pm local Date objects to 12am UTC.
  *
- * Date picker uses local date, 12pm:
- * Fri May 01 2020 12:00:00 GMT-0700 (Pacific Daylight Time)
- * The data's date is UTC 12am: 2020-05-01T00:00:00.000Z
+ * The date picker creates Date objects with the time set as 12pm local time.
+ * This is incompatible with the stock API, which uses UTC 12am.
  *
- * @param {Object} date
+ * @param {Date} date Fri May 01 2020 12:00:00 GMT-0700 (Pacific Daylight Time)
+ * @returns {Date} 2020-05-01T00:00:00.000Z
  */
-export const convertPickedDateToUtc = (date) => {
+export const setDateToUtcMidnight = (date) => {
   const timezoneOffset = date.getTimezoneOffset();
   const newDate = new Date(date);
   newDate.setHours(newDate.getHours() - timezoneOffset / 60 - 12);

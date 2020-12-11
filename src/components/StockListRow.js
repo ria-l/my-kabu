@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import * as Utilities from '../utils/utilities';
-import * as ApiCalls from '../utils/apiCalls';
+import * as utilities from '../utils/utilities';
+import * as apiCalls from '../utils/apiCalls';
 
 export class StockListRow extends Component {
   handleClick = (name, id) => {
@@ -14,11 +14,11 @@ export class StockListRow extends Component {
 
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const symbol = portfolio.lots[this.props.lot].symbol;
+    const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
-    const numShares = Utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = ApiCalls.getTodaysPrice(symbol);
-    const yesterdaysPrice = ApiCalls.getYesterdaysPrice(symbol);
+    const numShares = utilities.getNumberOfShares(this.props.lot);
+    const todaysPrice = apiCalls.getTodaysPrice(ticker);
+    const yesterdaysPrice = apiCalls.getYesterdaysPrice(ticker);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
     const boughtDate = portfolio.lots[this.props.lot].boughtDate;
@@ -26,7 +26,7 @@ export class StockListRow extends Component {
       <tr>
         <td>{id}</td>
 
-        <td>{symbol}</td>
+        <td>{ticker}</td>
 
         <td>{boughtDate}</td>
 
@@ -37,7 +37,7 @@ export class StockListRow extends Component {
             ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}`
             : null}
           <br />
-          {Utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
+          {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
         </td>
 
         <td>{numShares}</td>
@@ -49,7 +49,7 @@ export class StockListRow extends Component {
             ? `$${(todaysValue - yesterdaysValue).toFixed(2)}`
             : null}
           <br />
-          {Utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
+          {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
 
         <td></td>

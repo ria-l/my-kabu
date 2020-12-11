@@ -21,7 +21,7 @@ export function addLotToPortfolio(
     }
     portfolio.lots.push({
       id: uuidv4(),
-      symbol: ticker.toUpperCase(),
+      ticker: ticker.toUpperCase(),
       boughtShares,
       boughtDate,
       boughtPrice,
@@ -50,7 +50,7 @@ export function deleteLotFromPortfolio(id) {
   }
 }
 
-export function updatePortfolio(id, symbol, boughtShares) {
+export function updatePortfolio(id, ticker, boughtShares) {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (portfolio) {
     let index;
@@ -60,8 +60,8 @@ export function updatePortfolio(id, symbol, boughtShares) {
       }
     }
     if (index >= 0) {
-      if (symbol) {
-        portfolio.lots[index].symbol = symbol;
+      if (ticker) {
+        portfolio.lots[index].ticker = ticker;
       }
       if (boughtShares) {
         portfolio.lots[index].boughtShares = boughtShares;

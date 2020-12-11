@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import '../css/App.css';
+
 import PortfolioSummary from './PortfolioSummary';
 import StockList from './StockList';
 import AddLot from './AddLot';

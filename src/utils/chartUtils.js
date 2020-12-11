@@ -1,17 +1,17 @@
-import * as DateUtils from './dateUtils';
-import * as ApiCalls from './apiCalls';
+import * as dateUtils from './dateUtils';
+import * as apiCalls from './apiCalls';
 
 /**
  *
  * @param {Object} startDate
  * @param {Object} endDate
  */
-export const prepDataForPortfolioChart = async (startDate, endDate) => {
+export const getChartLabels = async (startDate, endDate) => {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (!portfolio) {
     return;
   }
-  const dateRange = DateUtils.getDateRange(startDate, endDate);
+  const dateRange = dateUtils.getDateRange(startDate, endDate);
   const xAxisLabels = [];
   const yAxisLabels = [];
   const promises = [];
@@ -50,8 +50,8 @@ export const getYAxisValue = async (portfolio, dateObject) => {
 
     if (dateIsInRange) {
       const stockPromise = new Promise(async (resolve, reject) => {
-        const stockPrice = await ApiCalls.getStockPrice(
-          portfolio.lots[lotIndex].symbol,
+        const stockPrice = await apiCalls.getStockPrice(
+          portfolio.lots[lotIndex].ticker,
           dateObject
         );
         resolve(stockPrice);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as PortfolioUtils from '../utils/portfolioUtils';
+import * as portfolioUtils from '../utils/portfolioUtils';
 import { StockListRow } from './StockListRow';
 import { EditableStockListRow } from './EditableStockListRow';
 
@@ -7,7 +7,7 @@ class StockList extends Component {
   state = { rerender: false, editing: false };
 
   deleteRow = (id) => {
-    PortfolioUtils.deleteLotFromPortfolio(id);
+    portfolioUtils.deleteLotFromPortfolio(id);
     this.setState({ rerender: true });
     this.props.submitted(true);
   };
@@ -16,9 +16,9 @@ class StockList extends Component {
     this.setState({ editing: true, id });
   };
 
-  finishEditingRow = (id, symbol, boughtShares) => {
+  finishEditingRow = (id, ticker, boughtShares) => {
     if (id) {
-      PortfolioUtils.updatePortfolio(id, symbol, boughtShares);
+      portfolioUtils.updatePortfolio(id, ticker, boughtShares);
     }
     this.setState({ editing: false, rerender: true });
     this.props.submitted(true);

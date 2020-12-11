@@ -1364,7 +1364,7 @@ export const API_META = {
 };
 
 // copy/paste to quickly mock localstorage
-// window.localStorage.setItem('portfolio',JSON.stringify({ name: 'To The Moon', lots: [ { id: 1234, symbol: 'AMZN', boughtShares: 1, boughtDate: '2020-12-16', broker: 'Robinhood', boughtPrice: 2619.97, soldShares: 1, soldDate: '2020-07-13', soldPrice: 3175.0, }, { id: 3456, symbol: 'MSFT', boughtShares: 5, boughtDate: '2020-07-14', broker: 'Robinhood', boughtPrice: 107.97, soldShares: 0, soldDate: null, soldPrice: null, }, { id: 2345, symbol: 'BABA', boughtShares: 2, boughtDate: '2020-11-07', broker: 'Robinhood', boughtPrice: 199.6, soldShares: 0, soldDate: null, soldPrice: null, }, ],}))
+// window.localStorage.setItem('portfolio',JSON.stringify({ name: 'To The Moon', lots: [ { id: 1234, ticker: 'AMZN', boughtShares: 1, boughtDate: '2020-12-16', broker: 'Robinhood', boughtPrice: 2619.97, soldShares: 1, soldDate: '2020-07-13', soldPrice: 3175.0, }, { id: 3456, ticker: 'MSFT', boughtShares: 5, boughtDate: '2020-07-14', broker: 'Robinhood', boughtPrice: 107.97, soldShares: 0, soldDate: null, soldPrice: null, }, { id: 2345, ticker: 'BABA', boughtShares: 2, boughtDate: '2020-11-07', broker: 'Robinhood', boughtPrice: 199.6, soldShares: 0, soldDate: null, soldPrice: null, }, ],}))
 
 export const DEPOSITS = {
   20200506: 100,
