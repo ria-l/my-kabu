@@ -14,11 +14,12 @@ class PortfolioSummary extends Component {
 
   getPortfolioValue = async () => {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    let currValue;
     if (!portfolio) {
       return 0;
     }
     const today = dateUtils.setTimeToNoon(new Date());
+
+    return await chartUtils.getYAxisValue(portfolio, today);
   };
 
   async componentDidMount() {
