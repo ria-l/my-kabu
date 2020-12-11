@@ -29,11 +29,11 @@ export function getYesterdaysPrice(ticker) {
 /**
  *
  * @param {String} ticker
- * @param {Object} date
+ * @param {Date} date
  */
 export async function getStockPrice(ticker, date) {
-  const apiDate = dateUtils
-    .convertPickedDateToUtc(date)
+  const dateFormattedForApi = dateUtils
+    .setDateToUtcMidnight(date)
     .toISOString()
     .split('T')[0];
   const pricesApiUrl = `/prices/${ticker}/${apiDate}`;
