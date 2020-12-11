@@ -36,7 +36,7 @@ export async function getStockPrice(ticker, date) {
     .setDateToUtcMidnight(date)
     .toISOString()
     .split('T')[0];
-  const pricesApiUrl = `/prices/${ticker}/${apiDate}`;
+  const pricesApiUrl = `/prices/${ticker}/${dateFormattedForApi}`;
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
 
@@ -49,16 +49,13 @@ export async function getStockPrice(ticker, date) {
       yAxisLabels: [],
       name: `Invalid ticker ${ticker}`,
     };
-  }
-  if (!pricesJson) {
-    return;
-  }
-
-  for (let i = 0; i < pricesJson.length; i++) {
-    const copyOfDate = dateUtils.convertPickedDateToUtc(date);
-    const apiDate = new Date(pricesJson[i].date);
-    if (apiDate.toISOString() === copyOfDate.toISOString()) {
-      return pricesJson[i].close;
+  } else if (!pricesJson || pricesJson.length === 0) {
+    return; // TODO: return something else
+  } else {
+    const d = dateUtils.setDateToUtcMidnight(date);
+    const fetchedDate = new Date(pricesJson[0].date);
+    if (fetchedDate.toISOString() === d.toISOString()) {
+      return pricesJson[0].close;
     }
   }
 }
