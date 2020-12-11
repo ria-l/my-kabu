@@ -6,6 +6,18 @@ import * as apiCalls from '../utils/apiCalls';
 export class EditableStockListRow extends Component {
   state = {};
 
+  handlers = {
+    delete: (id, ticker, shares) => {
+      this.props.onDelete(id);
+    },
+    save: (id, ticker, shares) => {
+      this.props.onSaveOrCancel(id, ticker, shares);
+    },
+    cancel: (id, ticker, shares) => {
+      this.props.onSaveOrCancel();
+    },
+  };
+
   /**
    * @param {string} btnName
    * @param {string} id Unique id of the row that is being edited.
@@ -13,15 +25,7 @@ export class EditableStockListRow extends Component {
    * @param {number} numShares
    */
   handleClick = (btnName, id, ticker, numShares) => {
-    if (btnName === 'delete') {
-      this.props.onDelete(id);
-    }
-    if (btnName === 'save') {
-      this.props.onSaveOrCancel(id, ticker, numShares);
-    }
-    if (btnName === 'cancel') {
-      this.props.onSaveOrCancel();
-    }
+    this.handlers[btnName](id, ticker, numShares);
   };
 
   handleChange = (e) => {
