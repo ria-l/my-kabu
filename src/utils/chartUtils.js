@@ -3,19 +3,21 @@ import * as dateUtils from './dateUtils';
 import * as apiCalls from './apiCalls';
 
 /**
- *
- * @param {Object} startDate
- * @param {Object} endDate
+ * @param {Date} startDate
+ * @param {Date} endDate
  */
 export const getChartLabels = async (startDate, endDate) => {
   let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+
   if (!portfolio) {
     return;
   }
+
   const dateRange = dateUtils.getDateRange(startDate, endDate);
   const xAxisLabels = [];
   const yAxisLabels = [];
   const promises = [];
+
   dateRange.forEach((date) => {
     const dateObject = new Date(date);
     promises.push(
@@ -30,6 +32,7 @@ export const getChartLabels = async (startDate, endDate) => {
 
   dateRange.forEach((date, i) => {
     const yValue = promiseArray[i];
+
     if (!isNaN(yValue)) {
       yAxisLabels.push(yValue);
       prevValue = yValue;
@@ -42,6 +45,10 @@ export const getChartLabels = async (startDate, endDate) => {
   return { xAxisLabels, yAxisLabels };
 };
 
+/**
+ * @param {Object} portfolio
+ * @param {Date} dateObject
+ */
 export const getYAxisValue = async (portfolio, dateObject) => {
   let yValue = 0;
   const promises = [];
@@ -61,13 +68,15 @@ export const getYAxisValue = async (portfolio, dateObject) => {
         resolve(stockPrice);
       });
 
-      promises.push(stockPromise); // stockPromise is a promise, that resolves to thet stock price
+      promises.push(stockPromise);
       numArr.push(numShares);
     }
   }
-  const resolvedJunk = await Promise.all(promises); // this is an object that contains the resolution of all the promises
+  const resolvedJunk = await Promise.all(promises);
+
   for (let i = 0; i < resolvedJunk.length; i++) {
     yValue += resolvedJunk[i] * numArr[i];
   }
+
   return yValue;
 };
