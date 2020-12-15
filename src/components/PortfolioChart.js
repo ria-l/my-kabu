@@ -18,9 +18,9 @@ export class PortfolioChart extends Component {
   };
 
   getData = async () => {
-    let chartData;
+    let chartLabels;
     if (this.state.startDate && this.state.endDate) {
-      chartData = await chartUtils.getChartLabels(
+      chartLabels = await chartUtils.getChartLabels(
         this.state.startDate._d,
         this.state.endDate._d
       );
@@ -29,15 +29,15 @@ export class PortfolioChart extends Component {
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
-      chartData = await chartUtils.getChartLabels(startDate, today);
+      chartLabels = await chartUtils.getChartLabels(startDate, today);
     }
 
-    const result = {
-      labels: chartData.xAxisLabels,
+    const chartData = {
+      labels: chartLabels.xAxisLabels,
       datasets: [
         {
           label: 'Portfolio value over time',
-          data: chartData.yAxisLabels,
+          data: chartLabels.yAxisLabels,
           fill: false,
           borderColor: ['rgba(0, 200, 5, 1)'],
           borderWidth: 1,
@@ -46,7 +46,7 @@ export class PortfolioChart extends Component {
       ],
     };
 
-    return result;
+    return chartData;
   };
 
   async componentDidMount() {
