@@ -21,8 +21,8 @@ export class PortfolioChart extends Component {
     let chartLabels;
     if (this.state.startDate && this.state.endDate) {
       chartLabels = await chartUtils.getChartLabels(
-        this.state.startDate._d,
-        this.state.endDate._d
+        this.state.startDate.toDate(),
+        this.state.endDate.toDate()
       );
     } else {
       const today = dateUtils.setTimeToNoon(new Date());

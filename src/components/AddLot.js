@@ -22,7 +22,7 @@ class AddLot extends React.Component {
       this.state.ticker,
       this.state.boughtShares,
       this.state.boughtPrice,
-      this.state.date._d,
+      this.state.date.toDate(),
       this.state.broker
     );
   };
