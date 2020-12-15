@@ -24,13 +24,19 @@ export const getChartLabels = async (startDate, endDate) => {
       )
     );
   });
+
   const promiseArray = await Promise.all(promises);
+  let prevValue = 0;
+
   dateRange.forEach((date, i) => {
     const yValue = promiseArray[i];
     if (!isNaN(yValue)) {
       yAxisLabels.push(yValue);
-      xAxisLabels.push(moment(date).format('YYYY-MM-DD'));
+      prevValue = yValue;
+    } else {
+      yAxisLabels.push(prevValue);
     }
+    xAxisLabels.push(moment(date).format('YYYY-MM-DD'));
   });
 
   return { xAxisLabels, yAxisLabels };
