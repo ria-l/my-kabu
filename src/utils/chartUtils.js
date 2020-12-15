@@ -15,52 +15,51 @@ export const getChartLabels = async (startDate, endDate) => {
 
   const dateRange = dateUtils.getDateRange(startDate, endDate);
   const xAxisLabels = [];
-  const yAxisLabels = [];
+  const dataPoints = [];
   const promises = [];
 
   dateRange.forEach((date) => {
     const dateObject = new Date(date);
     promises.push(
       new Promise(async (resolve) =>
-        resolve(await getYAxisValue(portfolio, dateObject))
+        resolve(await getPortfolioValue(portfolio, dateObject))
       )
     );
   });
 
-  const promiseArray = await Promise.all(promises);
+  const portfolioValues = await Promise.all(promises);
   let prevValue = 0;
 
   dateRange.forEach((date, i) => {
-    const yValue = promiseArray[i];
+    const value = portfolioValues[i];
 
-    if (!isNaN(yValue)) {
-      yAxisLabels.push(yValue);
-      prevValue = yValue;
+    if (!isNaN(value)) {
+      dataPoints.push(value);
+      prevValue = value;
     } else {
-      yAxisLabels.push(prevValue);
+      dataPoints.push(prevValue);
     }
     xAxisLabels.push(moment(date).format('YYYY-MM-DD'));
   });
 
-  return { xAxisLabels, yAxisLabels };
+  return { xAxisLabels, dataPoints };
 };
 
 /**
  * @param {Object} portfolio
  * @param {Date} dateObject
  */
-export const getYAxisValue = async (portfolio, dateObject) => {
-  let yValue = 0;
+export const getPortfolioValue = async (portfolio, dateObject) => {
+  let portfolioValue = 0;
   const promises = [];
-  const numArr = [];
+  const boughtShares = [];
 
   for (const lotIndex in portfolio.lots) {
     const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
     const dateIsInRange = boughtDate <= dateObject;
-    const numShares = portfolio.lots[lotIndex].boughtShares;
 
     if (dateIsInRange) {
-      const stockPromise = new Promise(async (resolve, reject) => {
+      const stockPrices = new Promise(async (resolve, reject) => {
         const stockPrice = await apiCalls.getStockPrice(
           portfolio.lots[lotIndex].ticker,
           dateObject
@@ -68,15 +67,15 @@ export const getYAxisValue = async (portfolio, dateObject) => {
         resolve(stockPrice);
       });
 
-      promises.push(stockPromise);
-      numArr.push(numShares);
+      promises.push(stockPrices);
+      boughtShares.push(portfolio.lots[lotIndex].boughtShares);
     }
   }
-  const resolvedJunk = await Promise.all(promises);
+  const stockPrices = await Promise.all(promises);
 
-  for (let i = 0; i < resolvedJunk.length; i++) {
-    yValue += resolvedJunk[i] * numArr[i];
+  for (const [i, price] of stockPrices.entries()) {
+    portfolioValue += price * boughtShares[i];
   }
 
-  return yValue;
+  return portfolioValue;
 };

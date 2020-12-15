@@ -19,7 +19,7 @@ class PortfolioSummary extends Component {
     }
     const today = dateUtils.setTimeToNoon(new Date());
 
-    return await chartUtils.getYAxisValue(portfolio, today);
+    return await chartUtils.getPortfolioValue(portfolio, today);
   };
 
   async componentDidMount() {
