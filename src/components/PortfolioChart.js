@@ -17,27 +17,27 @@ export class PortfolioChart extends Component {
     };
   };
 
-  getData = async () => {
-    let chartData;
+  getChartData = async () => {
+    let chartLabels;
     if (this.state.startDate && this.state.endDate) {
-      chartData = await chartUtils.getChartLabels(
-        this.state.startDate._d,
-        this.state.endDate._d
+      chartLabels = await chartUtils.getChartLabels(
+        this.state.startDate.toDate(),
+        this.state.endDate.toDate()
       );
     } else {
       const today = dateUtils.setTimeToNoon(new Date());
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
       startDate.setDate(startDate.getDate() - 6);
-      chartData = await chartUtils.getChartLabels(startDate, today);
+      chartLabels = await chartUtils.getChartLabels(startDate, today);
     }
 
-    const result = {
-      labels: chartData.xAxisLabels,
+    const chartData = {
+      labels: chartLabels.xAxisLabels,
       datasets: [
         {
           label: 'Portfolio value over time',
-          data: chartData.yAxisLabels,
+          data: chartLabels.dataPoints,
           fill: false,
           borderColor: ['rgba(0, 200, 5, 1)'],
           borderWidth: 1,
@@ -46,25 +46,25 @@ export class PortfolioChart extends Component {
       ],
     };
 
-    return result;
+    return chartData;
   };
 
   async componentDidMount() {
-    const apiData = await this.getData();
-    this.setState({ apiData: apiData });
+    const chartData = await this.getChartData();
+    this.setState({ chartData: chartData });
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.state.submitted !== prevState.submitted) {
-      const apiData = await this.getData();
-      this.setState({ apiData: apiData });
+      const chartData = await this.getChartData();
+      this.setState({ chartData: chartData });
     }
   }
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const apiData = await this.getData();
-    this.setState({ apiData: apiData });
+    const chartData = await this.getChartData();
+    this.setState({ chartData: chartData });
   };
 
   render() {
@@ -79,7 +79,7 @@ export class PortfolioChart extends Component {
                   <Line
                     redraw={false}
                     data={
-                      this.state.apiData || {
+                      this.state.chartData || {
                         labels: [],
                         datasets: [
                           {

@@ -46,7 +46,7 @@ export async function getStockPrice(ticker, date) {
     console.error(`Invalid ticker ${ticker}`);
     return {
       xAxisLabels: [],
-      yAxisLabels: [],
+      dataPoints: [],
       name: `Invalid ticker ${ticker}`,
     };
   } else if (!pricesJson || pricesJson.length === 0) {
