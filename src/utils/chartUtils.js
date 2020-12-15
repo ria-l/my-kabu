@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as dateUtils from './dateUtils';
 import * as apiCalls from './apiCalls';
 
@@ -25,13 +26,10 @@ export const getChartLabels = async (startDate, endDate) => {
   });
   const promiseArray = await Promise.all(promises);
   dateRange.forEach((date, i) => {
-    const dateObject = new Date(date);
-    const dateTwo = ('0' + dateObject.getDate()).substr(-2);
-    const monthTwo = ('0' + (dateObject.getMonth() + 1)).substr(-2);
     const yValue = promiseArray[i];
     if (!isNaN(yValue)) {
       yAxisLabels.push(yValue);
-      xAxisLabels.push(`${dateObject.getFullYear()}-${monthTwo}-${dateTwo}`);
+      xAxisLabels.push(moment(date).format('YYYY-MM-DD'));
     }
   });
 
