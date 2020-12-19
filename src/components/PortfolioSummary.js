@@ -6,47 +6,48 @@ import * as dateUtils from '../utils/dateUtils';
 import * as chartUtils from '../utils/chartUtils';
 
 class PortfolioSummary extends Component {
-  state = { submitted: false };
+  state = { submitted: false, todaysValue: 0, yesterdaysValue: 0, dayGain: 0 };
 
   setSubmittedState = (state) => {
     this.setState({ submitted: state });
   };
 
-  getPortfolioValue = async () => {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  getPortfolioValue = async (date = new Date()) => {
     if (!portfolio) {
       return 0;
     }
-    const today = dateUtils.setTimeToNoon(new Date());
-
-    return await chartUtils.getPortfolioValue(portfolio, today);
+    const dateCopy = dateUtils.setTimeToNoon(date);
+    return await chartUtils.getPortfolioValue(portfolio, dateCopy);
   };
 
   async componentDidMount() {
-    const currValue = await this.getPortfolioValue();
-    this.setState({ currValue: currValue });
+    const todaysValue = await this.getPortfolioValue();
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdaysValue = await this.getPortfolioValue(yesterday);
+    const dayGain = todaysValue - yesterdaysValue;
+    utilities.calculatePercentChange(yesterdaysValue, todaysValue);
+
+    this.setState({
+      todaysValue,
+      yesterdaysValue,
+      dayGain: dayGain.toFixed(2),
+    });
   }
 
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
 
-    // let depositValue = 0;
-
-    // for (const deposit in Constants.DEPOSITS) {
-    //   depositValue += Constants.DEPOSITS[deposit];
-    // }
-    // const totalGain = currValue - depositValue;
-    const prevValue = 6; // FIXME:
-    const dayGain = 7; // FIXME:
-
     return (
       <div className="main">
         <div>
           <h1>{portfolio && portfolio.name}</h1>
-          <h2>${this.state.currValue}</h2>
+          <h2>${this.state.todaysValue}</h2>
         </div>
         <div>
-          Day Gain: ${dayGain} (+{((dayGain / prevValue) * 100).toFixed(2)}%)
+          Day Gain: ${this.state.dayGain} (+
+          {((this.state.dayGain / this.state.yesterdaysValue) * 100).toFixed(2)}
+          %)
           <br />
           {/* Total Gain: ${totalGain} (
           {((totalGain / depositValue) * 100).toFixed(2)}%) */}
