@@ -1,15 +1,14 @@
 import moment from 'moment';
 import * as dateUtils from './dateUtils';
 import * as apiCalls from './apiCalls';
+import * as utilities from './utilities';
 
 /**
  * @param {Date} startDate
  * @param {Date} endDate
  */
 export const getChartLabels = async (startDate, endDate) => {
-  let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-
-  if (!portfolio) {
+  if (!utilities.portfolio) {
     return;
   }
 
@@ -22,7 +21,7 @@ export const getChartLabels = async (startDate, endDate) => {
     const dateObject = new Date(date);
     promises.push(
       new Promise(async (resolve) =>
-        resolve(await getPortfolioValue(portfolio, dateObject))
+        resolve(await getPortfolioValue(utilities.portfolio, dateObject))
       )
     );
   });

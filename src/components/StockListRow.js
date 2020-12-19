@@ -15,21 +15,18 @@ export class StockListRow extends Component {
   };
 
   async componentDidMount() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = utilities.portfolio;
     const ticker = portfolio.lots[this.props.lot].ticker;
     const today = new Date();
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    debugger;
     const todaysPrice = await apiCalls.getStockPrice(ticker, today);
-    debugger;
     const yesterdaysPrice = await apiCalls.getStockPrice(ticker, yesterday);
-    debugger;
     this.setState({ todaysPrice, yesterdaysPrice });
   }
 
   render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = utilities.portfolio;
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);

@@ -33,7 +33,7 @@ export class EditableStockListRow extends Component {
   };
 
   render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = utilities.portfolio;
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);

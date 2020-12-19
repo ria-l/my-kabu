@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { PortfolioChart } from './PortfolioChart';
 import * as dateUtils from '../utils/dateUtils';
 import * as chartUtils from '../utils/chartUtils';
+import * as utilities from '../utils/utilities';
 
 class PortfolioSummary extends Component {
   state = { submitted: false, todaysValue: 0, yesterdaysValue: 0, dayGain: 0 };
@@ -13,6 +14,7 @@ class PortfolioSummary extends Component {
   };
 
   getPortfolioValue = async (date = new Date()) => {
+    const portfolio = utilities.portfolio;
     if (!portfolio) {
       return 0;
     }
@@ -36,7 +38,7 @@ class PortfolioSummary extends Component {
   }
 
   render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = utilities.portfolio;
 
     return (
       <div className="main">
