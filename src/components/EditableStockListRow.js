@@ -37,15 +37,19 @@ export class EditableStockListRow extends Component {
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = apiCalls.getTodaysPrice(ticker);
-    const yesterdaysPrice = apiCalls.getYesterdaysPrice(ticker);
+    const today = new Date();
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const todaysPrice = apiCalls.getStockPrice(ticker, today);
+    const yesterdaysPrice = apiCalls.getStockPrice(ticker, yesterday);
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
 
     return (
       <tr>
+        {/* ID */}
         <td>{id}</td>
-
+        {/* Symbol */}
         <td>
           <input
             name="ticker"
@@ -53,11 +57,11 @@ export class EditableStockListRow extends Component {
             onChange={this.handleChange}
           />
         </td>
-
+        {/* Graph */}
         <td></td>
-
+        {/* Today's Close */}
         <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
-
+        {/* Change */}
         <td>
           {todaysPrice
             ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}`
@@ -65,7 +69,7 @@ export class EditableStockListRow extends Component {
           <br />
           {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
         </td>
-
+        {/* Shares */}
         <td>
           <input
             name="numShares"
@@ -73,7 +77,7 @@ export class EditableStockListRow extends Component {
             onChange={this.handleChange}
           />
         </td>
-
+        {/* Market Value */}
         <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : null}</td>
 
         <td>
