@@ -40,7 +40,7 @@ export const setTimeToNoon = (date) => {
  */
 export const setDateToUtcMidnight = (date) => {
   const timezoneOffset = date.getTimezoneOffset();
-  const newDate = new Date(date);
+  const newDate = setTimeToNoon(date);
   newDate.setHours(newDate.getHours() - timezoneOffset / 60 - 12);
   return newDate;
 };

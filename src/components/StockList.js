@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import * as portfolioUtils from '../utils/portfolioUtils';
 import { StockListRow } from './StockListRow';
 import { EditableStockListRow } from './EditableStockListRow';
+import * as portfolioUtils from '../utils/portfolioUtils';
+import * as utilities from '../utils/utilities';
 
 class StockList extends Component {
   state = { rerender: false, editing: false };
@@ -26,8 +27,7 @@ class StockList extends Component {
 
   render() {
     const rows = [];
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-
+    const portfolio = utilities.portfolio;
     if (portfolio) {
       for (const lot in portfolio.lots) {
         if (
@@ -60,7 +60,6 @@ class StockList extends Component {
         <table id="stocklist">
           <tbody>
             <tr>
-              {/* // TODO: Delete 'ID" later */}
               <th>ID</th>
               <th>Stock</th>
               <th>Graph</th>

@@ -1,4 +1,5 @@
 export const falseFunc = () => false;
+export const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
 
 /**
  *
@@ -14,9 +15,8 @@ export function calculatePercentChange(oldValue, newValue) {
 }
 
 export function getNumberOfShares(index) {
-  const portfolio = window.localStorage.getItem('portfolio');
   if (portfolio) {
-    const portfolioEntry = JSON.parse(portfolio).lots[index];
+    const portfolioEntry = portfolio.lots[index];
     return portfolioEntry.boughtShares - portfolioEntry.soldShares;
   }
   return 0;

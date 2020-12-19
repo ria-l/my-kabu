@@ -3,6 +3,8 @@ import * as utilities from '../utils/utilities';
 import * as apiCalls from '../utils/apiCalls';
 
 export class StockListRow extends Component {
+  state = { todaysPrice: 0, yesterdaysPrice: 0 };
+
   handleClick = (name, id) => {
     if (name === 'delete') {
       this.props.onDelete(id);
@@ -12,16 +14,32 @@ export class StockListRow extends Component {
     }
   };
 
+  async componentDidMount() {
+    const portfolio = utilities.portfolio;
+    const ticker = portfolio.lots[this.props.lot].ticker;
+    const today = new Date();
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const todaysPrice = await apiCalls.getStockPrice(ticker, today);
+    const yesterdaysPrice = await apiCalls.getStockPrice(ticker, yesterday);
+    this.setState({ todaysPrice, yesterdaysPrice });
+  }
+
   render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = utilities.portfolio;
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);
-    const todaysPrice = apiCalls.getTodaysPrice(ticker);
-    const yesterdaysPrice = apiCalls.getYesterdaysPrice(ticker);
-    const yesterdaysValue = numShares * yesterdaysPrice;
-    const todaysValue = numShares * todaysPrice;
     const boughtDate = portfolio.lots[this.props.lot].boughtDate;
+
+    let yesterdaysValue = 0;
+    let todaysValue = 0;
+
+    if (this.state.todaysPrice && this.state.yesterdaysPrice) {
+      yesterdaysValue = numShares * this.state.yesterdaysPrice;
+      todaysValue = numShares * this.state.todaysPrice;
+    }
+
     return (
       <tr>
         <td>{id}</td>
@@ -30,14 +48,19 @@ export class StockListRow extends Component {
 
         <td>{boughtDate}</td>
 
-        <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
+        <td>{this.state.todaysPrice ? `$${this.state.todaysPrice}` : null}</td>
 
         <td>
-          {todaysPrice
-            ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}`
+          {this.state.todaysPrice
+            ? `$${(this.state.todaysPrice - this.state.yesterdaysPrice).toFixed(
+                2
+              )}`
             : null}
           <br />
-          {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
+          {utilities.calculatePercentChange(
+            this.state.yesterdaysPrice,
+            this.state.todaysPrice
+          )}
         </td>
 
         <td>{numShares}</td>
