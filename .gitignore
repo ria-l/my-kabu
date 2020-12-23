@@ -103,5 +103,6 @@ dist
 ignore/
 build/
 
-# env
+# dotenv environment variables file
 .env
+.env.test
