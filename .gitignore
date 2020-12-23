@@ -102,3 +102,6 @@ dist
 # misc
 ignore/
 build/
+
+# env
+.env
