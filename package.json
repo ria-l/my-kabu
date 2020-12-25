@@ -10,19 +10,20 @@
     "antd": "^4.6.6",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
-    "express-pino-logger": "^5.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-pino-logger": "^5.0.0",
     "node-env-run": "^4.0.2",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6",
     "npm-run-all": "^4.1.5",
     "pino-colada": "^2.1.0",
+    "react": "^16.13.1",
     "react-chartjs-2": "^2.11.1",
     "react-dates": "^21.8.0",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "react-test-renderer": "^16.13.1",
-    "react": "^16.13.1",
     "uuid": "^8.3.1"
   },
   "scripts": {
@@ -51,5 +52,5 @@
   "engines": {
     "node": "10.16.3"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "https://fast-spire-77124.herokuapp.com/"
 }
