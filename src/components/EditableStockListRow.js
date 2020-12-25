@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import * as utilities from '../utils/utilities';
 import * as apiCalls from '../utils/apiCalls';
 
@@ -33,7 +32,7 @@ export class EditableStockListRow extends Component {
   };
 
   render() {
-    const portfolio = utilities.portfolio;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);

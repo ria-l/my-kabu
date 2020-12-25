@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StockListRow } from './StockListRow';
 import { EditableStockListRow } from './EditableStockListRow';
 import * as portfolioUtils from '../utils/portfolioUtils';
-import * as utilities from '../utils/utilities';
 
 class StockList extends Component {
   state = { rerender: false, editing: false };
@@ -27,7 +26,7 @@ class StockList extends Component {
 
   render() {
     const rows = [];
-    const portfolio = utilities.portfolio;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     if (portfolio) {
       for (const lot in portfolio.lots) {
         if (

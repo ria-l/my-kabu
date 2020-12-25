@@ -15,7 +15,7 @@ export class StockListRow extends Component {
   };
 
   async componentDidMount() {
-    const portfolio = utilities.portfolio;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const ticker = portfolio.lots[this.props.lot].ticker;
     const today = new Date();
     let yesterday = new Date();
@@ -26,12 +26,11 @@ export class StockListRow extends Component {
   }
 
   render() {
-    const portfolio = utilities.portfolio;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);
     const boughtDate = portfolio.lots[this.props.lot].boughtDate;
-
     let yesterdaysValue = 0;
     let todaysValue = 0;
 

@@ -14,7 +14,7 @@ class PortfolioSummary extends Component {
   };
 
   getPortfolioValue = async (date = new Date()) => {
-    const portfolio = utilities.portfolio;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     if (!portfolio) {
       return 0;
     }
@@ -38,7 +38,7 @@ class PortfolioSummary extends Component {
   }
 
   render() {
-    const portfolio = utilities.portfolio;
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
 
     return (
       <div className="main">
