@@ -1,33 +1,26 @@
 import * as dateUtils from './dateUtils';
-
 /**
  *
  * @param {String} ticker
  * @param {Date} date
+ * @return {Number} stockPrice
  */
 export async function getStockPrice(ticker, date) {
+  const isoDate = dateUtils.setDateToUtcMidnight(date).toISOString();
+  const storageKey = `${ticker}-${isoDate}`;
+  const storedValue = window.localStorage.getItem(storageKey);
+  if (storedValue) {
+    return storedValue;
+  }
+  window.localStorage.setItem(storageKey, true);
   const dateFormattedForApi = dateUtils
     .setDateToUtcMidnight(date)
     .toISOString()
     .split('T')[0];
-  const pricesApiUrl = `/prices/${ticker}/${dateFormattedForApi}`;
+  const pricesApiUrl = `https://fast-spire-77124.herokuapp.com/prices/${ticker}/${dateFormattedForApi}`;
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
-
-  // If ticker is invalid
-  if (pricesJson['detail']) {
-    console.error(`Invalid ticker ${ticker}`);
-    return undefined;
-  } else if (!pricesJson || pricesJson.length === 0) {
-    console.error('no data was fetched')
-    return undefined;
-  } else {
-    const d = dateUtils.setDateToUtcMidnight(date);
-    const fetchedDate = new Date(pricesJson[0].date);
-    if (fetchedDate.toISOString() === d.toISOString()) {
-      return pricesJson[0].close;
-    } else {
-      console.error(`${fetchedDate.toISOString()} != ${d.toISOString()}`);
-    }
-  }
+  const stockPrice = (pricesJson[0] || { close: null }).close || null;
+  window.localStorage.setItem(storageKey, JSON.stringify(stockPrice));
+  return stockPrice;
 }
