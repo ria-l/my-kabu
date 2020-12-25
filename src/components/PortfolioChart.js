@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-
 import { DateRangePicker } from 'react-dates';
 import { Line } from 'react-chartjs-2';
-
 import * as chartUtils from '../utils/chartUtils';
 import * as dateUtils from '../utils/dateUtils';
 import * as utilities from '../utils/utilities';
@@ -28,7 +26,7 @@ export class PortfolioChart extends Component {
       const today = dateUtils.setTimeToNoon(new Date());
       let startDate = new Date();
       startDate.setHours(12, 0, 0, 0);
-      startDate.setDate(startDate.getDate() - 6);
+      startDate.setDate(startDate.getDate() - 2);
       chartLabels = await chartUtils.getChartLabels(startDate, today);
     }
 
@@ -102,6 +100,7 @@ export class PortfolioChart extends Component {
         </table>
         <form onSubmit={this.handleSubmit}>
           <label>Select a date range</label>
+          {/* // TODO: disallow future dates */}
           <DateRangePicker
             startDate={this.state.startDate}
             startDateId="start-date"
