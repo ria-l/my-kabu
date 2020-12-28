@@ -4,25 +4,71 @@ import { SingleDatePicker } from 'react-dates';
 import * as utilities from '../utils/utilities';
 import * as portfolioUtils from '../utils/portfolioUtils';
 
+function MissingFields(props) {
+  return <div>Missing field: {props.blankFields}</div>;
+}
+
+function Error(props) {
+  const hasError = props.hasError;
+  if (hasError) {
+    return <MissingFields blankFields={props.blankFields} />;
+  }
+  return null;
+}
+
 class AddLot extends React.Component {
   state = {
     submitted: false,
+    blankFields: '',
+    hasError: false,
   };
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  validate = () => {
+    if (
+      this.state.ticker &&
+      this.state.boughtShares &&
+      this.state.boughtPrice &&
+      this.state.date &&
+      this.state.broker
+    ) {
+      return true;
+    } else {
+      this.setState({
+        blankFields: `${this.state.ticker ? '' : 'ticker'} ${
+          this.state.boughtShares ? '' : 'boughtShares'
+        } ${this.state.boughtPrice ? '' : 'boughtPrice'} ${
+          this.state.date ? '' : 'date'
+        } ${this.state.broker ? '' : 'broker'}`,
+      });
+
+      return false;
+    }
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.submitted(true);
-    portfolioUtils.addLotToPortfolio(
-      this.state.ticker,
-      this.state.boughtShares,
-      this.state.boughtPrice,
-      this.state.date.toDate(),
-      this.state.broker
-    );
+
+    const validated = this.validate();
+
+    if (validated) {
+      this.setState({ hasError: false });
+      this.setState({});
+      this.props.submitted(true);
+      portfolioUtils.addLotToPortfolio(
+        this.state.ticker,
+        this.state.boughtShares,
+        this.state.boughtPrice,
+        this.state.date.toDate(),
+        this.state.broker
+      );
+    } else {
+      this.setState({ hasError: true });
+      console.error(`missing fields`);
+    }
   };
 
   render() {
@@ -66,6 +112,10 @@ class AddLot extends React.Component {
             name="broker"
             onChange={this.handleChange}
             value={this.state.broker || ''}
+          />
+          <Error
+            hasError={this.state.hasError}
+            blankFields={this.state.blankFields}
           />
           <input type="submit" value="Submit" />
         </form>
