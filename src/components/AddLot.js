@@ -4,22 +4,29 @@ import { SingleDatePicker } from 'react-dates';
 import * as utilities from '../utils/utilities';
 import * as portfolioUtils from '../utils/portfolioUtils';
 
-function Error(props) {
-  const hasError = props.hasError;
-  if (hasError) {
-    return <MissingFields errorMsg={props.errorMsg} />;
-  }
-  return null;
-}
-
 function MissingFields(props) {
   return (
     <div className="error">
       Fill in all required fields.
       <br />
-      Missing: {props.errorMsg}
+      Missing: {props.missingErrorMsg}
+      <br />
+      Incorrect type: {props.typeErrorMsg}
     </div>
   );
+}
+
+function Error(props) {
+  const hasError = props.hasError;
+  if (hasError) {
+    return (
+      <MissingFields
+        missingErrorMsg={props.missingErrorMsg}
+        typeErrorMsg={props.typeErrorMsg}
+      />
+    );
+  }
+  return null;
 }
 
 const fieldLabels = {
@@ -34,11 +41,11 @@ class AddLot extends React.Component {
   state = {
     submitted: false,
     fieldValues: {
-      ticker: '',
-      boughtShares: '',
-      boughtPrice: '',
-      date: '',
-      broker: '',
+      ticker: undefined,
+      boughtShares: undefined,
+      boughtPrice: undefined,
+      date: undefined,
+      broker: undefined,
     },
     hasError: false,
   };
@@ -52,7 +59,36 @@ class AddLot extends React.Component {
     });
   };
 
-  validateFields = () => {
+  isString = (value) => {
+    return typeof value === 'string';
+  };
+
+  isNum = (value) => {
+    return !isNaN(Number(value));
+  };
+
+  checkForType = () => {
+    const tickerIsString = this.isString(this.state.fieldValues.ticker);
+    const boughtSharesIsNum = this.isNum(this.state.fieldValues.boughtShares);
+    const boughtPriceIsNum = this.isNum(this.state.fieldValues.boughtPrice);
+    const brokerIsString = this.isString(this.state.fieldValues.broker);
+    if (
+      tickerIsString &&
+      boughtSharesIsNum &&
+      boughtPriceIsNum &&
+      brokerIsString
+    ) {
+      return true;
+    }
+    return {
+      ticker: tickerIsString,
+      boughtShares: boughtSharesIsNum,
+      boughtPrice: boughtPriceIsNum,
+      broker: brokerIsString,
+    };
+  };
+
+  checkForBlanks = () => {
     if (
       this.state.fieldValues.ticker &&
       this.state.fieldValues.boughtShares &&
@@ -65,7 +101,17 @@ class AddLot extends React.Component {
     return false;
   };
 
-  setErrorMsg() {
+  validateFields = () => {
+    const typeCheck = this.checkForType();
+    const typesAreValid =
+      typeCheck.ticker &&
+      typeCheck.boughtShares &&
+      typeCheck.boughtPrice &&
+      typeCheck.broker;
+    return this.checkForBlanks() && typesAreValid;
+  };
+
+  setMissingErrorMsg() {
     let msg = '';
     for (let [field, value] of Object.entries(this.state.fieldValues)) {
       if (!value) {
@@ -73,7 +119,20 @@ class AddLot extends React.Component {
       }
     }
     this.setState({
-      errorMsg: msg,
+      missingErrorMsg: msg,
+    });
+  }
+
+  setTypeErrorMsg() {
+    const types = this.checkForType();
+    let msg = '';
+    for (let [field, value] of Object.entries(types)) {
+      if (!value) {
+        msg += `${fieldLabels[field]}, `;
+      }
+    }
+    this.setState({
+      typeErrorMsg: msg,
     });
   }
 
@@ -91,7 +150,8 @@ class AddLot extends React.Component {
       );
     } else {
       this.setState({ hasError: true });
-      this.setErrorMsg();
+      this.setMissingErrorMsg();
+      this.setTypeErrorMsg();
     }
   };
 
@@ -183,7 +243,8 @@ class AddLot extends React.Component {
           />
           <Error
             hasError={this.state.hasError}
-            errorMsg={this.state.errorMsg}
+            missingErrorMsg={this.state.missingErrorMsg}
+            typeErrorMsg={this.state.typeErrorMsg}
           />
           <input type="submit" value="Submit" />
         </form>
