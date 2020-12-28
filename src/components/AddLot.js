@@ -4,68 +4,186 @@ import { SingleDatePicker } from 'react-dates';
 import * as utilities from '../utils/utilities';
 import * as portfolioUtils from '../utils/portfolioUtils';
 
+function Error(props) {
+  const hasError = props.hasError;
+  if (hasError) {
+    return <MissingFields errorMsg={props.errorMsg} />;
+  }
+  return null;
+}
+
+function MissingFields(props) {
+  return (
+    <div className="error">
+      Fill in all required fields.
+      <br />
+      Missing: {props.errorMsg}
+    </div>
+  );
+}
+
+const fieldLabels = {
+  ticker: 'Symbol',
+  boughtShares: 'Number of Shares',
+  boughtPrice: 'Buy Price',
+  date: 'Date',
+  broker: 'Broker',
+};
+
 class AddLot extends React.Component {
   state = {
     submitted: false,
+    fieldValues: {
+      ticker: '',
+      boughtShares: '',
+      boughtPrice: '',
+      date: '',
+      broker: '',
+    },
+    hasError: false,
   };
 
   handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      fieldValues: {
+        ...this.state.fieldValues,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
+
+  validateFields = () => {
+    if (
+      this.state.fieldValues.ticker &&
+      this.state.fieldValues.boughtShares &&
+      this.state.fieldValues.boughtPrice &&
+      this.state.fieldValues.date &&
+      this.state.fieldValues.broker
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  setErrorMsg() {
+    let msg = '';
+    for (let [field, value] of Object.entries(this.state.fieldValues)) {
+      if (!value) {
+        msg += `${fieldLabels[field]}, `;
+      }
+    }
+    this.setState({
+      errorMsg: msg,
+    });
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.submitted(true);
-    portfolioUtils.addLotToPortfolio(
-      this.state.ticker,
-      this.state.boughtShares,
-      this.state.boughtPrice,
-      this.state.date.toDate(),
-      this.state.broker
-    );
+    if (this.validateFields()) {
+      this.setState({ hasError: false });
+      this.props.submitted(true);
+      portfolioUtils.addLotToPortfolio(
+        this.state.fieldValues.ticker,
+        this.state.fieldValues.boughtShares,
+        this.state.fieldValues.boughtPrice,
+        this.state.fieldValues.date.toDate(),
+        this.state.fieldValues.broker
+      );
+    } else {
+      this.setState({ hasError: true });
+      this.setErrorMsg();
+    }
   };
 
   render() {
     return (
       <>
         <form onSubmit={this.handleSubmit}>
-          <h2>What did you buy??</h2>
-          <label>Stock: </label>
+          <h2>Add a new lot</h2>
+          <label
+            className={
+              !this.state.fieldValues.ticker && this.state.hasError
+                ? 'error'
+                : 'default'
+            }
+          >
+            Ticker:{' '}
+          </label>
           <input
             name="ticker"
             onChange={this.handleChange}
-            value={this.state.ticker || ''}
+            value={this.state.fieldValues.ticker || ''}
           />
           <br />
-          <label>Number of shares: </label>
+          <label
+            className={
+              !this.state.fieldValues.boughtShares && this.state.hasError
+                ? 'error'
+                : 'default'
+            }
+          >
+            Number of shares:{' '}
+          </label>
           <input
             name="boughtShares"
             onChange={this.handleChange}
-            value={this.state.boughtShares || ''}
+            value={this.state.fieldValues.boughtShares || ''}
           />
           <br />
-          <label>Buy price: </label>
+          <label
+            className={
+              !this.state.fieldValues.boughtPrice && this.state.hasError
+                ? 'error'
+                : 'default'
+            }
+          >
+            Buy price:{' '}
+          </label>
           <input
             name="boughtPrice"
             onChange={this.handleChange}
-            value={this.state.boughtPrice || ''}
+            value={this.state.fieldValues.boughtPrice || ''}
           />
           <br />
-          <label>Buy date: </label>
+          <label
+            className={
+              !this.state.fieldValues.date && this.state.hasError
+                ? 'error'
+                : 'default'
+            }
+          >
+            Buy date:{' '}
+          </label>
           <SingleDatePicker
-            date={this.state.date}
-            onDateChange={(date) => this.setState({ date })}
+            date={this.state.fieldValues.date}
+            onDateChange={(date) =>
+              this.setState({
+                fieldValues: { ...this.state.fieldValues, date },
+              })
+            }
             focused={this.state.focused}
             onFocusChange={({ focused }) => this.setState({ focused })}
             id="your_unique_id"
             isOutsideRange={utilities.falseFunc}
           />
           <br />
-          <label>Broker: </label>
+          <label
+            className={
+              !this.state.fieldValues.broker && this.state.hasError
+                ? 'error'
+                : 'default'
+            }
+          >
+            Broker:{' '}
+          </label>
           <input
             name="broker"
             onChange={this.handleChange}
-            value={this.state.broker || ''}
+            value={this.state.fieldValues.broker || ''}
+          />
+          <Error
+            hasError={this.state.hasError}
+            errorMsg={this.state.errorMsg}
           />
           <input type="submit" value="Submit" />
         </form>
