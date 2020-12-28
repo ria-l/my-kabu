@@ -41,7 +41,6 @@ class AddLot extends React.Component {
       broker: '',
     },
     hasError: false,
-    errorMsg: '',
   };
 
   handleChange = (e) => {
@@ -70,7 +69,7 @@ class AddLot extends React.Component {
     let msg = '';
     for (let [field, value] of Object.entries(this.state.fieldValues)) {
       if (!value) {
-        msg += `${fieldLabels[field]}`;
+        msg += `${fieldLabels[field]}, `;
       }
     }
     this.setState({
