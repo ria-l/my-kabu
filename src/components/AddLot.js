@@ -34,11 +34,11 @@ class AddLot extends React.Component {
   state = {
     submitted: false,
     fieldValues: {
-      ticker: '',
-      boughtShares: '',
-      boughtPrice: '',
-      date: '',
-      broker: '',
+      ticker: undefined,
+      boughtShares: undefined,
+      boughtPrice: undefined,
+      date: undefined,
+      broker: undefined,
     },
     hasError: false,
   };
