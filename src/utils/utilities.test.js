@@ -1,5 +1,4 @@
-import * as utilities from './utils/utilities';
-import * as dateUtils from '../utils/dateUtils';
+import * as utilities from './utilities';
 
 const testPortfolio = JSON.stringify({
   name: 'To The Moon',
@@ -40,20 +39,6 @@ const testPortfolio = JSON.stringify({
   ],
 });
 
-describe('API retrieval functions', () => {
-  describe('getTodaysPrice', () => {
-    it("returns today's close price for a given ticker, if it exists", () => {
-      expect(dateUtils.getTodaysPrice('FAKE')).toEqual(1452.71);
-    });
-  });
-
-  describe('getYesterdaysPrice', () => {
-    it("returns yesterday's close price for a given ticker, if it exists", () => {
-      expect(dateUtils.getYesterdaysPrice('FAKE')).toEqual(1489.58);
-    });
-  });
-});
-
 describe('calculatePercentChange', () => {
   it('returns percent change between two numbers', () => {
     expect(utilities.calculatePercentChange(5, 10)).toEqual('100.00%');
@@ -82,7 +67,7 @@ describe('localstorage retrieval functions', () => {
     });
 
     it('returns 0 if there is no portfolio in localstorage', () => {
-      getStorage.mockReturnValue(undefined);
+      getStorage.mockReturnValue(null);
       expect(utilities.getNumberOfShares(1)).toEqual(0);
       expect(getStorage).toHaveBeenCalledWith('portfolio');
       expect(getStorage.mock.calls.length).toEqual(1);
