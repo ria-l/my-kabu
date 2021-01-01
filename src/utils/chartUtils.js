@@ -13,33 +13,12 @@ export const getChartLabels = async (startDate, endDate) => {
   }
 
   const dateRange = dateUtils.getDateRange(startDate, endDate);
-  const xAxisLabels = [];
-  const dataPoints = [];
-  const promises = [];
-
-  dateRange.forEach((date) => {
-    const dateObject = new Date(date);
-    promises.push(
-      new Promise(async (resolve) =>
-        resolve(await getPortfolioValue(portfolio, dateObject))
-      )
-    );
-  });
-
+  const promises = await fillPortfolioValuePromises(dateRange, portfolio);
   const portfolioValues = await Promise.all(promises);
-  let prevValue = 0;
-
-  dateRange.forEach((date, i) => {
-    const value = portfolioValues[i];
-
-    if (!isNaN(value)) {
-      dataPoints.push(value);
-      prevValue = value;
-    } else {
-      dataPoints.push(prevValue);
-    }
-    xAxisLabels.push(moment(date).format('YYYY-MM-DD'));
-  });
+  const { xAxisLabels, dataPoints } = fillChartLabels(
+    dateRange,
+    portfolioValues
+  );
   return { xAxisLabels, dataPoints };
 };
 
@@ -76,4 +55,36 @@ export const getPortfolioValue = async (portfolio, dateObject) => {
   }
 
   return portfolioValue;
+};
+
+function fillChartLabels(dateRange, portfolioValues) {
+  let prevValue = 0;
+  const xAxisLabels = [];
+  const dataPoints = [];
+  dateRange.forEach((date, i) => {
+    const value = portfolioValues[i];
+    if (!isNaN(value)) {
+      dataPoints.push(value);
+      prevValue = value;
+    } else {
+      dataPoints.push(prevValue);
+    }
+    xAxisLabels.push(moment(date).format('YYYY-MM-DD'));
+  });
+  return { xAxisLabels, dataPoints };
+}
+
+export const fillPortfolioValuePromises = async (dateRange, portfolio) => {
+  const promises = [];
+
+  dateRange.forEach((date) => {
+    const dateObject = new Date(date);
+    console.log(dateObject);
+    promises.push(
+      new Promise(async (resolve) =>
+        resolve(await getPortfolioValue(portfolio, dateObject))
+      )
+    );
+  });
+  return promises;
 };
