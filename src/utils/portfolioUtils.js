@@ -1,5 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ *
+ * @param {string} ticker
+ * @param {number} boughtShares
+ * @param {number} boughtPrice
+ * @param {Date} boughtDate
+ * @param {string} broker
+ */
 export function addLotToPortfolio(
   ticker,
   boughtShares,
