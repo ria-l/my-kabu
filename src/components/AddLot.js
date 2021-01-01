@@ -72,14 +72,6 @@ class AddLot extends React.Component {
     const boughtSharesIsNum = this.isNum(this.state.fieldValues.boughtShares);
     const boughtPriceIsNum = this.isNum(this.state.fieldValues.boughtPrice);
     const brokerIsString = this.isString(this.state.fieldValues.broker);
-    if (
-      tickerIsString &&
-      boughtSharesIsNum &&
-      boughtPriceIsNum &&
-      brokerIsString
-    ) {
-      return true;
-    }
     return {
       ticker: tickerIsString,
       boughtShares: boughtSharesIsNum,
