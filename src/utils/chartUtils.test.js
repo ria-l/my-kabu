@@ -1,5 +1,4 @@
 import * as chartUtils from './chartUtils';
-import * as dateUtils from './dateUtils';
 
 const testPortfolio = JSON.stringify({
   name: 'To The Moon',
@@ -39,26 +38,6 @@ const testPortfolio = JSON.stringify({
     },
   ],
 });
-
-class LocalStorageMock {
-  constructor() {
-    this.store = {};
-  }
-  clear() {
-    this.store = {};
-  }
-  getItem(key) {
-    return this.store[key] || null;
-  }
-  setItem(key, value) {
-    this.store[key] = value.toString();
-  }
-  removeItem(key) {
-    delete this.store[key];
-  }
-}
-
-window.localStorage = new LocalStorageMock();
 
 jest.mock('uuid', () => {
   return {
@@ -118,6 +97,7 @@ describe('getPortfolioValue', () => {
   afterEach(() => {
     window.localStorage.clear();
   });
+
   it('datepicker', () => {
     const date = new Date(
       'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
@@ -127,6 +107,7 @@ describe('getPortfolioValue', () => {
       expect(data).toBe(4683.83);
     });
   });
+
   it('today', () => {
     const date = new Date(
       'Tue Dec 29 2020 17:24:29 GMT-0800 (Pacific Standard Time)'

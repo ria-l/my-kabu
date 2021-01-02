@@ -22,7 +22,7 @@ export async function getStockPrice(ticker, date) {
   const pricesApiUrl = `https://fast-spire-77124.herokuapp.com/prices/${ticker}/${dateFormattedForApi}`;
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
-  const stockPrice = pricesJson[0].close || 'no data';
+  const stockPrice = (pricesJson[0] || { close: 'no data' }).close || 'no data';
   window.localStorage.setItem(storageKey, JSON.stringify(stockPrice));
   return stockPrice;
 }
