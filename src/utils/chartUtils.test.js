@@ -114,10 +114,10 @@ describe('getChartLabels', () => {
     ]);
   });
 
-  it('returns nothing if no portfolio found', async () => {
+  it('no portfolio found', async () => {
     window.localStorage.clear();
     const data = await chartUtils.getChartLabels(startDate, todayMock);
-    expect(data).toBe(undefined);
+    expect(data).toStrictEqual({ xAxisLabels: [], dataPoints: [] });
   });
 });
 
