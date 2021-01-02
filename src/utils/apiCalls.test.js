@@ -35,7 +35,7 @@ describe('getStockPrice', () => {
       'Sat Dec 12 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
     );
     return apiCalls.getStockPrice('BABA', date).then((data) => {
-      expect(data).toBe('no data');
+      expect(data).toBe('');
       expect(global.fetch).toHaveBeenCalled();
     });
   });
@@ -43,7 +43,7 @@ describe('getStockPrice', () => {
   it('market closed, pre-stored data', () => {
     window.localStorage.setItem(
       'BABA-2020-12-12T00:00:00.000Z',
-      JSON.stringify('no data')
+      JSON.stringify('')
     );
     const date = new Date(
       'Sat Dec 12 2020 12:00:00 GMT-0800 (Pacific Standard Time)'

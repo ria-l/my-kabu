@@ -51,11 +51,11 @@ function populateStockPrices() {
   );
   window.localStorage.setItem(
     'AMZN-2020-12-12T00:00:00.000Z',
-    JSON.stringify('no data')
+    JSON.stringify('')
   );
   window.localStorage.setItem(
     'AMZN-2020-12-13T00:00:00.000Z',
-    JSON.stringify('no data')
+    JSON.stringify('')
   );
   window.localStorage.setItem(
     'AMZN-2020-12-14T00:00:00.000Z',
@@ -75,11 +75,11 @@ function populateStockPrices() {
   );
   window.localStorage.setItem(
     'MSFT-2020-12-12T00:00:00.000Z',
-    JSON.stringify('no data')
+    JSON.stringify('')
   );
   window.localStorage.setItem(
     'MSFT-2020-12-13T00:00:00.000Z',
-    JSON.stringify('no data')
+    JSON.stringify('')
   );
   window.localStorage.setItem(
     'MSFT-2020-12-14T00:00:00.000Z',
