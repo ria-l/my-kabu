@@ -49,28 +49,28 @@ describe('calculatePercentChange', () => {
   });
 });
 
-// describe('localstorage retrieval functions', () => {
-//   let getStorage;
-//   beforeEach(() => {
-//     getStorage = jest.spyOn(window.localStorage.__proto__, 'getItem');
-//   });
-//   afterEach(() => {
-//     jest.clearAllMocks();
-//   });
+describe('localstorage retrieval functions', () => {
+  let getStorage;
+  beforeEach(() => {
+    getStorage = jest.spyOn(window.localStorage.__proto__, 'getItem');
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-//   describe('getNumberOfShares', () => {
-//     it('returns number of owned shares for a given portfolio entry', () => {
-//       getStorage.mockReturnValue(testPortfolio);
-//       expect(utilities.getNumberOfShares(1)).toEqual(5);
-//       expect(getStorage).toHaveBeenCalledWith('portfolio');
-//       expect(getStorage.mock.calls.length).toEqual(1);
-//     });
+  describe('getNumberOfShares', () => {
+    it('returns number of owned shares for a given portfolio entry', () => {
+      getStorage.mockReturnValue(testPortfolio);
+      expect(utilities.getNumberOfShares(1)).toEqual(5);
+      expect(getStorage).toHaveBeenCalledWith('portfolio');
+      expect(getStorage.mock.calls.length).toEqual(1);
+    });
 
-//     it('returns 0 if there is no portfolio in localstorage', () => {
-//       getStorage.mockReturnValue(null);
-//       expect(utilities.getNumberOfShares(1)).toEqual(0);
-//       expect(getStorage).toHaveBeenCalledWith('portfolio');
-//       expect(getStorage.mock.calls.length).toEqual(1);
-//     });
-//   });
-// });
+    it('returns 0 if there is no portfolio in localstorage', () => {
+      getStorage.mockReturnValue(null);
+      expect(utilities.getNumberOfShares(1)).toEqual(0);
+      expect(getStorage).toHaveBeenCalledWith('portfolio');
+      expect(getStorage.mock.calls.length).toEqual(1);
+    });
+  });
+});
