@@ -35,18 +35,74 @@ jest.mock('uuid', () => {
   };
 });
 
+function populatePortfolio() {
+  window.localStorage.setItem('portfolio', testPortfolio);
+}
+
+// to prevent unneeded API calls
+function populateStockPrices() {
+  window.localStorage.setItem(
+    'AMZN-2020-12-10T00:00:00.000Z',
+    JSON.stringify(3101.49)
+  );
+  window.localStorage.setItem(
+    'AMZN-2020-12-11T00:00:00.000Z',
+    JSON.stringify(3116.42)
+  );
+  window.localStorage.setItem(
+    'AMZN-2020-12-12T00:00:00.000Z',
+    JSON.stringify('no data')
+  );
+  window.localStorage.setItem(
+    'AMZN-2020-12-13T00:00:00.000Z',
+    JSON.stringify('no data')
+  );
+  window.localStorage.setItem(
+    'AMZN-2020-12-14T00:00:00.000Z',
+    JSON.stringify(3156.97)
+  );
+  window.localStorage.setItem(
+    'AMZN-2020-12-29T00:00:00.000Z',
+    JSON.stringify(3322)
+  );
+  window.localStorage.setItem(
+    'MSFT-2020-12-10T00:00:00.000Z',
+    JSON.stringify(210.52)
+  );
+  window.localStorage.setItem(
+    'MSFT-2020-12-11T00:00:00.000Z',
+    JSON.stringify(213.26)
+  );
+  window.localStorage.setItem(
+    'MSFT-2020-12-12T00:00:00.000Z',
+    JSON.stringify('no data')
+  );
+  window.localStorage.setItem(
+    'MSFT-2020-12-13T00:00:00.000Z',
+    JSON.stringify('no data')
+  );
+  window.localStorage.setItem(
+    'MSFT-2020-12-14T00:00:00.000Z',
+    JSON.stringify(214.2)
+  );
+  window.localStorage.setItem(
+    'MSFT-2020-12-29T00:00:00.000Z',
+    JSON.stringify(224.15)
+  );
+}
+
 describe('getChartLabels', () => {
-  const startDate = new Date('2020-12-10T20:00:00.000Z');
   // `todayMock` has non-noon time to mock `new Date()`
   const todayMock = new Date('2020-12-15T01:24:29.000Z');
-  beforeEach(() => {
-    window.localStorage.setItem('portfolio', testPortfolio);
-  });
+  const startDate = new Date('2020-12-10T20:00:00.000Z');
+
   afterEach(() => {
     window.localStorage.clear();
   });
 
   it('returns data for chart', async () => {
+    populatePortfolio();
+    populateStockPrices();
     const data = await chartUtils.getChartLabels(startDate, todayMock);
     expect(data.dataPoints).toStrictEqual([4154.09, 4182.72, 0, 0, 4227.97]);
     expect(data.xAxisLabels).toStrictEqual([
@@ -67,8 +123,8 @@ describe('getChartLabels', () => {
 
 describe('fillPortfolioValuePromises', () => {
   beforeEach(() => {
-    window.localStorage.clear();
-    window.localStorage.setItem('portfolio', testPortfolio);
+    populatePortfolio();
+    populateStockPrices();
   });
   afterEach(() => {
     window.localStorage.clear();
@@ -87,36 +143,31 @@ describe('fillPortfolioValuePromises', () => {
     );
     const portfolioValues = await Promise.all(promises);
     expect(portfolioValues).toStrictEqual([4154.09, 4182.72, 0, 0, 4227.97]);
-    /**
-     * msft: 210.52, 213.26, 0, 0, 214.2
-     * amzn: 3101.49, 3116.42, 0, 0, 3156.97
-     */
   });
 });
 
 describe('getPortfolioValue', () => {
   beforeEach(() => {
-    window.localStorage.setItem('portfolio', testPortfolio);
+    populatePortfolio();
+    populateStockPrices();
   });
   afterEach(() => {
     window.localStorage.clear();
   });
 
-  it('datepicker', () => {
+  it('datepicker', async () => {
     const date = new Date('2020-12-10T20:00:00.000Z');
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    return chartUtils.getPortfolioValue(portfolio, date).then((data) => {
-      expect(data).toBe(4154.09); // amzn: 3101.49, msft: 210.52
-    });
+    const data = await chartUtils.getPortfolioValue(portfolio, date);
+    expect(data).toBe(4154.09);
   });
 
-  it('today', () => {
+  it('today', async () => {
     const date = new Date(
       'Tue Dec 29 2020 17:24:29 GMT-0800 (Pacific Standard Time)'
     );
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    return chartUtils.getPortfolioValue(portfolio, date).then((data) => {
-      expect(data).toBe(4442.75); // amzn: 3322, msft: 224.15
-    });
+    const data = await chartUtils.getPortfolioValue(portfolio, date);
+    expect(data).toBe(4442.75);
   });
 });

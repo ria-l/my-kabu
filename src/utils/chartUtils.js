@@ -11,7 +11,6 @@ export const getChartLabels = async (startDate, endDate) => {
   if (!portfolio) {
     return;
   }
-
   const dateRange = dateUtils.getDateRange(startDate, endDate);
   const promises = await fillPortfolioValuePromises(dateRange, portfolio);
   const portfolioValues = await Promise.all(promises);
