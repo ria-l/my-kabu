@@ -11,9 +11,7 @@ describe('getStockPrice', () => {
   });
 
   it('market open, no local data', () => {
-    const date = new Date(
-      'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
-    );
+    const date = new Date('2020-12-10T20:00:00.000Z');
     return apiCalls.getStockPrice('BABA', date).then((data) => {
       expect(data).toBe(264.87);
       expect(global.fetch).toHaveBeenCalled();
@@ -25,9 +23,7 @@ describe('getStockPrice', () => {
       'BABA-2020-12-10T00:00:00.000Z',
       JSON.stringify(264.87)
     );
-    const date = new Date(
-      'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
-    );
+    const date = new Date('2020-12-10T20:00:00.000Z');
     return apiCalls.getStockPrice('BABA', date).then((data) => {
       expect(data).toBe(264.87);
       expect(global.fetch).not.toHaveBeenCalled();

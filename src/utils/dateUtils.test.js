@@ -12,9 +12,7 @@ describe('setDateToUtcMidnight', () => {
   });
 
   it('datePicker', () => {
-    const date = new Date(
-      'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
-    );
+    const date = new Date('2020-12-10T20:00:00.000Z');
     console.log(date);
     expect(dateUtils.setDateToUtcMidnight(date)).toEqual(
       new Date('2020-12-10T00:00:00.000Z')

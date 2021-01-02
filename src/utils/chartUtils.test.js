@@ -35,29 +35,35 @@ jest.mock('uuid', () => {
   };
 });
 
-// describe('getChartLabels', () => {
-//   beforeEach(() => {
-//     window.localStorage.setItem('portfolio', testPortfolio);
-//   });
-//   afterEach(() => {
-//     window.localStorage.clear();
-//   });
-//   it('returns data for chart', () => {
-//     return chartUtils
-//       .getChartLabels(new Date('2020-12-10'), new Date())
-//       .then((data) => {
-//         expect(data).toBe('');
-//       });
-//   });
-//   it('returns nothing if no portfolio found', () => {
-//     window.localStorage.clear();
-//     return chartUtils
-//       .getChartLabels(new Date('2020-12-10'), new Date())
-//       .then((data) => {
-//         expect(data).toBe(undefined);
-//       });
-//   });
-// });
+describe('getChartLabels', () => {
+  const startDate = new Date('2020-12-10T20:00:00.000Z');
+  // `todayMock` has non-noon time to mock `new Date()`
+  const todayMock = new Date('2020-12-15T01:24:29.000Z');
+  beforeEach(() => {
+    window.localStorage.setItem('portfolio', testPortfolio);
+  });
+  afterEach(() => {
+    window.localStorage.clear();
+  });
+
+  it('returns data for chart', async () => {
+    const data = await chartUtils.getChartLabels(startDate, todayMock);
+    expect(data.dataPoints).toStrictEqual([4154.09, 4182.72, 0, 0, 4227.97]);
+    expect(data.xAxisLabels).toStrictEqual([
+      '2020-12-10',
+      '2020-12-11',
+      '2020-12-12',
+      '2020-12-13',
+      '2020-12-14',
+    ]);
+  });
+
+  it('returns nothing if no portfolio found', async () => {
+    window.localStorage.clear();
+    const data = await chartUtils.getChartLabels(startDate, todayMock);
+    expect(data).toBe(undefined);
+  });
+});
 
 describe('fillPortfolioValuePromises', () => {
   beforeEach(() => {
@@ -69,9 +75,7 @@ describe('fillPortfolioValuePromises', () => {
   });
 
   it('happy path', async () => {
-    const startDate = new Date(
-      'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
-    );
+    const startDate = new Date('2020-12-10T20:00:00.000Z');
     const endDate = new Date(
       'Mon Dec 14 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
     );
@@ -99,9 +103,7 @@ describe('getPortfolioValue', () => {
   });
 
   it('datepicker', () => {
-    const date = new Date(
-      'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
-    );
+    const date = new Date('2020-12-10T20:00:00.000Z');
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     return chartUtils.getPortfolioValue(portfolio, date).then((data) => {
       expect(data).toBe(4154.09); // amzn: 3101.49, msft: 210.52
