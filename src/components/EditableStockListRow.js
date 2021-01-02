@@ -59,12 +59,10 @@ export class EditableStockListRow extends Component {
         {/* Graph */}
         <td></td>
         {/* Today's Close */}
-        <td>{todaysPrice ? `$${todaysPrice}` : null}</td>
+        <td>{todaysPrice ? `$${todaysPrice}` : 0}</td>
         {/* Change */}
         <td>
-          {todaysPrice
-            ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}`
-            : null}
+          {todaysPrice ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
         </td>
@@ -77,12 +75,10 @@ export class EditableStockListRow extends Component {
           />
         </td>
         {/* Market Value */}
-        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : null}</td>
+        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : 0}</td>
 
         <td>
-          {todaysValue
-            ? `$${(todaysValue - yesterdaysValue).toFixed(2)}`
-            : null}
+          {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>

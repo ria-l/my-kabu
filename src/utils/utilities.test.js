@@ -22,8 +22,8 @@ const testPortfolio = JSON.stringify({
       broker: 'Robinhood',
       boughtPrice: 107.97,
       soldShares: 0,
-      soldDate: null,
-      soldPrice: null,
+      soldDate: '',
+      soldPrice: 0,
     },
     {
       id: 3456,
@@ -33,8 +33,8 @@ const testPortfolio = JSON.stringify({
       broker: 'Robinhood',
       boughtPrice: 199.6,
       soldShares: 0,
-      soldDate: null,
-      soldPrice: null,
+      soldDate: '',
+      soldPrice: 0,
     },
   ],
 });
@@ -45,7 +45,7 @@ describe('calculatePercentChange', () => {
   });
 
   it('returns error if inputs are invalid', () => {
-    expect(utilities.calculatePercentChange(null, 5)).toEqual(null);
+    expect(utilities.calculatePercentChange(null, 5)).toEqual(0);
   });
 });
 

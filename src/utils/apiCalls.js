@@ -8,8 +8,13 @@ import * as dateUtils from './dateUtils';
 export async function getStockPrice(ticker, date) {
   const isoDate = dateUtils.setDateToUtcMidnight(date).toISOString();
   const storageKey = `${ticker}-${isoDate}`;
-  const storedValue = window.localStorage.getItem(storageKey);
-  if (storedValue === 'null' || !storedValue) {
+  const storedValue = JSON.parse(window.localStorage.getItem(storageKey));
+  /*
+   * Cannot use `if(!storedValue)` here, since `localstorage.getItem()`
+   * returns `null` if there is not a key/value set, in which case,
+   * the default case needs to run.
+   */
+  if (storedValue === '') {
     return 0;
   } else if (storedValue) {
     return storedValue;
@@ -22,7 +27,7 @@ export async function getStockPrice(ticker, date) {
   const pricesApiUrl = `https://fast-spire-77124.herokuapp.com/prices/${ticker}/${dateFormattedForApi}`;
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
-  const stockPrice = (pricesJson[0] || { close: 0 }).close || 0;
+  const stockPrice = (pricesJson[0] || { close: '' }).close || '';
   window.localStorage.setItem(storageKey, JSON.stringify(stockPrice));
   return stockPrice;
 }

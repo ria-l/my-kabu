@@ -106,3 +106,6 @@ build/
 # dotenv environment variables file
 .env
 .env.test
+
+# mac
+.DS_store

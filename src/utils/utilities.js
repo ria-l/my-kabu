@@ -9,7 +9,7 @@ export function calculatePercentChange(oldValue, newValue) {
   if (oldValue && newValue) {
     return (((newValue - oldValue) / oldValue) * 100).toFixed(2) + '%';
   } else {
-    return null;
+    return 0;
   }
 }
 
