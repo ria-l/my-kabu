@@ -47,14 +47,14 @@ export class StockListRow extends Component {
 
         <td>{boughtDate}</td>
 
-        <td>{this.state.todaysPrice ? `$${this.state.todaysPrice}` : null}</td>
+        <td>{this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}</td>
 
         <td>
           {this.state.todaysPrice
             ? `$${(this.state.todaysPrice - this.state.yesterdaysPrice).toFixed(
                 2
               )}`
-            : null}
+            : 0}
           <br />
           {utilities.calculatePercentChange(
             this.state.yesterdaysPrice,
@@ -64,12 +64,10 @@ export class StockListRow extends Component {
 
         <td>{numShares}</td>
 
-        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : null}</td>
+        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : 0}</td>
 
         <td>
-          {todaysValue
-            ? `$${(todaysValue - yesterdaysValue).toFixed(2)}`
-            : null}
+          {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>

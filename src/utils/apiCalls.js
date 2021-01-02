@@ -8,8 +8,8 @@ import * as dateUtils from './dateUtils';
 export async function getStockPrice(ticker, date) {
   const isoDate = dateUtils.setDateToUtcMidnight(date).toISOString();
   const storageKey = `${ticker}-${isoDate}`;
-  const storedValue = window.localStorage.getItem(storageKey);
-  if (storedValue === 'null') {
+  const storedValue = JSON.parse(window.localStorage.getItem(storageKey));
+  if (storedValue === 'no data') {
     return 0;
   } else if (storedValue) {
     return storedValue;
@@ -22,7 +22,7 @@ export async function getStockPrice(ticker, date) {
   const pricesApiUrl = `https://fast-spire-77124.herokuapp.com/prices/${ticker}/${dateFormattedForApi}`;
   const pricesResponse = await fetch(pricesApiUrl);
   const pricesJson = await pricesResponse.json();
-  const stockPrice = (pricesJson[0] || { close: 0 }).close || 0;
+  const stockPrice = pricesJson[0].close || 'no data';
   window.localStorage.setItem(storageKey, JSON.stringify(stockPrice));
   return stockPrice;
 }

@@ -35,8 +35,8 @@ export function addLotToPortfolio(
       boughtPrice,
       broker,
       soldShares: 0,
-      soldDate: null,
-      soldPrice: null,
+      soldDate: '',
+      soldPrice: 0,
     });
     window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
   }
