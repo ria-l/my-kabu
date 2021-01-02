@@ -9,9 +9,9 @@ export async function getStockPrice(ticker, date) {
   const isoDate = dateUtils.setDateToUtcMidnight(date).toISOString();
   const storageKey = `${ticker}-${isoDate}`;
   const storedValue = JSON.parse(window.localStorage.getItem(storageKey));
-  /**
+  /*
    * Cannot use `if(!storedValue)` here, since `localstorage.getItem()`
-   * returns null if there is not a key/value set. In those cases,
+   * returns `null` if there is not a key/value set, in which case,
    * the default case needs to run.
    */
   if (storedValue === '') {
