@@ -47,9 +47,11 @@ export const getPortfolioValue = async (portfolio, dateObject) => {
   }
   const stockPrices = await Promise.all(promises);
   for (const [i, price] of stockPrices.entries()) {
-    portfolioValue += price * boughtShares[i];
+    if (!isNaN(price)) {
+      portfolioValue += price * boughtShares[i];
+    }
   }
-  return portfolioValue;
+  return Math.round(portfolioValue * 100 + Number.EPSILON) / 100;
 };
 
 function fillChartLabels(dateRange, portfolioValues) {

@@ -1,4 +1,5 @@
 import * as chartUtils from './chartUtils';
+import * as dateUtils from './dateUtils';
 
 const testPortfolio = JSON.stringify({
   name: 'To The Moon',
@@ -21,17 +22,6 @@ const testPortfolio = JSON.stringify({
       boughtDate: '2020-07-14',
       broker: 'Robinhood',
       boughtPrice: 107.97,
-      soldShares: 0,
-      soldDate: '',
-      soldPrice: 0,
-    },
-    {
-      id: 3456,
-      ticker: 'BABA',
-      boughtShares: 2,
-      boughtDate: '2020-05-07',
-      broker: 'Robinhood',
-      boughtPrice: 199.6,
       soldShares: 0,
       soldDate: '',
       soldPrice: 0,
@@ -69,26 +59,36 @@ jest.mock('uuid', () => {
 //   });
 // });
 
-// describe('fillPortfolioValuePromises', () => {
-//   beforeEach(() => {
-//     window.localStorage.setItem('portfolio', testPortfolio);
-//   });
-//   afterEach(() => {
-//     window.localStorage.clear();
-//   });
-//   it('happy path', () => {
-//     const startDate = new Date('2020-12-10');
-//     const endDate = new Date();
-//     const dateRange = dateUtils.getDateRange(startDate, endDate);
-//     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+describe('fillPortfolioValuePromises', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    window.localStorage.setItem('portfolio', testPortfolio);
+  });
+  afterEach(() => {
+    window.localStorage.clear();
+  });
 
-//     return chartUtils
-//       .fillPortfolioValuePromises(dateRange, portfolio)
-//       .then((data) => {
-//         expect(data).toBe('');
-//       });
-//   });
-// });
+  it('happy path', async () => {
+    const startDate = new Date(
+      'Thu Dec 10 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
+    );
+    const endDate = new Date(
+      'Mon Dec 14 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
+    );
+    const dateRange = dateUtils.getDateRange(startDate, endDate);
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const promises = await chartUtils.fillPortfolioValuePromises(
+      dateRange,
+      portfolio
+    );
+    const portfolioValues = await Promise.all(promises);
+    expect(portfolioValues).toStrictEqual([4154.09, 4182.72, 0, 0, 4227.97]);
+    /**
+     * msft: 210.52, 213.26, 0, 0, 214.2
+     * amzn: 3101.49, 3116.42, 0, 0, 3156.97
+     */
+  });
+});
 
 describe('getPortfolioValue', () => {
   beforeEach(() => {
@@ -104,7 +104,7 @@ describe('getPortfolioValue', () => {
     );
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     return chartUtils.getPortfolioValue(portfolio, date).then((data) => {
-      expect(data).toBe(4683.83);
+      expect(data).toBe(4154.09); // amzn: 3101.49, msft: 210.52
     });
   });
 
@@ -114,7 +114,7 @@ describe('getPortfolioValue', () => {
     );
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     return chartUtils.getPortfolioValue(portfolio, date).then((data) => {
-      expect(data).toBe(4915.27);
+      expect(data).toBe(4442.75); // amzn: 3322, msft: 224.15
     });
   });
 });
