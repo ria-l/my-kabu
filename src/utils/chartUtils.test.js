@@ -121,7 +121,7 @@ describe('getChartLabels', () => {
   });
 });
 
-describe('fillPortfolioValuePromises', () => {
+describe('getPortfolioValuePromises', () => {
   beforeEach(() => {
     populatePortfolio();
     populateStockPrices();
@@ -137,7 +137,7 @@ describe('fillPortfolioValuePromises', () => {
     );
     const dateRange = dateUtils.getDateRange(startDate, endDate);
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const promises = await chartUtils.fillPortfolioValuePromises(
+    const promises = await chartUtils.getPortfolioValuePromises(
       dateRange,
       portfolio
     );
