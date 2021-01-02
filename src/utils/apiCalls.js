@@ -9,7 +9,7 @@ export async function getStockPrice(ticker, date) {
   const isoDate = dateUtils.setDateToUtcMidnight(date).toISOString();
   const storageKey = `${ticker}-${isoDate}`;
   const storedValue = window.localStorage.getItem(storageKey);
-  if (storedValue === 'null' || !storedValue) {
+  if (storedValue === 'null') {
     return 0;
   } else if (storedValue) {
     return storedValue;
