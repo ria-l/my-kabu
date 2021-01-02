@@ -30,11 +30,9 @@ export const getPortfolioValue = async (portfolio, dateObject) => {
   let portfolioValue = 0;
   const promises = [];
   const boughtShares = [];
-
   for (const lotIndex in portfolio.lots) {
     const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
     const dateIsInRange = boughtDate <= dateObject;
-
     if (dateIsInRange) {
       const stockPrices = new Promise(async (resolve, reject) => {
         const stockPrice = await apiCalls.getStockPrice(
@@ -43,17 +41,14 @@ export const getPortfolioValue = async (portfolio, dateObject) => {
         );
         resolve(stockPrice);
       });
-
       promises.push(stockPrices);
       boughtShares.push(portfolio.lots[lotIndex].boughtShares);
     }
   }
   const stockPrices = await Promise.all(promises);
-
   for (const [i, price] of stockPrices.entries()) {
     portfolioValue += price * boughtShares[i];
   }
-
   return portfolioValue;
 };
 
@@ -79,7 +74,6 @@ export const fillPortfolioValuePromises = async (dateRange, portfolio) => {
 
   dateRange.forEach((date) => {
     const dateObject = new Date(date);
-    console.log(dateObject);
     promises.push(
       new Promise(async (resolve) =>
         resolve(await getPortfolioValue(portfolio, dateObject))
