@@ -1,5 +1,30 @@
 import * as apiCalls from './apiCalls';
 
+describe('getLastValidPrice', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    jest.spyOn(global, 'fetch');
+  });
+  afterEach(() => {
+    window.localStorage.clear();
+    jest.clearAllMocks();
+  });
+
+  it('date is not a business day', () => {
+    const date = new Date('2020-12-13T20:00:00.000Z');
+    return apiCalls.getLastValidPrice('BABA', date).then((data) => {
+      expect(data).toBe(264.54);
+    });
+  });
+
+  it('date is a business day', () => {
+    const date = new Date('2020-12-14T20:00:00.000Z');
+    return apiCalls.getLastValidPrice('BABA', date).then((data) => {
+      expect(data).toBe(256.03);
+    });
+  });
+});
+
 describe('getStockPrice', () => {
   beforeEach(() => {
     window.localStorage.clear();

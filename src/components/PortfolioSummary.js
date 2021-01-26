@@ -44,11 +44,15 @@ class PortfolioSummary extends Component {
       <div className="main">
         <div>
           <h1>{portfolio && portfolio.name}</h1>
-          <h2>${this.state.todaysValue}</h2>
+          <h2>Current value: ${this.state.todaysValue}</h2>
         </div>
         <div>
           Day Gain: ${this.state.dayGain} (+
-          {((this.state.dayGain / this.state.yesterdaysValue) * 100).toFixed(2)}
+          {this.state.yesterdaysValue > 0
+            ? ((this.state.dayGain / this.state.yesterdaysValue) * 100).toFixed(
+                2
+              )
+            : 0}
           %)
           <br />
           {/* Total Gain: ${totalGain} (

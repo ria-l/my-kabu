@@ -8,7 +8,7 @@ import * as utilities from '../utils/utilities';
 export class PortfolioChart extends Component {
   state = { submitted: false };
 
-  // Options for Chartjs rendering.
+  // Options for rendering Chart.js.
   getOptions = () => {
     return {
       responsive: true,
@@ -68,7 +68,6 @@ export class PortfolioChart extends Component {
   render() {
     return (
       <div>
-        PortfolioChart
         <table id="the-chart">
           <tbody>
             <tr>

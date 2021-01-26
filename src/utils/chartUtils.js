@@ -9,7 +9,7 @@ import * as apiCalls from './apiCalls';
 export const getChartLabels = async (startDate, endDate) => {
   const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (!portfolio) {
-    return;
+    return { xAxisLabels: [], dataPoints: [] };
   }
   const dateRange = dateUtils.getDateRange(startDate, endDate);
   const promises = await getPortfolioValuePromises(dateRange, portfolio);
