@@ -104,7 +104,13 @@ describe('getChartLabels', () => {
     populatePortfolio();
     populateStockPrices();
     const data = await chartUtils.getChartLabels(startDate, todayMock);
-    expect(data.dataPoints).toStrictEqual([4154.09, 4182.72, 0, 0, 4227.97]);
+    expect(data.dataPoints).toStrictEqual([
+      4154.09,
+      4182.72,
+      4182.72,
+      4182.72,
+      4227.97,
+    ]);
     expect(data.xAxisLabels).toStrictEqual([
       '2020-12-10',
       '2020-12-11',
@@ -142,7 +148,13 @@ describe('getPortfolioValuePromises', () => {
       portfolio
     );
     const portfolioValues = await Promise.all(promises);
-    expect(portfolioValues).toStrictEqual([4154.09, 4182.72, 0, 0, 4227.97]);
+    expect(portfolioValues).toStrictEqual([
+      4154.09,
+      4182.72,
+      4182.72,
+      4182.72,
+      4227.97,
+    ]);
   });
 });
 

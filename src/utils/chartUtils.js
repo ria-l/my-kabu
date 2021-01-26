@@ -27,30 +27,42 @@ export const getChartLabels = async (startDate, endDate) => {
  */
 export const getPortfolioValue = async (portfolio, dateObject) => {
   let portfolioValue = 0;
-  const promises = [];
-  const boughtShares = [];
-  for (const lotIndex in portfolio.lots) {
-    const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
-    const dateIsInRange = boughtDate <= dateObject;
-    if (dateIsInRange) {
-      const stockPrices = new Promise(async (resolve, reject) => {
-        const stockPrice = await apiCalls.getStockPrice(
-          portfolio.lots[lotIndex].ticker,
-          dateObject
-        );
-        resolve(stockPrice);
-      });
-      promises.push(stockPrices);
-      boughtShares.push(portfolio.lots[lotIndex].boughtShares);
+
+  for (let i = 0; i < 5; i++) {
+    const promises = [];
+    const boughtShares = [];
+    for (const lotIndex in portfolio.lots) {
+      const boughtDate = new Date(portfolio.lots[lotIndex].boughtDate);
+      const dateIsInRange = boughtDate <= dateObject;
+      if (dateIsInRange) {
+        const stockPrices = new Promise(async (resolve, reject) => {
+          const stockPrice = await apiCalls.getStockPrice(
+            portfolio.lots[lotIndex].ticker,
+            dateObject
+          );
+          resolve(stockPrice);
+        });
+        promises.push(stockPrices);
+        boughtShares.push(portfolio.lots[lotIndex].boughtShares);
+      }
+    }
+
+    const stockPrices = await Promise.all(promises);
+    for (const [i, price] of stockPrices.entries()) {
+      if (!isNaN(price)) {
+        portfolioValue += price * boughtShares[i];
+      }
+    }
+
+    if (!portfolioValue) {
+      dateObject.setDate(dateObject.getDate() - 1);
+    } else {
+      portfolioValue = Math.round(portfolioValue * 100 + Number.EPSILON) / 100;
+      return portfolioValue;
     }
   }
-  const stockPrices = await Promise.all(promises);
-  for (const [i, price] of stockPrices.entries()) {
-    if (!isNaN(price)) {
-      portfolioValue += price * boughtShares[i];
-    }
-  }
-  return Math.round(portfolioValue * 100 + Number.EPSILON) / 100;
+
+  return portfolioValue;
 };
 
 function fillChartLabels(dateRange, portfolioValues) {
