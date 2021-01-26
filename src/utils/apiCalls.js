@@ -13,10 +13,9 @@ export async function getLastValidPrice(ticker, date) {
     if (!price) {
       date.setDate(date.getDate() - 1);
     } else {
-      i = 4;
+      return price;
     }
   }
-  return price;
 }
 
 /**
