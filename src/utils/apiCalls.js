@@ -1,4 +1,24 @@
 import * as dateUtils from './dateUtils';
+
+/**
+ *
+ * @param {String} ticker
+ * @param {Date} date
+ * @return {Number} stockPrice
+ */
+export async function getLastValidPrice(ticker, date) {
+  let price = 0;
+  for (let i = 0; i < 5; i++) {
+    price = await getStockPrice(ticker, date);
+    if (!price) {
+      date.setDate(date.getDate() - 1);
+    } else {
+      i = 4;
+    }
+  }
+  return price;
+}
+
 /**
  *
  * @param {String} ticker

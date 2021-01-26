@@ -17,11 +17,14 @@ export class StockListRow extends Component {
   async componentDidMount() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const ticker = portfolio.lots[this.props.lot].ticker;
+
     const today = new Date();
-    let yesterday = new Date();
+    const todaysPrice = await apiCalls.getLastValidPrice(ticker, today);
+
+    const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    const todaysPrice = await apiCalls.getStockPrice(ticker, today);
-    const yesterdaysPrice = await apiCalls.getStockPrice(ticker, yesterday);
+    const yesterdaysPrice = await apiCalls.getLastValidPrice(ticker, yesterday);
+
     this.setState({ todaysPrice, yesterdaysPrice });
   }
 
@@ -46,9 +49,9 @@ export class StockListRow extends Component {
         <td>{ticker}</td>
 
         <td>{boughtDate}</td>
-
+        {/* today's close */}
         <td>{this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}</td>
-
+        {/* change since... */}
         <td>
           {this.state.todaysPrice
             ? `$${(this.state.todaysPrice - this.state.yesterdaysPrice).toFixed(
