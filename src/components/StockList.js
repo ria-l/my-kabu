@@ -61,7 +61,7 @@ class StockList extends Component {
             <tr>
               <th>ID</th>
               <th>Stock</th>
-              <th>Graph</th>
+              <th>Buy Date</th>
               <th>Today's close</th>
               <th>Change since...</th>
               <th>Shares</th>
