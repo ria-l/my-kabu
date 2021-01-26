@@ -27,7 +27,6 @@ export const getChartLabels = async (startDate, endDate) => {
  */
 export const getPortfolioValue = async (portfolio, dateObject) => {
   let portfolioValue = 0;
-
   for (let i = 0; i < 5; i++) {
     const promises = [];
     const boughtShares = [];
@@ -46,14 +45,12 @@ export const getPortfolioValue = async (portfolio, dateObject) => {
         boughtShares.push(portfolio.lots[lotIndex].boughtShares);
       }
     }
-
     const stockPrices = await Promise.all(promises);
     for (const [i, price] of stockPrices.entries()) {
       if (!isNaN(price)) {
         portfolioValue += price * boughtShares[i];
       }
     }
-
     if (!portfolioValue) {
       dateObject.setDate(dateObject.getDate() - 1);
     } else {
@@ -61,8 +58,6 @@ export const getPortfolioValue = async (portfolio, dateObject) => {
       return portfolioValue;
     }
   }
-
-  return portfolioValue;
 };
 
 function fillChartLabels(dateRange, portfolioValues) {
