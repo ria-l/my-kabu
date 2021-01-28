@@ -69,7 +69,6 @@ export async function getStockMetadata(ticker) {
   const apiUrl = `https://fast-spire-77124.herokuapp.com/meta/${ticker}`;
   const response = await fetch(apiUrl);
   const json = await response.text();
-  console.log(json, apiUrl);
   window.localStorage.setItem(storageKey, JSON.stringify(json));
   return json;
 }

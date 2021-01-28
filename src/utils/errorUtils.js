@@ -83,10 +83,10 @@ export const getMissingErrorMsg = (fieldValues) => {
 };
 
 export async function validateTicker(ticker) {
-  const stockMeta = apiCalls.getStockMetadata(ticker);
-  if (stockMeta['ticker'] === ticker) {
-    return false;
-  } else {
+  const stockMeta = await apiCalls.getStockMetadata(ticker);
+  if (JSON.parse(stockMeta)['ticker'] === ticker) {
     return true;
+  } else {
+    return false;
   }
 }
