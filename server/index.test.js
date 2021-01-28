@@ -81,6 +81,19 @@ window.fetch = (url) => {
         ]),
     });
   }
+  if (url.includes('meta')) {
+    return Promise.resolve({
+      json: () =>
+        Promise.resolve({
+          endDate: '2021-01-27',
+          exchangeCode: 'NASDAQ',
+          startDate: '2010-06-29',
+          description: 'fake data is fake.',
+          name: 'Fake',
+          ticker: 'FAKE',
+        }),
+    });
+  }
 };
 
 it('API: calls /prices for historical price data', async () => {
@@ -163,4 +176,17 @@ it('API: calls /prices for historical price data', async () => {
       volume: 8896420,
     },
   ]);
+});
+
+it('API: calls /meta for historical price data', async () => {
+  const response = await fetch(`/meta/FAKE`);
+  const data = await response.json();
+  expect(data).toEqual({
+    endDate: '2021-01-27',
+    exchangeCode: 'NASDAQ',
+    startDate: '2010-06-29',
+    description: 'fake data is fake.',
+    name: 'Fake',
+    ticker: 'FAKE',
+  });
 });
