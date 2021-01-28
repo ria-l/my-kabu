@@ -45,4 +45,10 @@ describe('field validation', () => {
       expect(errorUtils.fieldsAreValid(badValues)).toBeFalsy();
     });
   });
+
+  describe('validateTicker', () => {
+    it('returns true if valid ticker', () => {
+      expect(errorUtils.validateTicker('FAKE')).toBeTruthy;
+    });
+  });
 });

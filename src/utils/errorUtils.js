@@ -1,3 +1,5 @@
+import * as apiCalls from './apiCalls';
+
 /**
  *
  * @param {?} value
@@ -79,3 +81,12 @@ export const getMissingErrorMsg = (fieldValues) => {
   }
   return msg;
 };
+
+export async function validateTicker(ticker) {
+  const stockMeta = apiCalls.getStockMetadata(ticker);
+  if (stockMeta['ticker'] === ticker) {
+    return false;
+  } else {
+    return true;
+  }
+}
