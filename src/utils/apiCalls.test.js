@@ -79,3 +79,30 @@ describe('getStockPrice', () => {
     });
   });
 });
+
+describe('getStockMetaData', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    jest.spyOn(global, 'fetch');
+  });
+  afterEach(() => {
+    window.localStorage.clear();
+    jest.clearAllMocks();
+  });
+  it('idk', () => {
+    return apiCalls.getStockMetadata('TSLA').then((data) => {
+      expect(data).toBe(
+        JSON.stringify({
+          endDate: '2021-01-27',
+          exchangeCode: 'NASDAQ',
+          startDate: '2010-06-29',
+          description:
+            'Tesla Motors, Inc. (Tesla) designs, develops, manufactures and sells electric vehicles and advanced electric vehicle powertrain components. Tesla owns its sales and service network. The Company is engaged in commercially producing a federally-compliant electric vehicle, the Tesla Roadster. addition to developing its Model S and future vehicle manufacturing capabilities at the Tesla Factory, the Company is designing, developing and manufacturing lithium-ion battery packs, electric motors, gearboxes and components both for its vehicles and for its original equipment manufacturer customers. These activities occur at its electric powertrain manufacturing facility in Palo Alto, California and at the Tesla Factory. The Company provides services for the development of electric powertrain components and sells electric powertrain components to other automotive manufacturers.',
+          name: 'Tesla Inc',
+          ticker: 'TSLA',
+        })
+      );
+      expect(global.fetch).toHaveBeenCalled();
+    });
+  });
+});

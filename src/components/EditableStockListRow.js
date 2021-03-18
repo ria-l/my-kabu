@@ -31,6 +31,22 @@ export class EditableStockListRow extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  async componentDidMount() {
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const ticker = portfolio.lots[this.props.lot].ticker;
+
+    const today = new Date();
+    const todaysPrice = await apiCalls.getStockPrice(ticker, today);
+
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdaysPrice = await apiCalls.getStockPrice(ticker, yesterday);
+
+    this.setState({
+      todaysPrice: todaysPrice,
+      yesterdaysPrice: yesterdaysPrice,
+    });
+  }
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const ticker = portfolio.lots[this.props.lot].ticker;
@@ -39,8 +55,8 @@ export class EditableStockListRow extends Component {
     const today = new Date();
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const todaysPrice = apiCalls.getStockPrice(ticker, today);
-    const yesterdaysPrice = apiCalls.getStockPrice(ticker, yesterday);
+    const todaysPrice = this.state.todaysPrice;
+    const yesterdaysPrice = this.state.yesterdaysPrice;
     const yesterdaysValue = numShares * yesterdaysPrice;
     const todaysValue = numShares * todaysPrice;
 
@@ -56,12 +72,13 @@ export class EditableStockListRow extends Component {
             onChange={this.handleChange}
           />
         </td>
-        {/* Graph */}
+        {/* Buy Date */}
         <td></td>
         {/* Today's Close */}
         <td>{todaysPrice ? `$${todaysPrice}` : 0}</td>
         {/* Change */}
         <td>
+          {/* Change since... */}
           {todaysPrice ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
