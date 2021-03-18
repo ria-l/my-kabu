@@ -38,7 +38,6 @@ export async function getStockPrice(ticker, date) {
   } else if (storedValue) {
     return storedValue;
   }
-  window.localStorage.setItem(storageKey, true);
   const dateFormattedForApi = dateUtils
     .setDateToUtcMidnight(date)
     .toISOString()
