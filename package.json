@@ -1,5 +1,8 @@
 {
   "name": "my-kabu",
+  "jest": {
+    "transform": { "^.+\\.(ts|tsx|js|jsx)?$": "ts-jest" }
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,7 +10,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "antd": "^4.6.6",
+    "antd": "^4.14.0",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
     "cors": "^2.8.5",
