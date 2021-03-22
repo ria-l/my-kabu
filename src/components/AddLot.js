@@ -7,13 +7,7 @@ import * as portfolioUtils from '../utils/portfolioUtils';
 class AddLot extends React.Component {
   state = {};
 
-  onChange(date, dateString) {
-    console.log(date, dateString);
-  }
-
   onFinish = (values) => {
-    console.log('Success:', values);
-    this.props.submitted(true);
     portfolioUtils.addLotToPortfolio(
       values.ticker,
       values.boughtShares,
@@ -21,6 +15,7 @@ class AddLot extends React.Component {
       values.date.toDate(),
       values.broker
     );
+    this.props.rerender();
   };
 
   onFinishFailed = (errorInfo) => {
@@ -85,7 +80,7 @@ class AddLot extends React.Component {
             },
           ]}
         >
-          <DatePicker onChange={this.onChange} />
+          <DatePicker />
         </Form.Item>
 
         <Form.Item
