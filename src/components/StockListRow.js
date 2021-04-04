@@ -24,8 +24,10 @@ export class StockListRow extends Component {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdaysPrice = await apiCalls.getLastValidPrice(ticker, yesterday);
+    const boughtDate = new Date(portfolio.lots[this.props.lot].boughtDate);
+    let startValue = await apiCalls.getLastValidPrice(ticker, boughtDate);
 
-    this.setState({ todaysPrice, yesterdaysPrice });
+    this.setState({ todaysPrice, yesterdaysPrice, startValue });
   }
 
   render() {
@@ -49,33 +51,37 @@ export class StockListRow extends Component {
         <td>{ticker}</td>
 
         <td>{boughtDate}</td>
-        {/* today's close */}
-        <td>{this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}</td>
-        {/* change since... */}
         <td>
-          {this.state.todaysPrice
-            ? `$${(this.state.todaysPrice - this.state.yesterdaysPrice).toFixed(
-                2
-              )}`
-            : 0}
-          <br />
-          {utilities.calculatePercentChange(
-            this.state.yesterdaysPrice,
-            this.state.todaysPrice
-          )}
+          {/* today's close */}
+          {this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}
         </td>
+        <td>{/* change since... */}</td>
 
         <td>{numShares}</td>
 
-        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : 0}</td>
+        <td>
+          {/* {Market Value} */}
+          {todaysValue ? `$${todaysValue.toFixed(2)}` : 0}
+        </td>
 
         <td>
+          {/* {Daily Gain} */}
           {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
 
-        <td></td>
+        {/* {Total gain} */}
+        <td>
+          {this.state.todaysPrice
+            ? `$${(this.state.todaysPrice - this.state.startValue).toFixed(2)}`
+            : 0}
+          <br />
+          {utilities.calculatePercentChange(
+            this.state.startValue,
+            this.state.todaysPrice
+          )}
+        </td>
         <td>
           <button onClick={() => this.handleClick('delete', id)}>Delete</button>
         </td>
