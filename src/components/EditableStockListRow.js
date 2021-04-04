@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { DatePicker } from 'antd';
 import * as utilities from '../utils/utilities';
 import * as apiCalls from '../utils/apiCalls';
+import moment from 'moment';
 
 export class EditableStockListRow extends Component {
   state = {};
@@ -9,8 +11,9 @@ export class EditableStockListRow extends Component {
     delete: (id, ticker, shares) => {
       this.props.onDelete(id);
     },
-    save: (id, ticker, shares) => {
-      this.props.onSaveOrCancel(id, ticker, shares);
+    save: (id, ticker, shares, boughtDate, boughtPrice) => {
+      this.props.onSaveOrCancel(id, ticker, shares, boughtDate, boughtPrice);
+      console.log(boughtPrice);
     },
     cancel: (id, ticker, shares) => {
       this.props.onSaveOrCancel();
@@ -23,88 +26,111 @@ export class EditableStockListRow extends Component {
    * @param {string} ticker
    * @param {number} numShares
    */
-  handleClick = (btnName, id, ticker, numShares) => {
-    this.handlers[btnName](id, ticker, numShares);
+  handleClick = (btnName, id, ticker, numShares, boughtDate, boughtPrice) => {
+    this.handlers[btnName](id, ticker, numShares, boughtDate, boughtPrice);
   };
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  handleDateChange = (date) => {
+    this.setState({ boughtDate: date.toDate() });
+  };
+
   async componentDidMount() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const ticker = portfolio.lots[this.props.lot].ticker;
-
     const today = new Date();
-    const todaysPrice = await apiCalls.getStockPrice(ticker, today);
+    const todaysPrice = await apiCalls.getLastValidPrice(
+      this.props.ticker,
+      today
+    );
 
-    let yesterday = new Date();
+    const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdaysPrice = await apiCalls.getStockPrice(ticker, yesterday);
+    const yesterdaysPrice = await apiCalls.getLastValidPrice(
+      this.props.ticker,
+      yesterday
+    );
 
     this.setState({
-      todaysPrice: todaysPrice,
-      yesterdaysPrice: yesterdaysPrice,
+      todaysPrice,
+      yesterdaysPrice,
+      boughtPrice: this.props.boughtPrice,
     });
   }
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
-    const numShares = utilities.getNumberOfShares(this.props.lot);
-    const today = new Date();
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const todaysPrice = this.state.todaysPrice;
-    const yesterdaysPrice = this.state.yesterdaysPrice;
-    const yesterdaysValue = numShares * yesterdaysPrice;
-    const todaysValue = numShares * todaysPrice;
+    let yesterdaysValue = 0;
+    let todaysValue = 0;
+
+    if (this.state.todaysPrice && this.state.yesterdaysPrice) {
+      yesterdaysValue = this.props.numShares * this.state.yesterdaysPrice;
+      todaysValue = this.props.numShares * this.state.todaysPrice;
+    }
 
     return (
       <tr>
-        {/* ID */}
-        <td>{id}</td>
-        {/* Symbol */}
+        {/* <td>
+          ID
+          {id}
+        </td> */}
         <td>
+          {/* Stock */}
           <input
             name="ticker"
-            value={this.state.ticker || ticker}
+            value={this.state.ticker || this.props.ticker}
             onChange={this.handleChange}
           />
         </td>
-        {/* Buy Date */}
-        <td></td>
-        {/* Today's Close */}
-        <td>{todaysPrice ? `$${todaysPrice}` : 0}</td>
-        {/* Change */}
         <td>
-          {/* Change since... */}
-          {todaysPrice ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}` : 0}
-          <br />
-          {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
+          {/* Buy Date */}
+          <DatePicker
+            defaultValue={moment(this.props.boughtDate)}
+            name="boughtDate"
+            onChange={this.handleDateChange}
+          />
         </td>
-        {/* Shares */}
         <td>
+          {/* Shares */}
           <input
             name="numShares"
-            value={this.state.numShares || numShares}
+            value={this.state.numShares || this.props.numShares}
             onChange={this.handleChange}
           />
         </td>
-        {/* Market Value */}
-        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : 0}</td>
-
         <td>
+          {/*Cost per share*/}
+          <input
+            name="boughtPrice"
+            value={this.state.boughtPrice || this.props.boughtPrice}
+            onChange={this.handleChange}
+          />
+        </td>
+        <td>
+          {/* Today's Close */}
+          {this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}
+        </td>
+        <td>
+          {/* {Market Value} */}
+          {todaysValue ? `$${todaysValue.toFixed(2)}` : 0}
+        </td>
+        <td>
+          {/* {Daily Gain} */}
           {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
-
-        <td></td>
         <td>
-          <button name="delete" onClick={() => this.handleClick('delete', id)}>
-            Delete
-          </button>
+          {/* {Total gain} */}
+          {this.state.todaysPrice
+            ? `$${(this.state.todaysPrice - this.state.boughtPrice).toFixed(2)}`
+            : 0}
+          <br />
+          {utilities.calculatePercentChange(
+            this.state.boughtPrice,
+            this.state.todaysPrice
+          )}
         </td>
         <td>
           <button
@@ -114,7 +140,9 @@ export class EditableStockListRow extends Component {
                 'save',
                 id,
                 this.state.ticker,
-                this.state.numShares
+                this.state.numShares,
+                this.state.boughtDate,
+                this.state.boughtPrice
               );
             }}
           >
@@ -127,6 +155,11 @@ export class EditableStockListRow extends Component {
             }}
           >
             Cancel
+          </button>
+        </td>
+        <td>
+          <button name="delete" onClick={() => this.handleClick('delete', id)}>
+            Delete
           </button>
         </td>
       </tr>

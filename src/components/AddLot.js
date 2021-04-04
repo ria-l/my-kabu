@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DatePicker, Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import '../css/index.css';
 import * as portfolioUtils from '../utils/portfolioUtils';
 
-class AddLot extends React.Component {
-  state = {};
+const AddLot = (props) => {
+  const tailLayout = {
+    wrapperCol: {
+      offset: 8,
+      span: 16,
+    },
+  };
 
-  onFinish = (values) => {
+  const [componentSize, setComponentSize] = useState('default');
+
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size);
+  };
+  const onFinish = (values) => {
     portfolioUtils.addLotToPortfolio(
       values.ticker,
       values.boughtShares,
@@ -15,20 +25,47 @@ class AddLot extends React.Component {
       values.date.toDate(),
       values.broker
     );
-    this.props.rerender();
+    props.rerender();
   };
 
-  onFinishFailed = (errorInfo) => {
+  const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
 
-  render() {
-    return (
+  return (
+    <>
+      <h2>Add a new lot</h2>
       <Form
+        labelCol={{
+          span: 12,
+        }}
+        wrapperCol={{
+          span: 24,
+        }}
+        labelAlign="left"
+        layout="horizontal"
+        initialValues={{
+          size: componentSize,
+        }}
+        onValuesChange={onFormLayoutChange}
+        size={componentSize}
         name="Add a lot"
-        onFinish={this.onFinish}
-        onFinishFailed={this.onFinishFailed}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
+        <Form.Item
+          label="Buy date"
+          name="date"
+          rules={[
+            {
+              required: true,
+              message: 'Required',
+            },
+          ]}
+        >
+          <DatePicker />
+        </Form.Item>
+
         <Form.Item
           label="Ticker"
           name="ticker"
@@ -71,19 +108,6 @@ class AddLot extends React.Component {
         </Form.Item>
 
         <Form.Item
-          label="Buy date"
-          name="date"
-          rules={[
-            {
-              required: true,
-              message: 'Required',
-            },
-          ]}
-        >
-          <DatePicker />
-        </Form.Item>
-
-        <Form.Item
           label="Broker"
           name="broker"
           rules={[
@@ -96,14 +120,14 @@ class AddLot extends React.Component {
           <Input />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
       </Form>
-    );
-  }
-}
+    </>
+  );
+};
 
 export default AddLot;

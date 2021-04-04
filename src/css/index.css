@@ -12,11 +12,25 @@ code {
     monospace;
 }
 
+input {
+  width: 50px;
+}
+
+table {
+  float: left;
+}
+
 td,
 th {
+  background-color: #fff;
+  border: solid 1px black !important;
+  padding: 5px;
   text-align: center !important;
 }
 
-input {
-  width: 50px;
+#the-chart {
+  border: solid 1px black;
+  height: 400px;
+  margin: 30px;
+  width: 600px;
 }
