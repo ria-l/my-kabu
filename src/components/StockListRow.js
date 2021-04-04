@@ -15,67 +15,64 @@ export class StockListRow extends Component {
   };
 
   async componentDidMount() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const ticker = portfolio.lots[this.props.lot].ticker;
-
     const today = new Date();
-    const todaysPrice = await apiCalls.getLastValidPrice(ticker, today);
+    const todaysPrice = await apiCalls.getLastValidPrice(
+      this.props.ticker,
+      today
+    );
 
-    const yesterday = new Date(today);
+    const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdaysPrice = await apiCalls.getLastValidPrice(ticker, yesterday);
-    const boughtPrice = portfolio.lots[this.props.lot].boughtPrice;
+    const yesterdaysPrice = await apiCalls.getLastValidPrice(
+      this.props.ticker,
+      yesterday
+    );
 
-    this.setState({ todaysPrice, yesterdaysPrice, boughtPrice });
+    this.setState({
+      todaysPrice,
+      yesterdaysPrice,
+      boughtPrice: this.props.boughtPrice,
+    });
   }
 
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
-    const numShares = utilities.getNumberOfShares(this.props.lot);
-    const boughtDate = portfolio.lots[this.props.lot].boughtDate;
-    const boughtPrice = portfolio.lots[this.props.lot].boughtPrice;
     let yesterdaysValue = 0;
     let todaysValue = 0;
 
     if (this.state.todaysPrice && this.state.yesterdaysPrice) {
-      yesterdaysValue = numShares * this.state.yesterdaysPrice;
-      todaysValue = numShares * this.state.todaysPrice;
+      yesterdaysValue = this.props.numShares * this.state.yesterdaysPrice;
+      todaysValue = this.props.numShares * this.state.todaysPrice;
     }
+    const boughtDateObj = new Date(this.props.boughtDate);
+    const formattedDate = `${boughtDateObj.getFullYear()}-${
+      boughtDateObj.getMonth() + 1
+    }-${boughtDateObj.getDate()}`;
 
     return (
       <tr>
         {/* <td>{id}</td> */}
-
-        <td>{ticker}</td>
-
-        <td>{boughtDate}</td>
-
-        <td>{numShares}</td>
-
-        <td>{boughtPrice}</td>
-
+        <td>{this.props.ticker}</td>
+        <td>{formattedDate}</td>
+        <td>{this.props.numShares}</td>
+        <td>{this.props.boughtPrice}</td>
         <td>
           {/* today's close */}
           {this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}
         </td>
-
         <td>
           {/* {Market Value} */}
           {todaysValue ? `$${todaysValue.toFixed(2)}` : 0}
         </td>
-
         <td>
           {/* {Daily Gain} */}
           {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
-
         <td>
           {/* {Total gain} */}
-          yo{this.state.boughtPrice} <br />
           {this.state.todaysPrice
             ? `$${(this.state.todaysPrice - this.state.boughtPrice).toFixed(2)}`
             : 0}
@@ -85,11 +82,9 @@ export class StockListRow extends Component {
             this.state.todaysPrice
           )}
         </td>
-
         <td>
           <button onClick={() => this.handleClick('edit', id)}>Edit</button>
         </td>
-
         <td>
           <button onClick={() => this.handleClick('delete', id)}>Delete</button>
         </td>

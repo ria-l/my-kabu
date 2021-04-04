@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StockListRow } from './StockListRow';
 import { EditableStockListRow } from './EditableStockListRow';
 import * as portfolioUtils from '../utils/portfolioUtils';
+import * as utilities from '../utils/utilities';
 
 const StockList = (props) => {
   const [rerender, setRerender] = useState(false);
@@ -41,6 +42,7 @@ const StockList = (props) => {
 
   const rows = [];
   const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+
   if (portfolio) {
     for (const lot in portfolio.lots) {
       if (editing === true && portfolio.lots[lot].id === id) {
@@ -50,6 +52,10 @@ const StockList = (props) => {
             lot={lot}
             onDelete={deleteRow}
             onSaveOrCancel={finishEditingRow}
+            ticker={portfolio.lots[lot].ticker}
+            boughtDate={portfolio.lots[lot].boughtDate}
+            numShares={utilities.getNumberOfShares(lot)}
+            boughtPrice={portfolio.lots[lot].boughtPrice}
           />
         );
       } else {
@@ -59,6 +65,10 @@ const StockList = (props) => {
             lot={lot}
             onDelete={deleteRow}
             onEdit={editRow}
+            ticker={portfolio.lots[lot].ticker}
+            boughtDate={portfolio.lots[lot].boughtDate}
+            numShares={utilities.getNumberOfShares(lot)}
+            boughtPrice={portfolio.lots[lot].boughtPrice}
           />
         );
       }

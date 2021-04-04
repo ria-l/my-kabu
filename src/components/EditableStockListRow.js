@@ -39,35 +39,35 @@ export class EditableStockListRow extends Component {
   };
 
   async componentDidMount() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const ticker = portfolio.lots[this.props.lot].ticker;
-
     const today = new Date();
-    const todaysPrice = await apiCalls.getLastValidPrice(ticker, today);
+    const todaysPrice = await apiCalls.getLastValidPrice(
+      this.props.ticker,
+      today
+    );
 
-    let yesterday = new Date();
+    const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdaysPrice = await apiCalls.getStockPrice(ticker, yesterday);
+    const yesterdaysPrice = await apiCalls.getLastValidPrice(
+      this.props.ticker,
+      yesterday
+    );
 
     this.setState({
-      todaysPrice: todaysPrice,
-      yesterdaysPrice: yesterdaysPrice,
+      todaysPrice,
+      yesterdaysPrice,
+      boughtPrice: this.props.boughtPrice,
     });
   }
   render() {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const ticker = portfolio.lots[this.props.lot].ticker;
     const id = portfolio.lots[this.props.lot].id;
-    const numShares = utilities.getNumberOfShares(this.props.lot);
-    const today = new Date();
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const todaysPrice = this.state.todaysPrice;
-    const yesterdaysPrice = this.state.yesterdaysPrice;
-    const yesterdaysValue = numShares * yesterdaysPrice;
-    const todaysValue = numShares * todaysPrice;
-    const boughtDate = portfolio.lots[this.props.lot].boughtDate;
-    const boughtPrice = portfolio.lots[this.props.lot].boughtPrice;
+    let yesterdaysValue = 0;
+    let todaysValue = 0;
+
+    if (this.state.todaysPrice && this.state.yesterdaysPrice) {
+      yesterdaysValue = this.props.numShares * this.state.yesterdaysPrice;
+      todaysValue = this.props.numShares * this.state.todaysPrice;
+    }
 
     return (
       <tr>
@@ -79,14 +79,14 @@ export class EditableStockListRow extends Component {
           {/* Stock */}
           <input
             name="ticker"
-            value={this.state.ticker || ticker}
+            value={this.state.ticker || this.props.ticker}
             onChange={this.handleChange}
           />
         </td>
         <td>
           {/* Buy Date */}
           <DatePicker
-            defaultValue={moment(boughtDate)}
+            defaultValue={moment(this.props.boughtDate)}
             name="boughtDate"
             onChange={this.handleDateChange}
           />
@@ -95,7 +95,7 @@ export class EditableStockListRow extends Component {
           {/* Shares */}
           <input
             name="numShares"
-            value={this.state.numShares || numShares}
+            value={this.state.numShares || this.props.numShares}
             onChange={this.handleChange}
           />
         </td>
@@ -103,7 +103,7 @@ export class EditableStockListRow extends Component {
           {/*Cost per share*/}
           <input
             name="boughtPrice"
-            value={this.state.boughtPrice || boughtPrice}
+            value={this.state.boughtPrice || this.props.boughtPrice}
             onChange={this.handleChange}
           />
         </td>
@@ -112,18 +112,17 @@ export class EditableStockListRow extends Component {
           {this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}
         </td>
         <td>
-          {/* Market Value */}
+          {/* {Market Value} */}
           {todaysValue ? `$${todaysValue.toFixed(2)}` : 0}
         </td>
         <td>
-          {/* Daily Gain */}
+          {/* {Daily Gain} */}
           {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
         <td>
           {/* {Total gain} */}
-          yo{this.state.boughtPrice} <br />
           {this.state.todaysPrice
             ? `$${(this.state.todaysPrice - this.state.boughtPrice).toFixed(2)}`
             : 0}
