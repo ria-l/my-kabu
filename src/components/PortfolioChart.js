@@ -98,7 +98,8 @@ export class PortfolioChart extends Component {
           </tbody>
         </table>
         <form onSubmit={this.handleSubmit}>
-          <label>Select a date range</label>
+          <h2>Select a date range for the chart</h2>
+
           {/* // TODO: disallow future dates */}
           <DateRangePicker
             startDate={this.state.startDate}
