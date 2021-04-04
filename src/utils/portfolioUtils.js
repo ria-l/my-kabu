@@ -58,7 +58,13 @@ export function deleteLotFromPortfolio(id) {
   }
 }
 
-export function updatePortfolio(id, ticker, boughtShares) {
+export function updatePortfolio(
+  id,
+  ticker,
+  boughtShares,
+  boughtDate,
+  boughtPrice
+) {
   const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (portfolio) {
     let index;
@@ -73,6 +79,12 @@ export function updatePortfolio(id, ticker, boughtShares) {
       }
       if (boughtShares) {
         portfolio.lots[index].boughtShares = boughtShares;
+      }
+      if (boughtDate) {
+        portfolio.lots[index].boughtDate = boughtDate;
+      }
+      if (boughtPrice) {
+        portfolio.lots[index].boughtPrice = boughtPrice;
       }
       window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
     }

@@ -18,9 +18,21 @@ const StockList = (props) => {
     setId(id);
   };
 
-  const finishEditingRow = (id, ticker, boughtShares) => {
+  const finishEditingRow = (
+    id,
+    ticker,
+    boughtShares,
+    boughtDate,
+    boughtPrice
+  ) => {
     if (id) {
-      portfolioUtils.updatePortfolio(id, ticker, boughtShares);
+      portfolioUtils.updatePortfolio(
+        id,
+        ticker,
+        boughtShares,
+        boughtDate,
+        boughtPrice
+      );
     }
     setEditing(false);
     setRerender(true);

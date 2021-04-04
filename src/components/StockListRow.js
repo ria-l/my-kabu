@@ -24,10 +24,9 @@ export class StockListRow extends Component {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdaysPrice = await apiCalls.getLastValidPrice(ticker, yesterday);
-    const boughtDate = new Date(portfolio.lots[this.props.lot].boughtDate);
-    let startValue = await apiCalls.getLastValidPrice(ticker, boughtDate);
+    const boughtPrice = portfolio.lots[this.props.lot].boughtPrice;
 
-    this.setState({ todaysPrice, yesterdaysPrice, startValue });
+    this.setState({ todaysPrice, yesterdaysPrice, boughtPrice });
   }
 
   render() {
@@ -36,6 +35,7 @@ export class StockListRow extends Component {
     const id = portfolio.lots[this.props.lot].id;
     const numShares = utilities.getNumberOfShares(this.props.lot);
     const boughtDate = portfolio.lots[this.props.lot].boughtDate;
+    const boughtPrice = portfolio.lots[this.props.lot].boughtPrice;
     let yesterdaysValue = 0;
     let todaysValue = 0;
 
@@ -74,7 +74,7 @@ export class StockListRow extends Component {
         </td>
 
         <td>
-        {/* {Total gain} */}
+          {/* {Total gain} */}
           yo{this.state.boughtPrice} <br />
           {this.state.todaysPrice
             ? `$${(this.state.todaysPrice - this.state.boughtPrice).toFixed(2)}`
