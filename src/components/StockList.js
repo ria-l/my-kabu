@@ -24,15 +24,18 @@ const StockList = (props) => {
     ticker,
     boughtShares,
     boughtDate,
-    boughtPrice
+    boughtPrice,
+    broker
   ) => {
+    console.log(broker, ticker);
     if (id) {
       portfolioUtils.updatePortfolio(
         id,
         ticker,
         boughtShares,
         boughtDate,
-        boughtPrice
+        boughtPrice,
+        broker
       );
     }
     setEditing(false);
@@ -56,6 +59,7 @@ const StockList = (props) => {
             boughtDate={portfolio.lots[lot].boughtDate}
             numShares={utilities.getNumberOfShares(lot)}
             boughtPrice={portfolio.lots[lot].boughtPrice}
+            broker={portfolio.lots[lot].broker}
           />
         );
       } else {
@@ -69,6 +73,7 @@ const StockList = (props) => {
             boughtDate={portfolio.lots[lot].boughtDate}
             numShares={utilities.getNumberOfShares(lot)}
             boughtPrice={portfolio.lots[lot].boughtPrice}
+            broker={portfolio.lots[lot].broker}
           />
         );
       }
@@ -89,6 +94,7 @@ const StockList = (props) => {
             <th>Market Value</th>
             <th>Daily Gain</th>
             <th>Total Gain</th>
+            <th>Broker</th>
             <th>Edit</th>
             <th>Delete</th>
           </tr>

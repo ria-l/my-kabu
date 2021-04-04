@@ -11,8 +11,15 @@ export class EditableStockListRow extends Component {
     delete: (id, ticker, shares) => {
       this.props.onDelete(id);
     },
-    save: (id, ticker, shares, boughtDate, boughtPrice) => {
-      this.props.onSaveOrCancel(id, ticker, shares, boughtDate, boughtPrice);
+    save: (id, ticker, shares, boughtDate, boughtPrice, broker) => {
+      this.props.onSaveOrCancel(
+        id,
+        ticker,
+        shares,
+        boughtDate,
+        boughtPrice,
+        broker
+      );
     },
     cancel: (id, ticker, shares) => {
       this.props.onSaveOrCancel();
@@ -25,8 +32,23 @@ export class EditableStockListRow extends Component {
    * @param {string} ticker
    * @param {number} numShares
    */
-  handleClick = (btnName, id, ticker, numShares, boughtDate, boughtPrice) => {
-    this.handlers[btnName](id, ticker, numShares, boughtDate, boughtPrice);
+  handleClick = (
+    btnName,
+    id,
+    ticker,
+    numShares,
+    boughtDate,
+    boughtPrice,
+    broker
+  ) => {
+    this.handlers[btnName](
+      id,
+      ticker,
+      numShares,
+      boughtDate,
+      boughtPrice,
+      broker
+    );
   };
 
   handleChange = (e) => {
@@ -132,6 +154,14 @@ export class EditableStockListRow extends Component {
           )}
         </td>
         <td>
+          {/* Broker */}
+          <input
+            name="broker"
+            value={this.state.broker || this.props.broker}
+            onChange={this.handleChange}
+          />
+        </td>
+        <td>
           <button
             name="save"
             onClick={() => {
@@ -141,7 +171,8 @@ export class EditableStockListRow extends Component {
                 this.state.ticker,
                 this.state.numShares,
                 this.state.boughtDate,
-                this.state.boughtPrice
+                this.state.boughtPrice,
+                this.state.broker
               );
             }}
           >

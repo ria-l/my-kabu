@@ -82,6 +82,7 @@ export class StockListRow extends Component {
             this.state.todaysPrice
           )}
         </td>
+        <td>{this.props.broker}</td>
         <td>
           <button onClick={() => this.handleClick('edit', id)}>Edit</button>
         </td>
