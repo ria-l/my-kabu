@@ -58,16 +58,17 @@ const StockList = (props) => {
       <table id="stocklist">
         <tbody>
           <tr>
-            <th>ID</th>
+            {/* <th>ID</th> */}
             <th>Stock</th>
             <th>Buy Date</th>
-            <th>Today's close</th>
             <th>Shares</th>
+            <th>Cost per share</th>
+            <th>Today's close</th>
             <th>Market Value</th>
             <th>Daily Gain</th>
             <th>Total Gain</th>
-            <th>Delete</th>
             <th>Edit</th>
+            <th>Delete</th>
           </tr>
           {rows}
         </tbody>

@@ -46,18 +46,20 @@ export class StockListRow extends Component {
 
     return (
       <tr>
-        <td>{id}</td>
+        {/* <td>{id}</td> */}
 
         <td>{ticker}</td>
 
         <td>{boughtDate}</td>
 
+        <td>{numShares}</td>
+
+        <td>{boughtPrice}</td>
+
         <td>
           {/* today's close */}
           {this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}
         </td>
-
-        <td>{numShares}</td>
 
         <td>
           {/* {Market Value} */}
@@ -71,22 +73,25 @@ export class StockListRow extends Component {
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
 
-        {/* {Total gain} */}
         <td>
+        {/* {Total gain} */}
+          yo{this.state.boughtPrice} <br />
           {this.state.todaysPrice
-            ? `$${(this.state.todaysPrice - this.state.startValue).toFixed(2)}`
+            ? `$${(this.state.todaysPrice - this.state.boughtPrice).toFixed(2)}`
             : 0}
           <br />
           {utilities.calculatePercentChange(
-            this.state.startValue,
+            this.state.boughtPrice,
             this.state.todaysPrice
           )}
         </td>
-        <td>
-          <button onClick={() => this.handleClick('delete', id)}>Delete</button>
-        </td>
+
         <td>
           <button onClick={() => this.handleClick('edit', id)}>Edit</button>
+        </td>
+
+        <td>
+          <button onClick={() => this.handleClick('delete', id)}>Delete</button>
         </td>
       </tr>
     );

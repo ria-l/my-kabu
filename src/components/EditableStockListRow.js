@@ -62,10 +62,13 @@ export class EditableStockListRow extends Component {
 
     return (
       <tr>
-        {/* ID */}
-        <td>{id}</td>
-        {/* Symbol */}
+        {/* <td>
+          ID
+          {id}
+        </td> */}
+
         <td>
+          {/* Stock */}
           <input
             name="ticker"
             value={this.state.ticker || ticker}
@@ -84,21 +87,28 @@ export class EditableStockListRow extends Component {
             onChange={this.handleChange}
           />
         </td>
-        {/* Market Value */}
-        <td>{todaysValue ? `$${todaysValue.toFixed(2)}` : 0}</td>
+
+        <td>{/*Cost per share*/}</td>
 
         <td>
+          {/* Today's Close */}
+          {todaysPrice ? `$${todaysPrice}` : 0}
+        </td>
+
+        <td>
+        {/* Market Value */}
+          {todaysValue ? `$${todaysValue.toFixed(2)}` : 0}
+        </td>
+
+        <td>
+          {/* Daily Gain */}
           {todaysValue ? `$${(todaysValue - yesterdaysValue).toFixed(2)}` : 0}
           <br />
           {utilities.calculatePercentChange(yesterdaysValue, todaysValue)}
         </td>
 
-        <td></td>
-        <td>
-          <button name="delete" onClick={() => this.handleClick('delete', id)}>
-            Delete
-          </button>
-        </td>
+        <td>{/* {Total gain} */}</td>
+
         <td>
           <button
             name="save"
@@ -120,6 +130,12 @@ export class EditableStockListRow extends Component {
             }}
           >
             Cancel
+          </button>
+        </td>
+
+        <td>
+          <button name="delete" onClick={() => this.handleClick('delete', id)}>
+            Delete
           </button>
         </td>
       </tr>
