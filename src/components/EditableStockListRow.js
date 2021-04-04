@@ -13,7 +13,6 @@ export class EditableStockListRow extends Component {
     },
     save: (id, ticker, shares, boughtDate, boughtPrice) => {
       this.props.onSaveOrCancel(id, ticker, shares, boughtDate, boughtPrice);
-      console.log(boughtPrice);
     },
     cancel: (id, ticker, shares) => {
       this.props.onSaveOrCancel();
