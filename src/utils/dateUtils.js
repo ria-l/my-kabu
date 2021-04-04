@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * Takes two dates and creates an array of all dates
  * between them, inclusive.
