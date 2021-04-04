@@ -76,13 +76,6 @@ export class EditableStockListRow extends Component {
         <td></td>
         {/* Today's Close */}
         <td>{todaysPrice ? `$${todaysPrice}` : 0}</td>
-        {/* Change */}
-        <td>
-          {/* Change since... */}
-          {todaysPrice ? `$${(todaysPrice - yesterdaysPrice).toFixed(2)}` : 0}
-          <br />
-          {utilities.calculatePercentChange(yesterdaysPrice, todaysPrice)}
-        </td>
         {/* Shares */}
         <td>
           <input

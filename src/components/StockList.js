@@ -62,7 +62,6 @@ const StockList = (props) => {
             <th>Stock</th>
             <th>Buy Date</th>
             <th>Today's close</th>
-            <th>Change since...</th>
             <th>Shares</th>
             <th>Market Value</th>
             <th>Daily Gain</th>

@@ -51,11 +51,11 @@ export class StockListRow extends Component {
         <td>{ticker}</td>
 
         <td>{boughtDate}</td>
+
         <td>
           {/* today's close */}
           {this.state.todaysPrice ? `$${this.state.todaysPrice}` : 0}
         </td>
-        <td>{/* change since... */}</td>
 
         <td>{numShares}</td>
 
