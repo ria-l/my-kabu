@@ -63,7 +63,8 @@ export function updatePortfolio(
   ticker,
   boughtShares,
   boughtDate,
-  boughtPrice
+  boughtPrice,
+  broker
 ) {
   const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (portfolio) {
@@ -85,6 +86,9 @@ export function updatePortfolio(
       }
       if (boughtPrice) {
         portfolio.lots[index].boughtPrice = boughtPrice;
+      }
+      if (broker) {
+        portfolio.lots[index].broker = broker;
       }
       window.localStorage.setItem('portfolio', JSON.stringify(portfolio));
     }

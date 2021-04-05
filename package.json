@@ -1,8 +1,5 @@
 {
   "name": "my-kabu",
-  "jest": {
-    "transform": { "^.+\\.(ts|tsx|js|jsx)?$": "ts-jest" }
-  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
