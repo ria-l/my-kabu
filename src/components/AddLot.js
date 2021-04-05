@@ -3,6 +3,7 @@ import { DatePicker, Form, Input, Button } from 'antd';
 import 'antd/dist/antd.css';
 import '../css/index.css';
 import * as portfolioUtils from '../utils/portfolioUtils';
+import moment from 'moment';
 
 const AddLot = (props) => {
   const tailLayout = {
@@ -17,6 +18,7 @@ const AddLot = (props) => {
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
+
   const onFinish = (values) => {
     portfolioUtils.addLotToPortfolio(
       values.ticker,
@@ -30,6 +32,11 @@ const AddLot = (props) => {
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
+  };
+
+  const disabledDate = (current) => {
+    // Cannot select days after today
+    return current > moment().endOf('day');
   };
 
   return (
@@ -63,7 +70,7 @@ const AddLot = (props) => {
             },
           ]}
         >
-          <DatePicker />
+          <DatePicker disabledDate={disabledDate} />
         </Form.Item>
 
         <Form.Item
