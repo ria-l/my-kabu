@@ -16,21 +16,28 @@ input {
   width: 50px;
 }
 
-table {
+#stocklist {
   float: left;
 }
 
-td,
-th {
+#stocklist td,
+#stocklist th {
   background-color: #fff;
   border: solid 1px black !important;
   padding: 5px;
   text-align: center !important;
 }
 
+#stocklist th {
+  background-color: #001529;
+  color: #fff;
+}
+
 #the-chart {
   border: solid 1px black;
+  float: left;
   height: 400px;
   margin: 30px;
+  margin-left: 0;
   width: 600px;
 }
