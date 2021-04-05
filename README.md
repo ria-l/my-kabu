@@ -20,5 +20,9 @@ Last update: 2021-04-04
 
 ## Technology
 
-- REACT framework
-- Ant Design UI system for style and input elements
+- [REACT](http://reactjs.org/)
+- [Ant Design](https://ant.design/) for style and input elements
+- [Tiingo API](https://api.tiingo.com/) for stock data
+- [Chart.js](https://www.chartjs.org/) for chart and graphs
+- [Heroku](https://www.heroku.com/) for server hosting
+- [Amazon Web Services](https://aws.amazon.com/) for site hosting
