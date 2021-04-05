@@ -1,23 +1,14 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 h1 {
   color: #fff !important;
 }
 
 input {
   width: 50px;
+}
+
+.chart-wrapper {
+  height: 30vh;
+  width: 50vw;
 }
 
 #stocklist {
@@ -40,8 +31,6 @@ input {
 #the-chart {
   border: solid 1px black;
   float: left;
-  height: 400px;
   margin: 30px;
   margin-left: 0;
-  width: 600px;
 }

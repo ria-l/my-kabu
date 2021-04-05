@@ -13,7 +13,7 @@ export class PortfolioChart extends Component {
   // Options for rendering Chart.js.
   getOptions = () => {
     return {
-      responsive: true,
+      maintainAspectRatio: false,
     };
   };
 
