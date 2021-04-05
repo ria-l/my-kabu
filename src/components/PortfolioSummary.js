@@ -41,8 +41,8 @@ class PortfolioSummary extends Component {
     return (
       <div className="main">
         <div>
-          <h1>{portfolio && portfolio.name}</h1>
-          <h2>Current value: ${this.state.todaysValue}</h2>
+          <h2>{portfolio && portfolio.name}</h2>
+          Current value: ${this.state.todaysValue}
         </div>
         <div>
           Day Gain: ${this.state.dayGain} (+

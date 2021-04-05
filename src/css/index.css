@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+h1 {
+  color: #fff !important;
+}
+
 input {
   width: 50px;
 }

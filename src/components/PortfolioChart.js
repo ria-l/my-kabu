@@ -106,7 +106,7 @@ export class PortfolioChart extends Component {
           </tbody>
         </table>
         <form onSubmit={this.handleSubmit}>
-          <h2>Select a date range for the chart</h2>
+          <h3>Select a date range for the chart</h3>
           <RangePicker
             defaultValue={[moment().subtract(1, 'weeks'), moment()]}
             ranges={{

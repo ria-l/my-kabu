@@ -34,7 +34,7 @@ const AddLot = (props) => {
 
   return (
     <>
-      <h2>Add a new lot</h2>
+      <h3>Add a new lot</h3>
       <Form
         labelCol={{
           span: 12,

@@ -20,7 +20,9 @@ class App extends Component {
       <>
         <Layout className="layout">
           <Header>
-            <div className="logo" />
+            <h1>
+              My Kabu | <a href="https://github.com/ria-l/my-kabu">Github</a>
+            </h1>
           </Header>
           <Content style={{ padding: '0 50px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}></Breadcrumb>
