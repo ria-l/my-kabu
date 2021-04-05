@@ -90,3 +90,34 @@ export const getPortfolioValuePromises = async (dateRange, portfolio) => {
   });
   return promises;
 };
+
+export const getChartData = async (range, startDate, endDate) => {
+  let chartLabels;
+  if (range) {
+    chartLabels = await getChartLabels(range[0], range[1]);
+  } else if (startDate && endDate) {
+    chartLabels = await getChartLabels(startDate.toDate(), endDate.toDate());
+  } else {
+    const today = dateUtils.setTimeToNoon(new Date());
+    let startDate = new Date();
+    startDate.setHours(12, 0, 0, 0);
+    startDate.setDate(startDate.getDate() - 6);
+    chartLabels = await getChartLabels(startDate, today);
+  }
+
+  const chartData = {
+    labels: chartLabels.xAxisLabels,
+    datasets: [
+      {
+        label: 'Portfolio value over time',
+        data: chartLabels.dataPoints,
+        fill: false,
+        borderColor: ['rgba(0, 200, 5, 1)'],
+        borderWidth: 1,
+        lineTension: 0,
+      },
+    ],
+  };
+
+  return chartData;
+};
