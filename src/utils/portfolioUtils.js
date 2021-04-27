@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import * as portfolioUtils from '../utils/portfolioUtils';
 
 /**
  *
@@ -16,7 +17,7 @@ export function addLotToPortfolio(
   broker
 ) {
   if (ticker) {
-    let portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    let portfolio = portfolioUtils.getPortfolio();
     if (!portfolio) {
       window.localStorage.setItem(
         'portfolio',
@@ -25,7 +26,7 @@ export function addLotToPortfolio(
           lots: [],
         })
       );
-      portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+      portfolio = portfolioUtils.getPortfolio();
     }
     portfolio.lots.push({
       id: uuidv4(),
@@ -42,8 +43,12 @@ export function addLotToPortfolio(
   }
 }
 
+export function getPortfolio() {
+  return JSON.parse(window.localStorage.getItem('portfolio'));
+}
+
 export function deleteLotFromPortfolio(id) {
-  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  const portfolio = this.getPortfolio();
   if (portfolio) {
     let index;
     for (let i = 0; i < portfolio.lots.length; i++) {

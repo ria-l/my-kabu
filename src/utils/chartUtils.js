@@ -1,13 +1,14 @@
 import moment from 'moment';
 import * as apiCalls from './apiCalls';
 import * as dateUtils from './dateUtils';
+import * as portfolioUtils from '../utils/portfolioUtils';
 
 /**
  * @param {Date} startDate
  * @param {Date} endDate
  */
 export const getChartLabels = async (startDate, endDate) => {
-  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  const portfolio = portfolioUtils.getPortfolio();
   if (!portfolio) {
     return { xAxisLabels: [], dataPoints: [] };
   }

@@ -1,3 +1,5 @@
+import * as portfolioUtils from '../utils/portfolioUtils';
+
 export const falseFunc = () => false;
 
 /**
@@ -14,7 +16,7 @@ export function calculatePercentChange(oldValue, newValue) {
 }
 
 export function getNumberOfShares(index) {
-  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  const portfolio = portfolioUtils.getPortfolio();
   if (portfolio) {
     const portfolioEntry = portfolio.lots[index];
     return portfolioEntry.boughtShares - portfolioEntry.soldShares;

@@ -44,7 +44,7 @@ const StockList = (props) => {
   };
 
   const rows = [];
-  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  const portfolio = portfolioUtils.getPortfolio();
 
   if (portfolio) {
     for (const lot in portfolio.lots) {
