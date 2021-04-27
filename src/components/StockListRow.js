@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as dateUtils from '../utils/dateUtils';
 import * as utilities from '../utils/utilities';
 import * as apiCalls from '../utils/apiCalls';
 
@@ -21,8 +22,7 @@ export class StockListRow extends Component {
       today
     );
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterday = dateUtils.yesterday();
     const yesterdaysPrice = await apiCalls.getLastValidPrice(
       this.props.ticker,
       yesterday

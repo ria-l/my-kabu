@@ -21,10 +21,8 @@ class PortfolioSummary extends Component {
   };
 
   async componentDidMount() {
-    const todaysValue = await this.getPortfolioValue();
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdaysValue = await this.getPortfolioValue(yesterday);
+    let yesterday = dateUtils.yesterday();
+    const yesterdaysValue = await this.fetchPortfolioValue(yesterday);
     const dayGain = todaysValue - yesterdaysValue;
     utilities.calculatePercentChange(yesterdaysValue, todaysValue);
 

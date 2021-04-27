@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DatePicker } from 'antd';
+import * as dateUtils from '../utils/dateUtils';
 import * as utilities from '../utils/utilities';
 import * as apiCalls from '../utils/apiCalls';
 import moment from 'moment';
@@ -66,8 +67,7 @@ export class EditableStockListRow extends Component {
       today
     );
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterday = dateUtils.yesterday();
     const yesterdaysPrice = await apiCalls.getLastValidPrice(
       this.props.ticker,
       yesterday
