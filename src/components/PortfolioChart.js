@@ -11,7 +11,7 @@ export class PortfolioChart extends Component {
   state = { submitted: false };
 
   // Options for rendering Chart.js.
-  getOptions = () => {
+  options = () => {
     return {
       maintainAspectRatio: false,
     };
@@ -72,7 +72,7 @@ export class PortfolioChart extends Component {
                         ],
                       }
                     }
-                    options={this.getOptions()}
+                    options={this.options()}
                   />
                 </div>
               </td>
