@@ -11,16 +11,17 @@ class PortfolioSummary extends Component {
     this.setState({ submitted: state });
   };
 
-  getPortfolioValue = async (date = new Date()) => {
+  fetchPortfolioValue = async (date = new Date()) => {
     const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     if (!portfolio) {
       return 0;
     }
     const dateCopy = dateUtils.setTimeToNoon(date);
-    return await chartUtils.getPortfolioValue(portfolio, dateCopy);
+    return await chartUtils.fetchPortfolioValue(portfolio, dateCopy);
   };
 
   async componentDidMount() {
+    const todaysValue = await this.fetchPortfolioValue();
     let yesterday = dateUtils.yesterday();
     const yesterdaysValue = await this.fetchPortfolioValue(yesterday);
     const dayGain = todaysValue - yesterdaysValue;

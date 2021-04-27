@@ -12,7 +12,7 @@ export const getChartLabels = async (startDate, endDate) => {
     return { xAxisLabels: [], dataPoints: [] };
   }
   const dateRange = dateUtils.getDateRange(startDate, endDate);
-  const promises = await getPortfolioValuePromises(dateRange, portfolio);
+  const promises = await fetchPortfolioValuePromises(dateRange, portfolio);
   const portfolioValues = await Promise.all(promises);
   const { xAxisLabels, dataPoints } = fillChartLabels(
     dateRange,
@@ -25,7 +25,7 @@ export const getChartLabels = async (startDate, endDate) => {
  * @param {Object} portfolio
  * @param {Date} dateObject
  */
-export const getPortfolioValue = async (portfolio, dateObject) => {
+export const fetchPortfolioValue = async (portfolio, dateObject) => {
   let portfolioValue = 0;
   for (let i = 0; i < 5; i++) {
     const promises = [];
@@ -77,14 +77,14 @@ function fillChartLabels(dateRange, portfolioValues) {
   return { xAxisLabels, dataPoints };
 }
 
-export const getPortfolioValuePromises = async (dateRange, portfolio) => {
+export const fetchPortfolioValuePromises = async (dateRange, portfolio) => {
   const promises = [];
 
   dateRange.forEach((date) => {
     const dateObject = new Date(date);
     promises.push(
       new Promise(async (resolve) =>
-        resolve(await getPortfolioValue(portfolio, dateObject))
+        resolve(await fetchPortfolioValue(portfolio, dateObject))
       )
     );
   });
