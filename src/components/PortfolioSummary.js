@@ -1,9 +1,8 @@
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
 import React, { Component } from 'react';
 import { PortfolioChart } from './PortfolioChart';
-import * as dateUtils from '../utils/dateUtils';
 import * as chartUtils from '../utils/chartUtils';
+import * as dateUtils from '../utils/dateUtils';
+import * as portfolioUtils from '../utils/portfolioUtils';
 import * as utilities from '../utils/utilities';
 
 class PortfolioSummary extends Component {
@@ -13,20 +12,19 @@ class PortfolioSummary extends Component {
     this.setState({ submitted: state });
   };
 
-  getPortfolioValue = async (date = new Date()) => {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  fetchPortfolioValue = async (date = new Date()) => {
+    const portfolio = portfolioUtils.portfolio();
     if (!portfolio) {
       return 0;
     }
     const dateCopy = dateUtils.setTimeToNoon(date);
-    return await chartUtils.getPortfolioValue(portfolio, dateCopy);
+    return await chartUtils.fetchPortfolioValue(portfolio, dateCopy);
   };
 
   async componentDidMount() {
-    const todaysValue = await this.getPortfolioValue();
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdaysValue = await this.getPortfolioValue(yesterday);
+    const todaysValue = await this.fetchPortfolioValue();
+    let yesterday = dateUtils.yesterday();
+    const yesterdaysValue = await this.fetchPortfolioValue(yesterday);
     const dayGain = todaysValue - yesterdaysValue;
     utilities.calculatePercentChange(yesterdaysValue, todaysValue);
 
@@ -38,13 +36,13 @@ class PortfolioSummary extends Component {
   }
 
   render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = portfolioUtils.portfolio();
 
     return (
       <div className="main">
         <div>
-          <h1>{portfolio && portfolio.name}</h1>
-          <h2>Current value: ${this.state.todaysValue}</h2>
+          <h2>{portfolio && portfolio.name}</h2>
+          Current value: ${this.state.todaysValue}
         </div>
         <div>
           Day Gain: ${this.state.dayGain} (+

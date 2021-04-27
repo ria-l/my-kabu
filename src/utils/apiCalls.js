@@ -23,6 +23,13 @@ export async function getLastValidPrice(ticker, date) {
  * @param {String} ticker
  * @param {Date} date
  * @return {Number} stockPrice
+ *
+ * https://fast-spire-77124.herokuapp.com/prices/IBM/2021-03-30
+ * returns:
+ *
+ * [{"date":"2021-03-30T00:00:00.000Z","close":134.72,"high":136.27,"low":134.02,"open":135.86, "volume":4790366,"adjClose":134.72,"adjHigh":136.27,"adjLow":134.02,"adjOpen":135.86, "adjVolume":4790366,"divCash":0,"splitFactor":1}]
+ *
+ * returns [] if it’s a non-trading day.
  */
 export async function getStockPrice(ticker, date) {
   const isoDate = dateUtils.setDateToUtcMidnight(date).toISOString();

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import * as utilities from '../utils/utilities';
 import * as apiCalls from '../utils/apiCalls';
+import * as dateUtils from '../utils/dateUtils';
+import * as portfolioUtils from '../utils/portfolioUtils';
+import * as utilities from '../utils/utilities';
 
 export class StockListRow extends Component {
   state = { todaysPrice: 0, yesterdaysPrice: 0 };
@@ -21,8 +23,7 @@ export class StockListRow extends Component {
       today
     );
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterday = dateUtils.yesterday();
     const yesterdaysPrice = await apiCalls.getLastValidPrice(
       this.props.ticker,
       yesterday
@@ -36,7 +37,7 @@ export class StockListRow extends Component {
   }
 
   render() {
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+    const portfolio = portfolioUtils.portfolio();
     const id = portfolio.lots[this.props.lot].id;
     let yesterdaysValue = 0;
     let todaysValue = 0;

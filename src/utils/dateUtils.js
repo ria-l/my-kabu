@@ -46,3 +46,9 @@ export const setDateToUtcMidnight = (date) => {
   newDate.setHours(newDate.getHours() - timezoneOffset / 60 - 12);
   return newDate;
 };
+
+export const yesterday = () => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  return yesterday;
+};

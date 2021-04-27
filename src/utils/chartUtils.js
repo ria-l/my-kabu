@@ -1,18 +1,19 @@
 import moment from 'moment';
-import * as dateUtils from './dateUtils';
 import * as apiCalls from './apiCalls';
+import * as dateUtils from './dateUtils';
+import * as portfolioUtils from '../utils/portfolioUtils';
 
 /**
  * @param {Date} startDate
  * @param {Date} endDate
  */
 export const getChartLabels = async (startDate, endDate) => {
-  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
+  const portfolio = portfolioUtils.portfolio();
   if (!portfolio) {
     return { xAxisLabels: [], dataPoints: [] };
   }
   const dateRange = dateUtils.getDateRange(startDate, endDate);
-  const promises = await getPortfolioValuePromises(dateRange, portfolio);
+  const promises = await fetchPortfolioValuePromises(dateRange, portfolio);
   const portfolioValues = await Promise.all(promises);
   const { xAxisLabels, dataPoints } = fillChartLabels(
     dateRange,
@@ -25,7 +26,7 @@ export const getChartLabels = async (startDate, endDate) => {
  * @param {Object} portfolio
  * @param {Date} dateObject
  */
-export const getPortfolioValue = async (portfolio, dateObject) => {
+export const fetchPortfolioValue = async (portfolio, dateObject) => {
   let portfolioValue = 0;
   for (let i = 0; i < 5; i++) {
     const promises = [];
@@ -77,16 +78,47 @@ function fillChartLabels(dateRange, portfolioValues) {
   return { xAxisLabels, dataPoints };
 }
 
-export const getPortfolioValuePromises = async (dateRange, portfolio) => {
+export const fetchPortfolioValuePromises = async (dateRange, portfolio) => {
   const promises = [];
 
   dateRange.forEach((date) => {
     const dateObject = new Date(date);
     promises.push(
       new Promise(async (resolve) =>
-        resolve(await getPortfolioValue(portfolio, dateObject))
+        resolve(await fetchPortfolioValue(portfolio, dateObject))
       )
     );
   });
   return promises;
+};
+
+export const getChartData = async (range, startDate, endDate) => {
+  let chartLabels;
+  if (range) {
+    chartLabels = await getChartLabels(range[0], range[1]);
+  } else if (startDate && endDate) {
+    chartLabels = await getChartLabels(startDate.toDate(), endDate.toDate());
+  } else {
+    const today = dateUtils.setTimeToNoon(new Date());
+    let startDate = new Date();
+    startDate.setHours(12, 0, 0, 0);
+    startDate.setDate(startDate.getDate() - 6);
+    chartLabels = await getChartLabels(startDate, today);
+  }
+
+  const chartData = {
+    labels: chartLabels.xAxisLabels,
+    datasets: [
+      {
+        label: 'Portfolio value over time',
+        data: chartLabels.dataPoints,
+        fill: false,
+        borderColor: ['rgba(0, 200, 5, 1)'],
+        borderWidth: 1,
+        lineTension: 0,
+      },
+    ],
+  };
+
+  return chartData;
 };

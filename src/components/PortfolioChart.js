@@ -11,60 +11,34 @@ export class PortfolioChart extends Component {
   state = { submitted: false };
 
   // Options for rendering Chart.js.
-  getOptions = () => {
+  options = () => {
     return {
-      responsive: true,
+      maintainAspectRatio: false,
     };
-  };
-
-  getChartData = async (range) => {
-    let chartLabels;
-    if (range) {
-      chartLabels = await chartUtils.getChartLabels(range[0], range[1]);
-    } else if (this.state.startDate && this.state.endDate) {
-      chartLabels = await chartUtils.getChartLabels(
-        this.state.startDate.toDate(),
-        this.state.endDate.toDate()
-      );
-    } else {
-      const today = dateUtils.setTimeToNoon(new Date());
-      let startDate = new Date();
-      startDate.setHours(12, 0, 0, 0);
-      startDate.setDate(startDate.getDate() - 6);
-      chartLabels = await chartUtils.getChartLabels(startDate, today);
-    }
-
-    const chartData = {
-      labels: chartLabels.xAxisLabels,
-      datasets: [
-        {
-          label: 'Portfolio value over time',
-          data: chartLabels.dataPoints,
-          fill: false,
-          borderColor: ['rgba(0, 200, 5, 1)'],
-          borderWidth: 1,
-          lineTension: 0,
-        },
-      ],
-    };
-
-    return chartData;
   };
 
   async componentDidMount() {
-    const chartData = await this.getChartData();
+    const chartData = await chartUtils.getChartData(
+      undefined,
+      this.state.startDate,
+      this.state.endDate
+    );
     this.setState({ chartData: chartData });
   }
 
   async componentDidUpdate(prevProps, prevState) {
     if (this.state.submitted !== prevState.submitted) {
-      const chartData = await this.getChartData();
+      const chartData = await chartUtils.getChartData(
+        undefined,
+        this.state.startDate,
+        this.state.endDate
+      );
       this.setState({ chartData: chartData });
     }
   }
 
   handleDateChange = async (range) => {
-    const chartData = await this.getChartData(range);
+    const chartData = await chartUtils.getChartData(range);
     this.setState({ chartData: chartData });
   };
 
@@ -98,7 +72,7 @@ export class PortfolioChart extends Component {
                         ],
                       }
                     }
-                    options={this.getOptions()}
+                    options={this.options()}
                   />
                 </div>
               </td>
@@ -106,7 +80,7 @@ export class PortfolioChart extends Component {
           </tbody>
         </table>
         <form onSubmit={this.handleSubmit}>
-          <h2>Select a date range for the chart</h2>
+          <h3>Select a date range for the chart</h3>
           <RangePicker
             defaultValue={[moment().subtract(1, 'weeks'), moment()]}
             ranges={{

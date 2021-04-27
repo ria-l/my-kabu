@@ -1,5 +1,6 @@
 import * as chartUtils from './chartUtils';
 import * as dateUtils from './dateUtils';
+import * as portfolioUtils from '../utils/portfolioUtils';
 
 const testPortfolio = JSON.stringify({
   name: 'To The Moon',
@@ -127,7 +128,7 @@ describe('getChartLabels', () => {
   });
 });
 
-describe('getPortfolioValuePromises', () => {
+describe('fetchPortfolioValuePromises', () => {
   beforeEach(() => {
     populatePortfolio();
     populateStockPrices();
@@ -142,8 +143,8 @@ describe('getPortfolioValuePromises', () => {
       'Mon Dec 14 2020 12:00:00 GMT-0800 (Pacific Standard Time)'
     );
     const dateRange = dateUtils.getDateRange(startDate, endDate);
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const promises = await chartUtils.getPortfolioValuePromises(
+    const portfolio = portfolioUtils.portfolio();
+    const promises = await chartUtils.fetchPortfolioValuePromises(
       dateRange,
       portfolio
     );
@@ -158,7 +159,7 @@ describe('getPortfolioValuePromises', () => {
   });
 });
 
-describe('getPortfolioValue', () => {
+describe('fetchPortfolioValue', () => {
   beforeEach(() => {
     populatePortfolio();
     populateStockPrices();
@@ -169,8 +170,8 @@ describe('getPortfolioValue', () => {
 
   it('datepicker', async () => {
     const date = new Date('2020-12-10T20:00:00.000Z');
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const data = await chartUtils.getPortfolioValue(portfolio, date);
+    const portfolio = portfolioUtils.portfolio();
+    const data = await chartUtils.fetchPortfolioValue(portfolio, date);
     expect(data).toBe(4154.09);
   });
 
@@ -178,8 +179,8 @@ describe('getPortfolioValue', () => {
     const date = new Date(
       'Tue Dec 29 2020 17:24:29 GMT-0800 (Pacific Standard Time)'
     );
-    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
-    const data = await chartUtils.getPortfolioValue(portfolio, date);
+    const portfolio = portfolioUtils.portfolio();
+    const data = await chartUtils.fetchPortfolioValue(portfolio, date);
     expect(data).toBe(4442.75);
   });
 });
