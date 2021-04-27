@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { DatePicker } from 'antd';
 import * as apiCalls from '../utils/apiCalls';
 import * as dateUtils from '../utils/dateUtils';
-import * as portfolioUtils from '../utils/portfolioUtils';
 import * as utilities from '../utils/utilities';
 import moment from 'moment';
 
@@ -81,7 +80,7 @@ export class EditableStockListRow extends Component {
     });
   }
   render() {
-    const portfolio = portfolioUtils.portfolio();
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     const id = portfolio.lots[this.props.lot].id;
     let yesterdaysValue = 0;
     let todaysValue = 0;

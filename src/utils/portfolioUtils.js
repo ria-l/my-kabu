@@ -1,9 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export const portfolio = () => {
-  return JSON.parse(window.localStorage.getItem('portfolio'));
-};
-
 /**
  *
  * @param {string} ticker
@@ -47,7 +43,7 @@ export function addLotToPortfolio(
 }
 
 export function deleteLotFromPortfolio(id) {
-  const portfolio = portfolio();
+  const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
   if (portfolio) {
     let index;
     for (let i = 0; i < portfolio.lots.length; i++) {

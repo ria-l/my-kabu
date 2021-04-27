@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { PortfolioChart } from './PortfolioChart';
 import * as chartUtils from '../utils/chartUtils';
 import * as dateUtils from '../utils/dateUtils';
-import * as portfolioUtils from '../utils/portfolioUtils';
 import * as utilities from '../utils/utilities';
 
 class PortfolioSummary extends Component {
@@ -13,7 +12,7 @@ class PortfolioSummary extends Component {
   };
 
   fetchPortfolioValue = async (date = new Date()) => {
-    const portfolio = portfolioUtils.portfolio();
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
     if (!portfolio) {
       return 0;
     }
@@ -36,7 +35,7 @@ class PortfolioSummary extends Component {
   }
 
   render() {
-    const portfolio = portfolioUtils.portfolio();
+    const portfolio = JSON.parse(window.localStorage.getItem('portfolio'));
 
     return (
       <div className="main">
