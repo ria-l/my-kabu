@@ -1,4 +1,4 @@
-import * as portfolioUtils from '../utils/portfolioUtils';
+import * as portfolioUtils from './portfolioUtils';
 
 class LocalStorageMock {
   constructor() {
