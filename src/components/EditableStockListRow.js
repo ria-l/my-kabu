@@ -58,7 +58,9 @@ export class EditableStockListRow extends Component {
   };
 
   handleDateChange = (date) => {
-    this.setState({ boughtDate: date.toDate() });
+    if (date) {
+      this.setState({ boughtDate: date.toDate() });
+    }
   };
 
   async componentDidMount() {
