@@ -71,7 +71,7 @@ export function updatePortfolio(
   boughtPrice,
   broker
 ) {
-  const portfolio = portfolio();
+  const portfolio = getPortfolio();
   if (portfolio) {
     let index;
     for (let i = 0; i < portfolio.lots.length; i++) {
