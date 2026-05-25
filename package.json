@@ -3,27 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/preset-env": "^7.12.1",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "antd": "^4.14.0",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-pino-logger": "^5.0.0",
-    "mockdate": "^3.0.5",
-    "node-env-run": "^4.0.2",
     "node-fetch": "^2.6.1",
-    "nodemon": "^2.0.6",
-    "npm-run-all": "^4.1.5",
     "pino-colada": "^2.1.0",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
-    "react-test-renderer": "^16.13.1",
     "uuid": "^8.3.1"
   },
   "scripts": {
@@ -53,5 +43,17 @@
   "engines": {
     "node": "10.16.3"
   },
-  "proxy": "https://fast-spire-77124.herokuapp.com/"
+  "proxy": "https://fast-spire-77124.herokuapp.com/",
+  "devDependencies": {
+    "@babel/preset-env": "^7.14.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "mockdate": "^3.0.5",
+    "node-env-run": "^4.0.2",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "react-scripts": "3.4.3",
+    "react-test-renderer": "^16.14.0"
+  }
 }

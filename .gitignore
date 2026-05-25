@@ -100,8 +100,7 @@ dist
 .tern-port
 
 # misc
-ignore/
-build/
+dev-notes
 
 # dotenv environment variables file
 .env
