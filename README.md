@@ -26,3 +26,11 @@ Last update: 2021-08-13
 - [Chart.js](https://www.chartjs.org/) for chart and graphs
 - [Heroku](https://www.heroku.com/) for server hosting
 - [Amazon Web Services](https://aws.amazon.com/) for site hosting
+
+## Deployment
+
+- After building, must update paths for "href" and "src" to delete the initial `/` to view locally.
+  - `<link href="static/css/2.0b5d44dd.chunk.css" rel="stylesheet" />`
+  - `<link href="static/css/main.59c94fb7.chunk.css" rel="stylesheet" />`
+  - `<script src="static/js/2.9bd1caae.chunk.js"></script>`
+  - `<script src="static/js/main.791a5c02.chunk.js"></script>`
